@@ -1,6 +1,6 @@
 # Postslify: Master LinkedIn with the Power of AI 🚀
 
-![Postslify Banner](public/marketing.png)
+![Postslify Banner](public/logo-postslify.png)
 
 **Stop struggling with writer's block. Start building your personal brand today.**
 
