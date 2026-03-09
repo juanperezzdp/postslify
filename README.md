@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Postslify: Master LinkedIn with the Power of AI 🚀
 
-## Getting Started
+![Postslify Banner](public/marketing.png)
 
-First, run the development server:
+**Stop struggling with writer's block. Start building your personal brand today.**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Postslify is the ultimate platform for professionals and companies looking to scale their LinkedIn presence without sacrificing authenticity. Our Artificial Intelligence technology doesn't just write for you; it writes *like you*.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 💎 Why Postslify?
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+In today's competitive professional world, your personal brand is your most valuable asset. But creating quality content consistently is exhausting.
 
-## Learn More
+*   ❌ Spending hours staring at a blank screen?
+*   ❌ Struggling to maintain a consistent tone of voice?
+*   ❌ Don't know the best time to post?
 
-To learn more about Next.js, take a look at the following resources:
+**Postslify is your solution.** We automate the tedious work so you can focus on what matters: connecting and growing.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔥 Features that Power Your Growth
 
-## Deploy on Vercel
+### 🧠 **AI That Understands You**
+No more generic content. Train our AI with your best posts and create personalized **Voice Profiles**. Whether you need an executive, inspirational, or technical tone, Postslify adapts to you.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### ✍️ **Viral Content Generation**
+Create posts, threads, and articles optimized for the LinkedIn algorithm in seconds. From vague ideas to posts ready to go viral.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🎨 **Integrated Creative Studio**
+A picture is worth a thousand words. Generate impactful, royalty-free visuals to accompany your texts, all without leaving the platform.
+
+### 📅 **Smart Scheduling**
+Organize your editorial calendar weeks in advance. Our system schedules your posts for maximum impact times.
+
+### 🌍 **Global Reach**
+Break language barriers. Create and translate native content in **Spanish and English** to reach international audiences.
+
+---
+
+## 🚀 Join the Personal Branding Revolution
+
+Thousands of professionals are already using AI to stand out. Don't get left behind and take your LinkedIn profile to the next level.
+
+**✨ [Try Postslify Now](#) ✨**
+
+---
+
+### 📩 Need help?
+Have questions or suggestions? We are here to help you grow.
+Write to us at: **support@postslify.com**
+
+---
+© 2026 Postslify. All rights reserved.
