@@ -1,0 +1,1066 @@
+{
+  "Sidebar": {
+    "createAndManage": "Create and Manage",
+    "createPost": "Create Post",
+    "calendar": "Calendar",
+    "archivedPosts": "Archived Posts",
+    "voiceAndPersonality": "Voice and Personality",
+    "newVoiceProfile": "New Voice Profile",
+    "myProfiles": "My Profiles",
+    "account": "Account",
+    "businessPages": "Business Pages",
+    "billing": "Billing",
+    "userDetails": "User Details"
+  },
+  "LinkedInFloating": {
+    "userFallback": "User",
+    "connected": "LinkedIn connected",
+    "disconnectTitle": "Disconnect",
+    "reconnect": "Reconnect LinkedIn",
+    "connectTitle": "Connect your personal profile",
+    "connectSubtitle": "Manage your posts and pages",
+    "connectNow": "Connect now",
+    "pagesCount": "Pages ({count})",
+    "managePages": "Manage pages",
+    "pageAltFallback": "Page",
+    "companyFallback": "Company",
+    "noPages": "No pages configured",
+    "addPage": "Add page",
+    "disconnectModalTitle": "Disconnect LinkedIn?",
+    "disconnectModalDescription": "You will lose access to publish to your profile until you reconnect.",
+    "disconnectModalWarning": "WARNING! If you disconnect, all scheduled posts will fail automatically. You won't be able to publish anything until you reconnect.",
+    "cancel": "Cancel",
+    "disconnecting": "Disconnecting...",
+    "confirmDisconnect": "Yes, disconnect"
+  },
+  "VoiceProfileForm": {
+    "title": "Voice <highlight>Profile</highlight>",
+    "subtitle": "Define the personality and tone of your voice to generate authentic posts. Configure the language, context, and examples to train your assistant.",
+    "fields": {
+      "voiceName": {
+        "label": "Voice Name",
+        "placeholder": "Ex. Professional Voice, Friendly Voice..."
+      },
+      "timezone": {
+        "label": "Timezone",
+        "placeholder": "Select a timezone"
+      },
+      "language": {
+        "label": "Language",
+        "placeholder": "Select a language"
+      },
+      "context": {
+        "label": "Context / Biography",
+        "placeholder": "Describe who you are, your role, your company, and who your audience is. The more details, the better the result."
+      },
+      "style": {
+        "label": "Voice Style",
+        "description": "Choose a tag that best represents how you want this voice to sound.",
+        "placeholder": "Select a style"
+      },
+      "examples": {
+        "label": "Examples (Optional)",
+        "placeholder": "Paste an example of your writing style here...",
+        "add": "Add another example",
+        "remove": "Remove example"
+      }
+    },
+    "profileCount": "You have created <highlight>{count}</highlight> of <highlight>{max}</highlight> available profiles",
+    "errors": {
+      "limitReached": "You have reached the maximum limit of {limit} voice profiles.",
+      "voiceNameRequired": "Voice name is required.",
+      "timezoneRequired": "Timezone is required.",
+      "languageRequired": "Language is required.",
+      "contextRequired": "Context is required.",
+      "styleRequired": "Voice style is required.",
+      "invalidStyle": "Selected voice style is invalid.",
+      "saveError": "Could not save voice profile.",
+      "genericError": "An error occurred while saving the voice profile."
+    },
+    "success": "Voice profile saved successfully",
+    "submit": "Save Profile"
+  },
+  "VoiceProfileTags": {
+    "formal": "Formal",
+    "informal": "Informal",
+    "humor": "Humor",
+    "motivacional": "Motivational",
+    "educativo": "Educational",
+    "inspirador": "Inspirational",
+    "corporativo": "Corporate",
+    "tecnico": "Technical",
+    "storytelling": "Storytelling",
+    "directo": "Direct",
+    "autoridad": "Authority",
+    "empatico": "Empathetic",
+    "creativo": "Creative",
+    "analitico": "Analytical",
+    "polemico": "Controversial",
+    "reflexivo": "Reflective",
+    "visionario": "Visionary",
+    "minimalista": "Minimalist",
+    "comunidad": "Community",
+    "emocional": "Emotional",
+    "diplomatico": "Diplomatic",
+    "periodistico": "Journalistic",
+    "academico": "Academic",
+    "comercial": "Commercial",
+    "aventurero": "Adventurous",
+    "espiritual": "Spiritual",
+    "juvenil": "Youthful",
+    "disruptivo": "Disruptive",
+    "nostalgico": "Nostalgic"
+  },
+  "VoiceProfiles": {
+    "title": "My Voice Profiles",
+    "subtitle": "Manage and view all your communication styles. Create new profiles to adapt your content to different audiences.",
+    "createProfile": "Create new profile",
+    "loading": "Loading...",
+    "error": "Could not load voice profiles.",
+    "noProfiles": {
+      "title": "You have no voice profiles",
+      "description": "Create your first voice profile to start generating personalized content with your unique style.",
+      "cta": "Create my first profile"
+    },
+    "card": {
+      "viewDetails": "View details",
+      "createdOn": "Created on {date}"
+    }
+  },
+  "VoiceProfileDetail": {
+    "back": "Back to my profiles",
+    "createdOn": "Created on {date}",
+    "context": {
+      "title": "Context / Description",
+      "placeholder": "Describe the context for this profile...",
+      "empty": "No description provided for this profile."
+    },
+    "examples": {
+      "title": "Post examples",
+      "placeholder": "Write an example...",
+      "maxReached": "Maximum of 3 examples reached",
+      "add": "Add another example",
+      "empty": "No examples recorded for this profile."
+    },
+    "details": {
+      "title": "Profile details",
+      "styleLabel": "Style",
+      "languageLabel": "Language",
+      "timezoneLabel": "Time zone",
+      "unspecified": "Not specified"
+    },
+    "actions": {
+      "edit": "Edit profile",
+      "delete": "Delete",
+      "saveChanges": "Save changes",
+      "cancel": "Cancel",
+      "deleting": "Deleting..."
+    },
+    "delete": {
+      "title": "Delete voice profile?",
+      "description": "Are you sure you want to delete the profile <profileName>{name}</profileName>? This action cannot be undone and you will lose all associated data."
+    },
+    "notFound": {
+      "title": "Profile not found",
+      "subtitle": "We couldn't find the voice profile you're looking for.",
+      "back": "Back to my profiles"
+    },
+    "errors": {
+      "load": "Error loading profile",
+      "loadDescription": "Could not load the voice profile.",
+      "update": "Error updating",
+      "save": "Error saving changes.",
+      "delete": "Error deleting",
+      "deleteProfile": "Error deleting the profile."
+    }
+  },
+  "BusinessPage": {
+    "header": {
+      "title": "LinkedIn <highlight>Settings</highlight>",
+      "subtitle": "Connect your company page to automate posts and manage your professional presence with enterprise-grade security.",
+      "security": {
+        "title": "AES-256",
+        "subtitle": "Active encryption"
+      }
+    },
+    "initial": {
+      "title": "Initial Connection",
+      "subtitle": "Set up basic access to your page"
+    },
+    "renewal": {
+      "title": "Automatic Renewal",
+      "subtitle": "Prevent your connection from expiring every 60 days"
+    },
+    "forms": {
+      "token": {
+        "label": "Access Token",
+        "duration": "(2 months)",
+        "help": "How to get it?",
+        "placeholder": "Paste token here..."
+      },
+      "page": {
+        "label": "Page ID",
+        "duration": "(URN)",
+        "help": "Where to find it?",
+        "placeholder": "E.g.: 12345678",
+        "required": "Page is required."
+      },
+      "credentials": {
+        "clientId": "Client ID",
+        "clientSecret": "Client Secret",
+        "help": "Where do I find these credentials?"
+      },
+      "longToken": {
+        "label": "Refresh Token",
+        "duration": "(12 months)",
+        "help": "What is this?",
+        "placeholder": "Long-lived token..."
+      }
+    },
+    "actions": {
+      "saving": "Saving...",
+      "saveConfig": "Save Configuration",
+      "saveCredentials": "Save Credentials",
+      "refreshing": "Refreshing...",
+      "refresh": "Refresh",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "confirmDelete": "Yes, delete"
+    },
+    "list": {
+      "title": "Active Pages",
+      "subtitle": "Manage your connections",
+      "card": {
+        "logoAltFallback": "Page",
+        "defaultName": "Configured page",
+        "lastRenewalLabel": "Last renewal:"
+      },
+      "empty": {
+        "title": "No connected pages",
+        "subtitle": "Use the form on the left to add your first page."
+      }
+    },
+    "status": {
+      "refresh": {
+        "error": "Could not refresh the token.",
+        "success": "Token refreshed successfully."
+      },
+      "delete": {
+        "error": "Could not delete the page.",
+        "success": "Token deleted successfully."
+      },
+      "page": {
+        "missingFields": "You must enter the page and the 2-month Access Token.",
+        "saveError": "Could not save the page.",
+        "saveSuccess": "Page saved successfully."
+      },
+      "renewal": {
+        "missingPage": "Page ID is required to save credentials.",
+        "missingData": "You must enter at least one renewal detail.",
+        "saveError": "Could not save renewal configuration.",
+        "saveSuccess": "Renewal credentials saved successfully."
+      }
+    },
+    "modals": {
+      "token": {
+        "title": "How to get the Access Token?",
+        "intro": "To obtain a long-lived Access Token for your LinkedIn page, you need to complete the OAuth 2.0 flow with a LinkedIn app:",
+        "steps": {
+          "portal": "Go to the <link>LinkedIn Developer Portal</link> and create an app.",
+          "authIntro": "In your app, open the <strong>Auth</strong> tab and configure:",
+          "authList": {
+            "redirect": "Add the redirect URL.",
+            "credentials": "Copy your Client ID and Client Secret."
+          },
+          "products": "In <strong>Products</strong>, enable: Share on LinkedIn and Sign In with LinkedIn.",
+          "scopesLabel": "Review the permissions (scopes):"
+        },
+        "warning": "Tokens expire after 60 days. Set up automatic renewal to avoid interruptions."
+      },
+      "page": {
+        "title": "How to find the page ID?",
+        "intro": "Your LinkedIn page ID (Organization ID) is a unique number that identifies your company.",
+        "browserLabel": "Browser Address Bar",
+        "highlighted": "The highlighted number is your ID. You can also use the full URN:"
+      },
+      "credentials": {
+        "title": "Application Credentials",
+        "intro": "Required for automatic token renewal.",
+        "steps": {
+          "portal": "Go to the <link>LinkedIn Developer Portal</link>.",
+          "selectApp": "Select your application.",
+          "authPath": "Go to <strong>Auth</strong> > <strong>Application credentials</strong>.",
+          "copy": "Copy the <strong>Client ID</strong> and <strong>Client Secret</strong>."
+        },
+        "note": "Your credentials are stored encrypted and secure. We never share them."
+      },
+      "longToken": {
+        "title": "12-month Token (Refresh Token)",
+        "intro": "The OAuth 2.0 <strong>Refresh Token</strong> is valid for <strong>1 year</strong>.",
+        "points": {
+          "auto": "Allows you to request new Access Tokens automatically.",
+          "prefix": "It usually starts with <code>r_...</code>.",
+          "oauth": "It is obtained by completing the OAuth authorization flow."
+        }
+      }
+    },
+    "delete": {
+      "title": "Delete page?",
+      "description": "This action will disconnect the page and remove the associated credentials.<lineBreak/><warning>New posts will no longer be published.</warning>"
+    }
+  },
+  "Billing": {
+    "header": {
+      "title": "Credits and <highlight>Payments</highlight>",
+      "subtitle": "Manage your credits and payments securely. Chat requests consume credits from your balance.",
+      "back": "Back to chat"
+    },
+    "balance": {
+      "label": "Available balance",
+      "currency": "USD",
+      "requests": "{count} requests approx."
+    },
+    "plans": {
+      "title": "Choose a plan",
+      "selected": "Selected plan: <strong>{label}</strong> — <highlight>{requests} requests</highlight>"
+    },
+    "payment": {
+      "title": "Payment methods",
+      "paypalTitle": "Payments processed by PayPal",
+      "paypalSubtitle": "All payments are processed securely and encrypted through the PayPal platform.",
+      "loading": "Loading payment gateway...",
+      "starting": "Starting...",
+      "paypalCta": "Pay with PayPal"
+    },
+    "history": {
+      "title": "Transaction history",
+      "emptyTitle": "No transactions",
+      "emptySubtitle": "Your recent payments will appear here",
+      "itemTitle": "Credits ({provider})",
+      "unknownDate": "Unknown date",
+      "status": {
+        "completed": "Completed",
+        "failed": "Failed",
+        "pending": "Pending"
+      }
+    },
+    "status": {
+      "balanceError": "Could not load the balance.",
+      "historyError": "Could not fetch payment history.",
+      "captureError": "Could not complete the payment.",
+      "captureSuccess": "Payment confirmed. Credits added to your account.",
+      "missingClientId": "Missing NEXT_PUBLIC_PAYPAL_CLIENT_ID in environment variables.",
+      "paypalLoadError": "Could not load PayPal.",
+      "paymentCanceled": "Payment canceled.",
+      "orderError": "Could not create the order.",
+      "orderMissingId": "Order ID not received.",
+      "paymentError": "Could not process the payment."
+    }
+  },
+  "HomePage": {
+    "title": "Welcome to Postslify",
+    "description": "Publish on LinkedIn easily"
+  },
+  "Navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "createPost": "Create Post",
+    "settings": "Settings",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "Sidebar": {
+    "createAndManage": "Create & Manage",
+    "createPost": "Create Post",
+    "calendar": "Calendar",
+    "archivedPosts": "Archived Posts",
+    "voiceAndPersonality": "Voice & Personality",
+    "newVoiceProfile": "New Voice Profile",
+    "myProfiles": "My Profiles",
+    "account": "Account",
+    "businessPages": "Business Pages",
+    "billing": "Billing",
+    "userDetails": "User Details",
+    "openMenu": "Open menu"
+  },
+  "ArchivedPosts": {
+    "title": "Archived posts",
+    "description": "Manage and recover archived posts with a clean, focused overview.",
+    "emptyTitle": "No archived posts",
+    "emptyDescription": "Posts you archive will appear here so you can restore them later.",
+    "emptyCta": "Create new post"
+  },
+  "Calendar": {
+    "title": "Content Calendar",
+    "subtitle": "View and manage your scheduled posts with ease.",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    },
+    "morePosts": "+{count} more",
+    "modals": {
+      "dayPosts": {
+        "title": "Posts for the day",
+        "posts": "Posts"
+      }
+    },
+    "status": {
+      "published": "Published",
+      "failed": "Failed",
+      "pending": "Pending"
+    },
+    "voiceProfileFallback": "Voice profile",
+    "voiceProfileUsed": "Profile used to generate this content",
+    "targetFallbackProfile": "LinkedIn profile",
+    "targetFallbackPage": "LinkedIn page",
+    "targetUsed": "Post destination",
+    "content": {
+      "expand": "See more",
+      "collapse": "See less"
+    },
+    "media": {
+      "imageAlt": "Attached image",
+      "imageFallback": "Image",
+      "documentFallback": "Attached document",
+      "fileFallback": "File",
+      "downloadFallback": "file"
+    },
+    "schedule": {
+      "title": "Schedule",
+      "reschedule": "Reschedule",
+      "editTitle": "Edit Schedule",
+      "timezone": "Time zone",
+      "dateTime": "Date and time"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "saveChanges": "Save Changes",
+      "deleting": "Deleting...",
+      "delete": "Delete"
+    },
+    "delete": {
+      "title": "Delete post",
+      "subtitle": "This action cannot be undone",
+      "confirmTitle": "Delete post?",
+      "confirmDescription": "This action cannot be undone. The scheduled post will be permanently deleted."
+    },
+    "carousel": {
+      "close": "Close",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "errors": {
+      "update": "Error updating",
+      "updateAlert": "Error updating the post",
+      "delete": "Error deleting",
+      "deleteAlert": "Error deleting the post"
+    }
+  },
+  "LanguageSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "es": "Spanish"
+  },
+  "Landing": {
+    "nav": {
+      "services": "Services",
+      "blog": "Blog",
+      "pricing": "Pricing",
+      "login": "Login"
+    },
+    "hero": {
+      "title": "Create, Schedule and Optimize your <span>LinkedIn</span> Content with Artificial Intelligence",
+      "description": "Generate viral posts in seconds, keep your presence active 24/7 and connect authentically with your audience using custom voice profiles that sound exactly like you.",
+      "cta": "Start Now"
+    },
+    "comparison": {
+      "before": "Before",
+      "optimized": "Optimized with Postslify",
+      "authorRole": "Frontend developer ( React & Nextjs ) Always learning new technologies.",
+      "timeAgo": "2d",
+      "example": {
+        "before": "Hello everyone, I'm looking for investors for my startup. If you know anyone, let me know. Thanks.",
+        "after": "🚀 Excited to announce that we are revolutionizing the market with our new AI technology. We are looking for strategic partners who want to join this future vision. Are you ready to scale? 👇 #Startup #Tech #Growth #Innovation"
+      }
+    },
+    "services": {
+      "title": "Our <span>Services</span>",
+      "subtitle": "Tools designed to boost your personal brand and scale your business on LinkedIn.",
+      "items": {
+        "postGeneration": { "title": "AI Post Generation", "desc": "Create viral content in seconds. Our AI analyzes current trends and your unique style to generate posts that connect with your audience." },
+        "imageGeneration": { "title": "AI Image Generation", "desc": "Create impactful visuals for your posts. Generate original, royalty-free images that perfectly complement your textual content." },
+        "smartScheduling": { "title": "Smart Scheduling", "desc": "Keep your profile active 24/7. Schedule your posts for high-impact times without having to be online all day." },
+        "voiceProfiles": { "title": "Custom Voice Profiles", "desc": "Train the AI to write exactly like you. Upload examples of your texts and create a model that replicates your tone, style, and vocabulary." },
+        "analytics": { "title": "Performance Analysis", "desc": "Make data-driven decisions. Visualize the impact of your posts and optimize your strategy with detailed real-time metrics." },
+        "virtualAssistant": { "title": "24/7 Virtual Assistant", "desc": "Your LinkedIn co-pilot. Receive topic suggestions, real-time improvements, and smart automatic responses for your comments." },
+        "multiAccount": { "title": "Multi-Account Management", "desc": "Ideal for agencies and teams. Manage multiple personal profiles and company pages from a single unified dashboard." }
+      }
+    },
+    "testimonials": {
+      "title": "Success <span>Stories</span>",
+      "subtitle": "Founders, creators, and teams share how Postslify helped them grow.",
+      "empty": "Be the first to leave a testimonial.",
+      "form": {
+        "kicker": "Share your story",
+        "title": "Add your testimonial",
+        "subtitle": "Your feedback helps others discover Postslify.",
+        "nameLabel": "Name",
+        "roleLabel": "Role",
+        "companyLabel": "Company",
+        "ratingLabel": "Rating",
+        "contentLabel": "Testimonial",
+        "namePlaceholder": "Your name",
+        "rolePlaceholder": "e.g. Marketing Lead",
+        "companyPlaceholder": "Company name",
+        "contentPlaceholder": "Write your experience with Postslify...",
+        "nameRequired": "Name is required",
+        "contentRequired": "Testimonial is required",
+        "ratingValue": "{value} stars",
+        "submit": "Send testimonial",
+        "submitting": "Sending...",
+        "success": "Thanks for sharing your feedback!",
+        "error": "We couldn't save your testimonial. Try again."
+      }
+    },
+    "pricing": {
+      "simplePricing": "Simple Pricing",
+      "title": "Choose the perfect plan for your growth",
+      "description": "Buy credits according to your needs. No mandatory monthly subscriptions. Use them whenever you want.",
+      "buyNow": "Buy now",
+      "oneTime": "/one-time payment",
+      "credits": "Credits",
+      "mostPopular": "Most Popular",
+      "contact": "Do you need a custom plan for your company? <link>Contact us</link>",
+      "features": {
+         "generation": "AI post and image generation",
+         "scheduling": "Content scheduling",
+         "voice": "Voice profile creation",
+         "publishing": "Publishing on profile and company pages"
+      },
+      "plans": {
+        "start": "Start",
+        "basic": "Basic",
+        "advanced": "Advanced",
+        "expert": "Expert"
+      }
+    }
+  },
+  "PostCard": {
+    "seeMore": "...see more",
+    "comments": "comments",
+    "shares": "shares",
+    "views": "views",
+    "recommend": "Recommend",
+    "comment": "Comment",
+    "share": "Share"
+  },
+  "TestimonialsModal": {
+    "title": "What did you think of your experience so far?",
+    "description": "Share your feedback and help us improve the Postslify experience.",
+    "close": "Close",
+    "ratingRequired": "Rating is required",
+    "commentPlaceholder": "Tell us how Postslify helped you...",
+    "commentRequired": "Comment is required",
+    "commentMaxLength": "Maximum 600 characters",
+    "submit": "Send testimonial",
+    "submitting": "Sending...",
+    "success": "Thanks for your feedback!",
+    "error": "We couldn't save your testimonial."
+  },
+  "Login": {
+    "title": "Welcome back",
+    "subtitle": "Enter your credentials to access your account.",
+    "emailPlaceholder": "Email address",
+    "passwordPlaceholder": "Password",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email address",
+    "passwordRequired": "Password is required",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "signIn": "Sign In",
+    "loggingIn": "Logging in...",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "heroTitle": "Elevate Your  <span>LinkedIn</span> Presence",
+    "heroSubtitle": "Craft, schedule, and analyze your professional content with AI-powered tools designed for growth.",
+    "footerRights": "Postslify Inc. All rights reserved."
+  },
+  "Register": {
+    "title": "Create Account",
+    "subtitle": "Sign up to get started with Postslify.",
+    "heroTitle": "Join the <span>Revolution</span>",
+    "heroSubtitle": "Start managing your social media presence with powerful tools and analytics designed for growth.",
+    "namePlaceholder": "Full Name",
+    "emailPlaceholder": "Email address",
+    "passwordPlaceholder": "Password",
+    "confirmPasswordPlaceholder": "Confirm Password",
+    "submitButton": "Sign Up",
+    "submittingButton": "Creating account...",
+    "haveAccount": "Already have an account?",
+    "loginLink": "Log in",
+    "errors": {
+      "nameRequired": "Name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email address",
+      "emailExists": "An account with this email already exists",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must be at least 8 characters",
+      "passwordRequirements": "Must include uppercase, lowercase, and a number",
+      "confirmPasswordRequired": "Please confirm your password",
+      "passwordsNoMatch": "Your passwords do NOT match",
+      "genericError": "Error registering"
+    }
+  },
+  "ForgotPassword": {
+    "title": "Recover <span>Access</span>",
+    "subtitle": "Don't worry, it happens. We'll help you get back to managing your content in no time.",
+    "formTitle": "Forgot Password?",
+    "formSubtitle": "Enter your email address to reset your password.",
+    "backToLogin": "Back to Login",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "name@example.com",
+    "submitButton": "Send Reset Link",
+    "submittingButton": "Sending Instructions...",
+    "successTitle": "Check your inbox",
+    "successMessage": "If an account exists with this email, you will receive password reset instructions shortly.",
+    "returnToLogin": "Return to Login",
+    "errors": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email address",
+      "genericError": "Something went wrong. Please try again."
+    }
+  },
+  "ResetPassword": {
+    "title": "Secure Your <span>Account</span>",
+    "subtitle": "Create a strong password to protect your profile and data.",
+    "formTitle": "New Password",
+    "formSubtitle": "Please create a new password that you don't use on any other site.",
+    "passwordLabel": "New Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "passwordPlaceholder": "••••••••",
+    "submitButton": "Reset Password",
+    "submittingButton": "Resetting Password...",
+    "successTitle": "Password Reset!",
+    "successMessage": "Your password has been successfully reset.",
+    "redirecting": "Redirecting to login...",
+    "loginNow": "Login Now",
+    "invalidLinkTitle": "Invalid <span>Link</span>",
+    "invalidLinkMessage": "The password reset link is invalid or has expired. Please request a new one.",
+    "linkExpiredTitle": "Link Expired or Invalid",
+    "linkExpiredMessage": "This password reset link is no longer valid. Please request a new password reset link.",
+    "requestNewLink": "Request New Link",
+    "errors": {
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must be at least 8 characters",
+      "passwordComplexity": "Password must include at least one uppercase, one lowercase, and one number",
+      "confirmPasswordRequired": "Please confirm your password",
+      "passwordsNoMatch": "Your passwords do NOT match",
+      "invalidToken": "Invalid or missing token.",
+      "genericError": "Something went wrong. Please try again."
+    }
+  },
+  "CreatePost": {
+    "title": "Create Post",
+    "imageStyles": {
+        "caricatura": "Caricature",
+        "graficas": "Graphics",
+        "3d-modern": "3D Modern",
+        "fotografia": "Photography",
+        "acuarela": "Watercolor",
+        "minimalista": "Minimalist",
+        "futurista": "Futuristic",
+        "retro": "Retro",
+        "cyberpunk": "Cyberpunk",
+        "plano": "Flat Illustration",
+        "isometrico": "Isometric",
+        "comic": "Comic",
+        "neon": "Neon",
+        "pastel": "Pastel",
+        "noir": "Noir",
+        "vintage": "Vintage",
+        "sketch": "Sketch",
+        "low-poly": "Low Poly",
+        "surrealista": "Surrealist"
+    },
+    "labels": {
+        "voiceProfile": "Voice Profile",
+        "selectProfile": "Select a profile",
+        "target": "Target",
+        "linkedinProfile": "Personal Profile",
+        "linkedinPage": "Company Page",
+        "timezone": "Timezone",
+        "scheduleDate": "Schedule Date",
+        "imageStyle": "Image Style",
+        "extraContext": "Extra Context",
+        "personalProfile": "Personal Profile",
+        "personalLinkedIn": "Personal LinkedIn",
+        "profile": "Profile",
+        "page": "Page",
+        "corporatePage": "Corporate Page",
+        "aiAssistant": "AI Assistant",
+        "generatedWithAI": "Generated with AI",
+        "postContext": "Post Context",
+        "improveContext": "Improve Context",
+        "characters": "Characters",
+        "charactersLimit": "Max {max}",
+        "includePostTitle": "Post title in image",
+        "includePostTitleYes": "Include title",
+        "includePostTitleNo": "No title",
+        "postTitle": "Post Title",
+        "visualStyle": "Visual Style",
+        "finalPrompt": "Final Prompt",
+        "image": "Image",
+        "selectVoiceProfile": "Select Voice Profile",
+        "selectVoiceProfileTitle": "Select voice profile",
+        "selectedProfile": "Selected profile",
+        "chooseVoiceProfile": "Choose a voice profile",
+        "availableProfiles": "Available profiles",
+        "dateAndTime": "Date and time",
+        "suggested": "Suggested",
+        "scheduleDestinations": "Schedule Destinations",
+        "manageProfiles": "Manage Profiles",
+        "timezone": "Timezone",
+        "personalProfile": "Personal Profile",
+        "personalLinkedIn": "Personal LinkedIn",
+        "linkedinPage": "LinkedIn Page",
+        "corporatePage": "Corporate Page",
+        "postPreview": "Post Preview",
+        "generatingContent": "Generating content...",
+        "generatingNewAiImage": "A new AI image is being generated",
+        "noStyleDefined": "This profile has no style defined.",
+        "personality": "Personality:",
+        "tone": "Tone:",
+        "instructions": "Instructions:",
+        "examples": "Examples:",
+        "postTopic": "Post Topic",
+        "archivedDescription": "Manage and recover archived posts with a clean, focused overview."
+    },
+    "placeholders": {
+        "input": "Write your idea here...",
+        "date": "Select date and time",
+        "contextExample": "Ex: minimalist style, cool colors, futuristic vibe",
+        "characterName": "Add a person or character",
+        "completeContext": "Complete the context and choose a style to see the final prompt.",
+        "inputPrompt": "What do you want to write about today? (Ex: 'Create a post about leadership in times of crisis')",
+        "topicPrompt": "What do you want to write about today?"
+    },
+    "buttons": {
+        "generate": "Generate Post",
+        "schedule": "Schedule",
+        "publish": "Publish",
+        "publishNow": "Publish Now",
+        "schedulePost": "Schedule Post",
+        "connectPersonalProfile": "Connect Personal Profile",
+        "reconnectLinkedIn": "Reconnect LinkedIn",
+        "generating": "Generating...",
+        "scheduling": "Scheduling...",
+        "publishing": "Publishing...",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "confirm": "Confirm",
+        "save": "Save",
+        "saveChanges": "Save Changes",
+        "back": "Back",
+        "next": "Next",
+        "close": "Close",
+        "addMedia": "Add Media",
+        "addImage": "Add Image",
+        "addVideo": "Add Video",
+        "addDocument": "Add Document",
+        "addCharacter": "Add",
+        "edit": "Edit",
+        "archive": "Archive",
+        "generateImage": "Generate Image",
+        "connectLinkedIn": "Connect LinkedIn",
+        "previous": "Previous",
+        "improve": "Improve"
+    },
+    "errors": {
+        "maxFiles": "You can only select up to 9 images",
+        "processError": "Error executing process",
+        "scheduleError": "Error scheduling post",
+        "attachmentError": "Error processing attachment",
+        "selectDestination": "Select at least one valid destination to publish",
+        "selectDateAndTime": "Please select a date and time",
+        "linkedinDateAfterExpiry": "The date exceeds your personal profile expiration. Reconnect LinkedIn to renew for 60 days.",
+        "selectPage": "Select one or more pages before publishing",
+        "selectProfile": "Please select a voice profile before generating the post",
+        "describeTopic": "Please describe the topic of your post.",
+        "processingRequest": "Sorry, an error occurred while processing your request.",
+        "noAIResponse": "No response received from AI.",
+        "missingApiKey": "DEEPSEEK_API_KEY is missing in .env.local. Restart the server.",
+        "imageGeneration": "Could not generate image",
+        "imageProcessing": "Could not process image",
+        "imageLimitReached": "You can only generate up to 3 images per post",
+        "contextRequired": "Extra context is required.",
+        "unknown": "Unknown error",
+        "configurePageToken": "Configure the page token and URN before scheduling.",
+        "selectPageBeforeSchedule": "Select one or more pages before scheduling.",
+        "selectProfileOrPage": "Select personal profile and/or one or more pages before scheduling.",
+        "publishError": "Error publishing: {error}"
+    },
+    "success": {
+        "postScheduled": "Post scheduled!",
+        "scheduledFor": "Your post has been scheduled for",
+        "published": "Successfully published to {targets}! 🎉",
+        "passwordReset": "Password successfully reset",
+        "draftSaved": "Draft saved successfully",
+        "scheduledGeneric": "Post scheduled successfully",
+        "createdGeneric": "Post created successfully"
+    },
+    "prompts": {
+        "whatOnMind": "What’s on your mind?",
+        "ideaHelp": "Share your idea and we’ll help you turn it into a powerful post.",
+        "mandatoryLanguage": "Mandatory language: {language}. Use only this language.",
+        "includePostTitle": "Include the post title in the image text.",
+        "excludePostTitle": "Do not include any title text in the image.",
+        "creativeDirection": "Creative direction: image for LinkedIn post with Canva template style specialized for LinkedIn, clean and modern layout, clear visual hierarchy, well-aligned blocks, elegant contrast, eye-catching design with a clear visual hook that invites stopping, centered and clean composition, clear main subject, tidy and noise-free background, soft and realistic lighting, harmonious colors, high level of detail, sharp focus, subtle depth of field, professional aesthetic, include brief text related to the post, sharp and highly legible typography, large and perfectly legible text, high contrast between text and background, no hashtags, no logos, no watermarks, no borders.",
+        "textLegibility": "Typography: use a sans-serif font, crisp and perfectly readable text, high contrast, no distorted letters and no misspellings. Keep few words (6–10 max), short line(s), and a clear composition.",
+        "formatSquare": "Format: square 1:1."
+    },
+    "modals": {
+        "cronSuccess": "Process executed",
+        "cronError": "Error executing",
+        "scheduleSuccess": "Post scheduled!",
+        "understood": "Understood",
+        "generateImageTitle": "Generate Image with AI",
+        "generateImageSubtitle": "Use post context and define visual style",
+        "scheduleTitle": "Schedule Post",
+        "scheduleSubtitle": "Plan your content in advance",
+        "forcePublish": "Force Publish",
+        "deleteImageTitle": "Delete image",
+        "deleteImageDescription": "This action removes the selected image from the carousel.",
+        "connectAccount": "Connect Account",
+        "connectForSchedule": "Connect your LinkedIn account to schedule posts.",
+        "connectForPublish": "Connect your LinkedIn account to publish.",
+        "connectForFeatures": "Connect your LinkedIn account to access all features."
+    },
+    "defaults": {
+        "personalProfile": "Personal Profile",
+        "personalLinkedIn": "Personal LinkedIn",
+        "page": "Page",
+        "linkedinPage": "LinkedIn Page",
+        "corporatePage": "Corporate Page",
+        "image": "Image"
+    },
+    "aiImageName": "AI Image"
+  },
+  "Settings": {
+    "header": {
+      "title": "User Settings",
+      "subtitle": "Update the account details you used to sign in."
+    },
+    "form": {
+      "nameLabel": "Name",
+      "namePlaceholder": "Your name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "youremail@domain.com",
+      "imageLabel": "Profile Image",
+      "imageButton": "Upload Image",
+      "imageHint": "JPG or PNG, up to 5MB.",
+      "imageAlt": "Profile image"
+    },
+    "reset": {
+      "title": "Password Reset",
+      "subtitle": "We will email you a link to create a new password.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "youremail@domain.com"
+    },
+    "buttons": {
+      "signOut": "Sign Out",
+      "saving": "Saving...",
+      "saveChanges": "Save Changes",
+      "sending": "Sending...",
+      "sendLink": "Send Link"
+    },
+    "messages": {
+      "updateSuccess": "Settings updated",
+      "updateError": "Could not update your account",
+      "resetSuccess": "We sent the password reset email",
+      "resetError": "Could not send the email"
+    },
+    "errors": {
+      "nameRequired": "Name is required",
+      "nameMinLength": "Name must be at least 2 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email"
+    }
+  },
+  "Blog": {
+    "meta": {
+      "title": "Postslify Blog - LinkedIn and AI Strategies",
+      "description": "Discover the latest trends in LinkedIn, artificial intelligence, and automation to boost your personal brand and business.",
+      "keywords": ["LinkedIn Blog", "B2B Strategies", "Artificial Intelligence", "Social Media Automation"],
+      "blogSuffix": "Postslify Blog"
+    },
+    "title": "Postslify <span>Blog</span>",
+    "subtitle": "Resources, guides, and tips to master LinkedIn with the power of Artificial Intelligence.",
+    "readTime": "{time} read",
+    "backToBlog": "Back to blog",
+    "postNotFoundTitle": "Post not found - Postslify",
+    "cta": {
+      "title": "Ready to boost your LinkedIn?",
+      "subtitle": "Try Postslify today and start creating viral content with AI.",
+      "button": "Start free"
+    }
+  },
+  "AboutPage": {
+    "metaTitle": "About Us - Postslify",
+    "metaDescription": "Learn more about Postslify and our mission to transform LinkedIn presence with AI.",
+    "label": "Our Mission",
+    "title": "Empowering Professionals on LinkedIn",
+    "intro": "Postslify is dedicated to helping professionals and companies amplify their voice on LinkedIn through the power of Artificial Intelligence.",
+    "sections": {
+      "story": {
+        "title": "Our Story",
+        "content": "<p>Postslify was born out of the need to simplify professional content creation. We realized that many experts had brilliant ideas but struggled to express them consistently on LinkedIn.</p><p>What started as an internal tool to optimize our own processes quickly evolved into a complete AI-powered platform designed to boost the personal brand of thousands of users.</p>"
+      },
+      "mission": {
+        "title": "Our Mission",
+        "content": "<p>Our mission is to democratize access to high-quality content creation tools. We believe that every professional deserves to have a strong and clear voice in the digital world.</p><p>We strive to eliminate technical and creative barriers, allowing our users to focus on what they do best: sharing their knowledge and expertise.</p>"
+      },
+      "howItWorks": {
+        "title": "How It Works",
+        "content": "<p>Postslify uses advanced artificial intelligence algorithms to analyze trends, suggest relevant topics, and draft posts that capture your unique tone of voice.</p><ul><li><strong>Idea Generation:</strong> Never run out of topics to talk about.</li><li><strong>Assisted Writing:</strong> Create engaging posts in seconds, not hours.</li><li><strong>Smart Scheduling:</strong> Publish at the optimal time to maximize reach.</li></ul>"
+      },
+      "values": {
+        "title": "Our Values",
+        "content": "<ul><li><strong>Innovation:</strong> We are always looking for new ways to improve.</li><li><strong>Transparency:</strong> We believe in honesty and clarity in everything we do.</li><li><strong>User-Centric:</strong> Your success is our success. We design every feature with you in mind.</li></ul>"
+      }
+    }
+  },
+  "PrivacyPage": {
+    "metaTitle": "Privacy Policy - Postslify",
+    "metaDescription": "Read our Privacy Policy to understand how we handle your data.",
+    "label": "Legal",
+    "title": "Privacy Policy",
+    "intro": "Your privacy is important to us. This policy explains in detail how we collect, use, protect, and share your personal information.",
+    "lastUpdated": "Last updated: March 6, 2026",
+    "sections": {
+      "introduction": {
+        "title": "1. Introduction",
+        "content": "Welcome to Postslify. We are committed to protecting your personal information and your right to privacy. This Privacy Policy applies to all information collected through our website and related services (collectively, our \"Services\")."
+      },
+      "informationCollection": {
+        "title": "2. Information We Collect",
+        "content": "We collect personal information that you voluntarily provide to us when you register for the Services, when you participate in activities on the Services, or when you contact us.\n\n<ul><li><strong>Personal Information:</strong> Names, email addresses, passwords, contact preferences, and profile data.</li><li><strong>Social Media Data:</strong> When you connect your LinkedIn account, we collect basic profile information and access tokens required to post content on your behalf. We do not store your LinkedIn passwords.</li><li><strong>Generated Content:</strong> We store the posts, images, and voice settings you create using our platform.</li></ul>"
+      },
+      "useOfInformation": {
+        "title": "3. How We Use Your Information",
+        "content": "We process your information for purposes based on legitimate business interests, the fulfillment of our contract with you, compliance with our legal obligations, and/or your consent.\n\n<ul><li><strong>Service Provision:</strong> To facilitate account creation, login, and management of your LinkedIn posts.</li><li><strong>Product Improvement:</strong> To analyze usage and optimize our AI algorithms and user experience.</li><li><strong>Communications:</strong> To send you administrative updates, security notifications, and, with your consent, marketing information.</li></ul>"
+      },
+      "dataSharing": {
+        "title": "4. Sharing Your Information",
+        "content": "We only share information with your consent, to comply with laws, to provide services, to protect your rights, or to fulfill business obligations.\n\n<ul><li><strong>Service Providers:</strong> We share data with third-party vendors who assist us with hosting, data analysis, payment processing, and customer service (e.g., Vercel, Supabase, OpenAI).</li></ul>"
+      },
+      "dataSecurity": {
+        "title": "5. Data Security",
+        "content": "We have implemented rigorous technical and organizational security measures designed to protect the integrity and confidentiality of your personal information. We use advanced encryption and secure protocols to ensure your data is safeguarded at all times during transmission and storage within our systems."
+      },
+      "userRights": {
+        "title": "6. Your Privacy Rights",
+        "content": "Depending on your location, you may have certain rights regarding your personal information:\n\n<ul><li><strong>Right to access and portability:</strong> Request copies of your personal information.</li><li><strong>Right to rectification:</strong> Request that we correct inaccurate information.</li><li><strong>Right to erasure:</strong> Request that we delete your personal information.</li><li><strong>Right to withdraw consent:</strong> If we rely on your consent to process your personal information, you have the right to withdraw it at any time.</li></ul>"
+      },
+      "cookies": {
+        "title": "7. Cookie Policy",
+        "content": "We use cookies and similar tracking technologies (like web beacons and pixels) to access or store information. This information is used to keep your session active, remember your preferences, and analyze site traffic."
+      },
+      "changes": {
+        "title": "8. Changes to This Policy",
+        "content": "We may update this privacy policy from time to time. The updated version will be indicated by an updated \"Last updated\" date and the updated version will be effective as soon as it is accessible."
+      },
+      "contact": {
+        "title": "9. Contact Us",
+        "content": "If you have questions or comments about this policy, you may email us at support@postslify.com."
+      }
+    }
+  },
+  "TermsPage": {
+    "metaTitle": "Terms of Service - Postslify",
+    "metaDescription": "Read our Terms of Service.",
+    "label": "Legal",
+    "title": "Terms of Service",
+    "intro": "By using Postslify, you agree to these terms. Please read them carefully.",
+    "lastUpdated": "Last updated: March 6, 2026",
+    "sections": {
+      "introduction": {
+        "title": "1. Introduction",
+        "content": "Welcome to Postslify. By accessing or using our website and services, you agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree to these terms, you must not use our services."
+      },
+      "services": {
+        "title": "2. Description of Service",
+        "content": "Postslify is an AI-powered platform designed to help users create, schedule, and optimize content for LinkedIn. We offer tools for idea generation, post drafting, and publication management."
+      },
+      "accounts": {
+        "title": "3. User Accounts",
+        "content": "To access certain features, you must register and create an account. You are responsible for maintaining the confidentiality of your account and password. We reserve the right to suspend or terminate your account if you violate these terms."
+      },
+      "responsibilities": {
+        "title": "4. User Responsibilities",
+        "content": "You agree to use our services only for lawful purposes and in accordance with these terms.\n\n<ul><li>You will not use the service to post illegal, offensive, or infringing content.</li><li>You will not attempt to interfere with the proper functioning of the service.</li><li>You are solely responsible for the content you generate and publish via our platform.</li></ul>"
+      },
+      "intellectualProperty": {
+        "title": "5. Intellectual Property",
+        "content": "The service and its original content (excluding content provided by users) are the exclusive property of Postslify. The content you generate belongs to you, but you grant us a license to use it for the purpose of providing the service."
+      },
+      "thirdParty": {
+        "title": "6. Third-Party Services",
+        "content": "Our service integrates with LinkedIn. Your use of LinkedIn is governed by its own terms and policies. We are not responsible for LinkedIn's actions or policies."
+      },
+      "liability": {
+        "title": "7. Limitation of Liability",
+        "content": "To the maximum extent permitted by law, Postslify shall not be liable for any indirect, incidental, or consequential damages arising from your use of the service."
+      },
+      "termination": {
+        "title": "8. Termination",
+        "content": "We may terminate or suspend your access to the service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms."
+      },
+      "changes": {
+        "title": "9. Changes to Terms",
+        "content": "We reserve the right to modify these terms at any time. We will notify you of any material changes."
+      },
+      "contact": {
+        "title": "10. Contact Us",
+        "content": "If you have any questions about these Terms, please contact us at support@postslify.com."
+      }
+    }
+  },
+  "Footer": {
+    "product": "Product",
+    "features": "Features",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "company": "Company",
+    "about": "About Us",
+    "careers": "Careers",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "rights": "All rights reserved.",
+    "description": "Transform your LinkedIn presence with AI."
+  },
+  "Common": {
+    "footerRights": "All rights reserved."
+  }
+}

@@ -1,0 +1,1073 @@
+{
+  "Sidebar": {
+    "createAndManage": "Crear y Gestionar",
+    "createPost": "Crear post",
+    "calendar": "Calendario",
+    "archivedPosts": "Posts archivados",
+    "voiceAndPersonality": "Voz y Personalidad",
+    "newVoiceProfile": "Nuevo perfil de voz",
+    "myProfiles": "Mis perfiles",
+    "account": "Cuenta",
+    "businessPages": "Páginas de empresa",
+    "billing": "Facturación",
+    "userDetails": "Detalles de usuario"
+  },
+  "LinkedInFloating": {
+    "userFallback": "Usuario",
+    "connected": "LinkedIn conectado",
+    "disconnectTitle": "Desconectar",
+    "reconnect": "Reconectar LinkedIn",
+    "connectTitle": "Conecta tu perfil personal",
+    "connectSubtitle": "Gestiona tus publicaciones y páginas",
+    "connectNow": "Conectar ahora",
+    "pagesCount": "Páginas ({count})",
+    "managePages": "Gestionar páginas",
+    "pageAltFallback": "Página",
+    "companyFallback": "Empresa",
+    "noPages": "No hay páginas configuradas",
+    "addPage": "Añadir página",
+    "disconnectModalTitle": "¿Desconectar LinkedIn?",
+    "disconnectModalDescription": "Perderás el acceso para publicar en tu perfil hasta que vuelvas a conectar.",
+    "disconnectModalWarning": "¡ADVERTENCIA! Si te desconectas, todas las publicaciones programadas fallarán automáticamente. No podrás publicar nada hasta que te vuelvas a conectar.",
+    "cancel": "Cancelar",
+    "disconnecting": "Desconectando...",
+    "confirmDisconnect": "Sí, desconectar"
+  },
+  "VoiceProfileForm": {
+    "title": "Perfil de <highlight>Voz</highlight>",
+    "subtitle": "Define la personalidad y el tono de tu voz para generar publicaciones auténticas. Configura el idioma, contexto y ejemplos para entrenar a tu asistente.",
+    "fields": {
+      "voiceName": {
+        "label": "Nombre de la voz",
+        "placeholder": "Ej. Voz profesional, Voz cercana..."
+      },
+      "timezone": {
+        "label": "Zona horaria",
+        "placeholder": "Selecciona una zona horaria"
+      },
+      "language": {
+        "label": "Idioma",
+        "placeholder": "Selecciona un idioma"
+      },
+      "context": {
+        "label": "Contexto / Biografía",
+        "placeholder": "Describe quién eres, qué rol tienes, tu empresa y quién es tu audiencia. Cuantos más detalles, mejor será el resultado."
+      },
+      "style": {
+        "label": "Estilo de voz",
+        "description": "Elige una etiqueta que represente mejor cómo quieres que suene esta voz.",
+        "placeholder": "Selecciona un estilo"
+      },
+      "examples": {
+        "label": "Ejemplos (Opcional)",
+        "placeholder": "Pega un ejemplo de tu estilo de escritura aquí...",
+        "add": "Añadir otro ejemplo",
+        "remove": "Eliminar ejemplo"
+      }
+    },
+    "profileCount": "Has creado <highlight>{count}</highlight> de <highlight>{max}</highlight> perfiles disponibles",
+    "modals": {
+        "connectAccount": "Conectar cuenta",
+        "connectForSchedule": "Debes conectar tu cuenta de LinkedIn para programar publicaciones."
+    },
+    "errors": {
+      "limitReached": "Has alcanzado el límite máximo de {limit} perfiles de voz.",
+      "voiceNameRequired": "El nombre de la voz es obligatorio.",
+      "timezoneRequired": "La zona horaria es obligatoria.",
+      "languageRequired": "El idioma es obligatorio.",
+      "contextRequired": "El contexto es obligatorio.",
+      "styleRequired": "El estilo de la voz es obligatorio.",
+      "invalidStyle": "El estilo de la voz seleccionado no es válido.",
+      "saveError": "No se pudo guardar el perfil de voz.",
+      "genericError": "Ocurrió un error al guardar el perfil de voz."
+    },
+    "success": "Perfil de voz guardado correctamente",
+    "submit": "Guardar Perfil"
+  },
+  "VoiceProfileTags": {
+    "formal": "Formal",
+    "informal": "Informal",
+    "humor": "Humor",
+    "motivacional": "Motivacional",
+    "educativo": "Educativo",
+    "inspirador": "Inspirador",
+    "corporativo": "Corporativo",
+    "tecnico": "Técnico",
+    "storytelling": "Storytelling",
+    "directo": "Directo",
+    "autoridad": "Autoridad",
+    "empatico": "Empático",
+    "creativo": "Creativo",
+    "analitico": "Analítico",
+    "polemico": "Polémico",
+    "reflexivo": "Reflexivo",
+    "visionario": "Visionario",
+    "minimalista": "Minimalista",
+    "comunidad": "Comunidad",
+    "emocional": "Emocional",
+    "diplomatico": "Diplomático",
+    "periodistico": "Periodístico",
+    "academico": "Académico",
+    "comercial": "Comercial",
+    "aventurero": "Aventurero",
+    "espiritual": "Espiritual",
+    "juvenil": "Juvenil",
+    "disruptivo": "Disruptivo",
+    "nostalgico": "Nostálgico"
+  },
+  "VoiceProfiles": {
+    "title": "Mis perfiles de Voz",
+    "subtitle": "Gestiona y visualiza todos tus estilos de comunicación. Crea nuevos perfiles para adaptar tu contenido a diferentes audiencias.",
+    "createProfile": "Crear nuevo perfil",
+    "loading": "Cargando...",
+    "error": "No se pudieron cargar los perfiles de voz.",
+    "noProfiles": {
+      "title": "No tienes perfiles de voz",
+      "description": "Crea tu primer perfil de voz para empezar a generar contenido personalizado con tu estilo único.",
+      "cta": "Crear mi primer perfil"
+    },
+    "card": {
+      "viewDetails": "Ver detalles",
+      "createdOn": "Creado el {date}"
+    }
+  },
+  "VoiceProfileDetail": {
+    "back": "Volver a mis perfiles",
+    "createdOn": "Creado el {date}",
+    "context": {
+      "title": "Contexto / Descripción",
+      "placeholder": "Describe el contexto de este perfil...",
+      "empty": "No se ha proporcionado una descripción para este perfil."
+    },
+    "examples": {
+      "title": "Ejemplos de publicaciones",
+      "placeholder": "Escribe un ejemplo...",
+      "maxReached": "Máximo de 3 ejemplos alcanzado",
+      "add": "Agregar otro ejemplo",
+      "empty": "No hay ejemplos registrados para este perfil."
+    },
+    "details": {
+      "title": "Detalles del Perfil",
+      "styleLabel": "Estilo",
+      "languageLabel": "Idioma",
+      "timezoneLabel": "Zona horaria",
+      "unspecified": "No especificado"
+    },
+    "actions": {
+      "edit": "Editar Perfil",
+      "delete": "Eliminar",
+      "saveChanges": "Guardar Cambios",
+      "cancel": "Cancelar",
+      "deleting": "Eliminando..."
+    },
+    "delete": {
+      "title": "¿Eliminar perfil de voz?",
+      "description": "¿Estás seguro de que quieres eliminar el perfil <profileName>{name}</profileName>? Esta acción no se puede deshacer y perderás todos los datos asociados."
+    },
+    "notFound": {
+      "title": "Perfil no encontrado",
+      "subtitle": "No pudimos encontrar el perfil de voz que buscas.",
+      "back": "Volver a mis perfiles"
+    },
+    "errors": {
+      "load": "Error al cargar el perfil",
+      "loadDescription": "No se pudo cargar el perfil de voz.",
+      "update": "Error al actualizar",
+      "save": "Error al guardar los cambios.",
+      "delete": "Error al eliminar",
+      "deleteProfile": "Error al eliminar el perfil."
+    }
+  },
+  "BusinessPage": {
+    "header": {
+      "title": "Configuración <highlight>LinkedIn</highlight>",
+      "subtitle": "Conecta tu página de empresa para automatizar publicaciones y gestionar tu presencia profesional con seguridad de grado empresarial.",
+      "security": {
+        "title": "AES-256",
+        "subtitle": "Encriptación activa"
+      }
+    },
+    "initial": {
+      "title": "Conexión Inicial",
+      "subtitle": "Configura el acceso básico a tu página"
+    },
+    "renewal": {
+      "title": "Renovación Automática",
+      "subtitle": "Evita que tu conexión expire cada 60 días"
+    },
+    "forms": {
+      "token": {
+        "label": "Access Token",
+        "duration": "(2 meses)",
+        "help": "¿Cómo obtenerlo?",
+        "placeholder": "Pegar token aquí..."
+      },
+      "page": {
+        "label": "ID de la Página",
+        "duration": "(URN)",
+        "help": "¿Dónde encontrarlo?",
+        "placeholder": "Ej: 12345678",
+        "required": "La página es obligatoria."
+      },
+      "credentials": {
+        "clientId": "Client ID",
+        "clientSecret": "Client Secret",
+        "help": "¿Dónde encuentro estas credenciales?"
+      },
+      "longToken": {
+        "label": "Refresh Token",
+        "duration": "(12 meses)",
+        "help": "¿Qué es esto?",
+        "placeholder": "Token de larga duración..."
+      }
+    },
+    "actions": {
+      "saving": "Guardando...",
+      "saveConfig": "Guardar Configuración",
+      "saveCredentials": "Guardar Credenciales",
+      "refreshing": "Renovando...",
+      "refresh": "Renovar",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "confirmDelete": "Sí, eliminar"
+    },
+    "list": {
+      "title": "Páginas Activas",
+      "subtitle": "Gestiona tus conexiones",
+      "card": {
+        "logoAltFallback": "Página",
+        "defaultName": "Página configurada",
+        "lastRenewalLabel": "Última renovación:"
+      },
+      "empty": {
+        "title": "No hay páginas conectadas",
+        "subtitle": "Usa el formulario de la izquierda para agregar tu primera página."
+      }
+    },
+    "status": {
+      "refresh": {
+        "error": "No se pudo renovar el token.",
+        "success": "Token renovado correctamente."
+      },
+      "delete": {
+        "error": "No se pudo eliminar la página.",
+        "success": "Token eliminado correctamente."
+      },
+      "page": {
+        "missingFields": "Debes ingresar la página y el Access Token de 2 meses.",
+        "saveError": "No se pudo guardar la página.",
+        "saveSuccess": "Página guardada correctamente."
+      },
+      "renewal": {
+        "missingPage": "El ID de la página es obligatorio para guardar las credenciales.",
+        "missingData": "Debes ingresar al menos un dato de renovación.",
+        "saveError": "No se pudo guardar la configuración de renovación.",
+        "saveSuccess": "Credenciales de renovación guardadas correctamente."
+      }
+    },
+    "modals": {
+      "token": {
+        "title": "¿Cómo obtener el Access Token?",
+        "intro": "Para obtener un Access Token de larga duración para tu página de LinkedIn, necesitas completar el flujo OAuth 2.0 con una app de LinkedIn:",
+        "steps": {
+          "portal": "Entra al <link>LinkedIn Developer Portal</link> y crea una aplicación.",
+          "authIntro": "En tu app, abre la pestaña <strong>Auth</strong> y configura:",
+          "authList": {
+            "redirect": "Agrega la URL de redirección.",
+            "credentials": "Copia tu Client ID y Client Secret."
+          },
+          "products": "En <strong>Products</strong>, habilita: Share on LinkedIn y Sign In with LinkedIn.",
+          "scopesLabel": "Revisa los permisos (scopes):"
+        },
+        "warning": "Los tokens expiran a los 60 días. Configura la renovación automática para evitar cortes."
+      },
+      "page": {
+        "title": "¿Cómo encontrar el ID de la página?",
+        "intro": "El ID de tu página de LinkedIn (Organization ID) es un número único que identifica a tu empresa.",
+        "browserLabel": "Barra de Dirección del Navegador",
+        "highlighted": "El número resaltado es tu ID. También puedes usar el URN completo:"
+      },
+      "credentials": {
+        "title": "Credenciales de Aplicación",
+        "intro": "Necesarias para la renovación automática de tokens.",
+        "steps": {
+          "portal": "Ve al <link>LinkedIn Developer Portal</link>.",
+          "selectApp": "Selecciona tu aplicación.",
+          "authPath": "Ve a <strong>Auth</strong> > <strong>Application credentials</strong>.",
+          "copy": "Copia el <strong>Client ID</strong> y <strong>Client Secret</strong>."
+        },
+        "note": "Tus credenciales se guardan encriptadas y seguras. Nunca las compartimos."
+      },
+      "longToken": {
+        "title": "Token de 12 meses (Refresh Token)",
+        "intro": "El <strong>Refresh Token</strong> de OAuth 2.0 tiene una validez de <strong>1 año</strong>.",
+        "points": {
+          "auto": "Permite solicitar nuevos Access Tokens automáticamente.",
+          "prefix": "Suele empezar por <code>r_...</code>.",
+          "oauth": "Se obtiene al completar el flujo de autorización OAuth."
+        }
+      }
+    },
+    "delete": {
+      "title": "¿Eliminar página?",
+      "description": "Esta acción desconectará la página y eliminará las credenciales asociadas.<lineBreak/><warning>No se podrán publicar nuevos posts.</warning>"
+    }
+  },
+  "Billing": {
+    "header": {
+      "title": "Créditos y <highlight>Pagos</highlight>",
+      "subtitle": "Administra tus créditos y pagos de forma segura. Las solicitudes al chat consumen créditos de tu balance.",
+      "back": "Volver al chat"
+    },
+    "balance": {
+      "label": "Saldo disponible",
+      "currency": "USD",
+      "requests": "{count} solicitudes aprox."
+    },
+    "plans": {
+      "title": "Elige un plan",
+      "selected": "Plan seleccionado: <strong>{label}</strong> — <highlight>{requests} solicitudes</highlight>"
+    },
+    "payment": {
+      "title": "Métodos de pago",
+      "paypalTitle": "Pagos procesados por PayPal",
+      "paypalSubtitle": "Todos los pagos se procesan de forma segura y encriptada a través de la plataforma de PayPal.",
+      "loading": "Cargando pasarela de pago...",
+      "starting": "Iniciando...",
+      "paypalCta": "Pagar con PayPal"
+    },
+    "history": {
+      "title": "Historial de transacciones",
+      "emptyTitle": "No hay transacciones",
+      "emptySubtitle": "Tus pagos recientes aparecerán aquí",
+      "itemTitle": "Créditos ({provider})",
+      "unknownDate": "Fecha desconocida",
+      "status": {
+        "completed": "Completado",
+        "failed": "Fallido",
+        "pending": "Pendiente"
+      }
+    },
+    "status": {
+      "balanceError": "No se pudo cargar el balance.",
+      "historyError": "No se pudo obtener el historial de pagos.",
+      "captureError": "No se pudo completar el pago.",
+      "captureSuccess": "Pago confirmado. Créditos añadidos a tu cuenta.",
+      "missingClientId": "Falta NEXT_PUBLIC_PAYPAL_CLIENT_ID en las variables de entorno.",
+      "paypalLoadError": "No se pudo cargar PayPal.",
+      "paymentCanceled": "Pago cancelado.",
+      "orderError": "No se pudo crear la orden.",
+      "orderMissingId": "No se recibió el ID de la orden.",
+      "paymentError": "No se pudo procesar el pago."
+    }
+  },
+  "HomePage": {
+    "title": "Bienvenido a Postslify",
+    "description": "Publica en LinkedIn fácilmente"
+  },
+  "Navigation": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "createPost": "Crear Publicación",
+    "settings": "Configuración",
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión"
+  },
+  "Sidebar": {
+    "createAndManage": "Crear & Gestionar",
+    "createPost": "Crear Post",
+    "calendar": "Calendario",
+    "archivedPosts": "Posts archivados",
+    "voiceAndPersonality": "Voz & Personalidad",
+    "newVoiceProfile": "Nuevo Perfil de Voz",
+    "myProfiles": "Mis Perfiles",
+    "account": "Cuenta",
+    "businessPages": "Páginas de Negocio",
+    "billing": "Facturación",
+    "userDetails": "Detalles del Usuario",
+    "openMenu": "Abrir menú"
+  },
+  "ArchivedPosts": {
+    "title": "Posts archivados",
+    "description": "Gestiona y recupera tus publicaciones archivadas con una vista clara y ordenada.",
+    "emptyTitle": "No hay posts archivados",
+    "emptyDescription": "Los posts que archives aparecerán aquí para que puedas recuperarlos más tarde.",
+    "emptyCta": "Crear nuevo post"
+  },
+  "Calendar": {
+    "title": "Calendario de Contenidos",
+    "subtitle": "Visualiza y gestiona tus publicaciones programadas con facilidad.",
+    "days": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
+    "months": {
+      "january": "Enero",
+      "february": "Febrero",
+      "march": "Marzo",
+      "april": "Abril",
+      "may": "Mayo",
+      "june": "Junio",
+      "july": "Julio",
+      "august": "Agosto",
+      "september": "Septiembre",
+      "october": "Octubre",
+      "november": "Noviembre",
+      "december": "Diciembre"
+    },
+    "morePosts": "+{count} más",
+    "modals": {
+      "dayPosts": {
+        "title": "Publicaciones del día",
+        "posts": "Publicaciones"
+      }
+    },
+    "status": {
+      "published": "Publicado",
+      "failed": "Fallido",
+      "pending": "Pendiente"
+    },
+    "voiceProfileFallback": "Perfil de voz",
+    "voiceProfileUsed": "Perfil utilizado para generar este contenido",
+    "targetFallbackProfile": "Perfil de LinkedIn",
+    "targetFallbackPage": "Página de LinkedIn",
+    "targetUsed": "Destino de la publicación",
+    "content": {
+      "expand": "Ver más",
+      "collapse": "Ver menos"
+    },
+    "media": {
+      "imageAlt": "Imagen adjunta",
+      "imageFallback": "Imagen",
+      "documentFallback": "Documento adjunto",
+      "fileFallback": "Archivo",
+      "downloadFallback": "archivo"
+    },
+    "schedule": {
+      "title": "Programación",
+      "reschedule": "Reprogramar",
+      "editTitle": "Editar Programación",
+      "timezone": "Zona horaria",
+      "dateTime": "Fecha y hora"
+    },
+    "actions": {
+      "cancel": "Cancelar",
+      "saving": "Guardando...",
+      "saveChanges": "Guardar Cambios",
+      "deleting": "Eliminando...",
+      "delete": "Eliminar"
+    },
+    "delete": {
+      "title": "Eliminar publicación",
+      "subtitle": "Esta acción no se puede deshacer",
+      "confirmTitle": "¿Eliminar publicación?",
+      "confirmDescription": "Esta acción no se puede deshacer. Se eliminará permanentemente la publicación programada."
+    },
+    "carousel": {
+      "close": "Cerrar",
+      "previous": "Anterior",
+      "next": "Siguiente"
+    },
+    "errors": {
+      "update": "Error al actualizar",
+      "updateAlert": "Error al actualizar la publicación",
+      "delete": "Error al eliminar",
+      "deleteAlert": "Error al eliminar la publicación"
+    }
+  },
+  "LanguageSwitcher": {
+    "label": "Idioma",
+    "en": "Inglés",
+    "es": "Español"
+  },
+  "Landing": {
+    "nav": {
+      "services": "Servicios",
+      "blog": "Blog",
+      "pricing": "Precios",
+      "login": "Iniciar Sesión"
+    },
+    "hero": {
+      "title": "Crea, Programa y Optimiza tu Contenido en <span>LinkedIn</span> con Inteligencia Artificial",
+      "description": "Genera publicaciones virales en segundos, mantén tu presencia activa 24/7 y conecta auténticamente con tu audiencia usando perfiles de voz personalizados que suenan exactamente como tú.",
+      "cta": "Empiezar Ahora"
+    },
+    "comparison": {
+      "before": "Antes",
+      "optimized": "Optimizado con Postslify",
+      "authorRole": "Frontend developer ( React & Nextjs ) Siempre aprendiendo nuevas tecnologías.",
+      "timeAgo": "2d",
+      "example": {
+        "before": "Hola a todos, estoy buscando inversores para mi startup. Si conocen a alguien, avísenme. Gracias.",
+        "after": "🚀 Emocionado de anunciar que estamos revolucionando el mercado con nuestra nueva tecnología de IA. Buscamos socios estratégicos que quieran unirse a esta visión de futuro. ¿Estás listo para escalar? 👇 #Startup #Tech #Growth #Innovation"
+      }
+    },
+    "services": {
+      "title": "Nuestros <span>Servicios</span>",
+      "subtitle": "Herramientas diseñadas para potenciar tu marca personal y escalar tu negocio en LinkedIn.",
+      "items": {
+        "postGeneration": { "title": "Generación de Posts con IA", "desc": "Crea contenido viral en segundos. Nuestra IA analiza las tendencias actuales y tu estilo único para generar publicaciones que conectan con tu audiencia." },
+        "imageGeneration": { "title": "Generación de Imágenes con IA", "desc": "Crea visuales impactantes para tus publicaciones. Genera imágenes originales y libres de derechos que complementan perfectamente tu contenido textual." },
+        "smartScheduling": { "title": "Programación Inteligente", "desc": "Mantén tu perfil activo 24/7. Programa tus publicaciones para los momentos de mayor impacto sin tener que estar conectado todo el día." },
+        "voiceProfiles": { "title": "Perfiles de Voz Personalizados", "desc": "Entrena a la IA para que escriba exactamente como tú. Sube ejemplos de tus textos y crea un modelo que replica tu tono, estilo y vocabulario." },
+        "analytics": { "title": "Análisis de Rendimiento", "desc": "Toma decisiones basadas en datos. Visualiza el impacto de tus publicaciones y optimiza tu estrategia con métricas detalladas en tiempo real." },
+        "virtualAssistant": { "title": "Asistente Virtual 24/7", "desc": "Tu copiloto de LinkedIn. Recibe sugerencias de temas, mejoras en tiempo real y respuestas automáticas inteligentes para tus comentarios." },
+        "multiAccount": { "title": "Gestión de Múltiples Cuentas", "desc": "Ideal para agencias y equipos. Gestiona múltiples perfiles personales y páginas de empresa desde un solo panel de control unificado." }
+      }
+    },
+    "testimonials": {
+      "title": "Historias de <span>Éxito</span>",
+      "subtitle": "Fundadores, creadores y equipos comparten cómo Postslify impulsó su crecimiento.",
+      "empty": "Sé el primero en dejar un testimonio.",
+      "form": {
+        "kicker": "Comparte tu historia",
+        "title": "Agrega tu testimonio",
+        "subtitle": "Tu feedback ayuda a otros a descubrir Postslify.",
+        "nameLabel": "Nombre",
+        "roleLabel": "Rol",
+        "companyLabel": "Empresa",
+        "ratingLabel": "Calificación",
+        "contentLabel": "Testimonio",
+        "namePlaceholder": "Tu nombre",
+        "rolePlaceholder": "Ej. Líder de Marketing",
+        "companyPlaceholder": "Nombre de la empresa",
+        "contentPlaceholder": "Escribe tu experiencia con Postslify...",
+        "nameRequired": "El nombre es obligatorio",
+        "contentRequired": "El testimonio es obligatorio",
+        "ratingValue": "{value} estrellas",
+        "submit": "Enviar testimonio",
+        "submitting": "Enviando...",
+        "success": "¡Gracias por compartir tu feedback!",
+        "error": "No pudimos guardar tu testimonio. Intenta de nuevo."
+      }
+    },
+    "pricing": {
+      "simplePricing": "Precios Simples",
+      "title": "Elige el plan perfecto para tu crecimiento",
+      "description": "Compra créditos según tus necesidades. Sin suscripciones mensuales obligatorias. Úsalos cuando quieras.",
+      "buyNow": "Comprar ahora",
+      "oneTime": "/pago único",
+      "credits": "Créditos",
+      "mostPopular": "Más Popular",
+      "contact": "¿Necesitas un plan personalizado para tu empresa? <link>Contáctanos</link>",
+      "features": {
+         "generation": "Generación de posts e imágenes con IA",
+         "scheduling": "Programación de contenido",
+         "voice": "Creación de perfiles de voz",
+         "publishing": "Publicación en perfil y páginas de empresa"
+      },
+      "plans": {
+        "start": "Inicio",
+        "basic": "Básico",
+        "advanced": "Avanzado",
+        "expert": "Experto"
+      }
+    }
+  },
+  "PostCard": {
+    "seeMore": "...ver más",
+    "comments": "comentarios",
+    "shares": "veces compartido",
+    "views": "visualizaciones",
+    "recommend": "Recomendar",
+    "comment": "Comentar",
+    "share": "Compartir"
+  },
+  "TestimonialsModal": {
+    "title": "¿Qué te ha parecido tu experiencia hasta ahora?",
+    "description": "Comparte tu feedback y ayúdanos a mejorar la experiencia de Postslify.",
+    "close": "Cerrar",
+    "ratingRequired": "La calificación es obligatoria",
+    "commentPlaceholder": "Cuéntanos cómo Postslify te ayudó...",
+    "commentRequired": "El comentario es obligatorio",
+    "commentMaxLength": "Máximo 600 caracteres",
+    "submit": "Enviar mi feedback",
+    "submitting": "Enviando...",
+    "success": "¡Gracias por tu feedback!",
+    "error": "No pudimos guardar tu testimonio."
+  },
+  "Login": {
+    "title": "Bienvenido de nuevo",
+    "subtitle": "Ingresa tus credenciales para acceder a tu cuenta.",
+    "emailPlaceholder": "Correo electrónico",
+    "passwordPlaceholder": "Contraseña",
+    "emailRequired": "El correo es obligatorio",
+    "emailInvalid": "Correo inválido",
+    "passwordRequired": "La contraseña es obligatoria",
+    "rememberMe": "Recuérdame",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "signIn": "Iniciar Sesión",
+    "loggingIn": "Iniciando sesión...",
+    "noAccount": "¿No tienes una cuenta?",
+    "signUp": "Regístrate",
+    "heroTitle": "Eleva tu Presencia en <span>LinkedIn</span>",
+    "heroSubtitle": "Crea, programa y analiza tu contenido profesional con herramientas impulsadas por IA diseñadas para el crecimiento.",
+    "footerRights": "Postslify Inc. Todos los derechos reservados."
+  },
+  "Register": {
+    "title": "Crear Cuenta",
+    "subtitle": "Regístrate para comenzar con Postslify.",
+    "heroTitle": "Únete a la <span>Revolución</span>",
+    "heroSubtitle": "Comienza a gestionar tu presencia en redes sociales con potentes herramientas y análisis diseñados para el crecimiento.",
+    "namePlaceholder": "Nombre completo",
+    "emailPlaceholder": "Correo electrónico",
+    "passwordPlaceholder": "Contraseña",
+    "confirmPasswordPlaceholder": "Confirmar contraseña",
+    "submitButton": "Registrarse",
+    "submittingButton": "Creando cuenta...",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "loginLink": "Inicia sesión",
+    "errors": {
+      "nameRequired": "El nombre es obligatorio",
+      "emailRequired": "El correo es obligatorio",
+      "emailInvalid": "Correo inválido",
+      "emailExists": "Ya existe una cuenta con este correo",
+      "passwordRequired": "La contraseña es obligatoria",
+      "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
+      "passwordRequirements": "Debe incluir mayúsculas, minúsculas y un número",
+      "confirmPasswordRequired": "Por favor confirma tu contraseña",
+      "passwordsNoMatch": "Las contraseñas NO coinciden",
+      "genericError": "Error al registrarse"
+    }
+  },
+  "ForgotPassword": {
+    "title": "Recuperar <span>Acceso</span>",
+    "subtitle": "No te preocupes, sucede. Te ayudaremos a volver a gestionar tu contenido en poco tiempo.",
+    "formTitle": "¿Olvidaste tu contraseña?",
+    "formSubtitle": "Ingresa tu correo electrónico para restablecer tu contraseña.",
+    "backToLogin": "Volver a Iniciar Sesión",
+    "emailLabel": "Correo Electrónico",
+    "emailPlaceholder": "nombre@ejemplo.com",
+    "submitButton": "Enviar Enlace",
+    "submittingButton": "Enviando...",
+    "successTitle": "¡Revisa tu bandeja de entrada!",
+    "successMessage": "Si existe una cuenta con este correo, recibirás instrucciones para restablecer tu contraseña en breve.",
+    "returnToLogin": "Volver a Iniciar Sesión",
+    "errors": {
+      "emailRequired": "El correo es obligatorio",
+      "emailInvalid": "Correo inválido",
+      "genericError": "Algo salió mal. Por favor intenta de nuevo."
+    }
+  },
+  "ResetPassword": {
+    "title": "Asegura tu <span>Cuenta</span>",
+    "subtitle": "Crea una contraseña segura para proteger tu perfil y datos.",
+    "formTitle": "Nueva Contraseña",
+    "formSubtitle": "Por favor crea una nueva contraseña que no uses en ningún otro sitio.",
+    "passwordLabel": "Nueva Contraseña",
+    "confirmPasswordLabel": "Confirmar Contraseña",
+    "passwordPlaceholder": "••••••••",
+    "submitButton": "Restablecer Contraseña",
+    "submittingButton": "Restableciendo...",
+    "successTitle": "¡Contraseña Restablecida!",
+    "successMessage": "Tu contraseña ha sido restablecida exitosamente.",
+    "redirecting": "Redirigiendo al inicio de sesión...",
+    "loginNow": "Iniciar Sesión Ahora",
+    "invalidLinkTitle": "Enlace <span>Inválido</span>",
+    "invalidLinkMessage": "El enlace de restablecimiento de contraseña es inválido o ha expirado. Por favor solicita uno nuevo.",
+    "linkExpiredTitle": "Enlace Expirado o Inválido",
+    "linkExpiredMessage": "Este enlace de restablecimiento de contraseña ya no es válido. Por favor solicita un nuevo enlace.",
+    "requestNewLink": "Solicitar Nuevo Enlace",
+    "errors": {
+      "passwordRequired": "La contraseña es obligatoria",
+      "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
+      "passwordComplexity": "La contraseña debe incluir al menos una mayúscula, una minúscula y un número",
+      "confirmPasswordRequired": "Por favor confirma tu contraseña",
+      "passwordsNoMatch": "Las contraseñas NO coinciden",
+      "invalidToken": "Token inválido o faltante.",
+      "genericError": "Algo salió mal. Por favor intenta de nuevo."
+    }
+  },
+  "CreatePost": {
+    "title": "Crear Post",
+    "imageStyles": {
+        "caricatura": "Caricatura",
+        "graficas": "Gráficas",
+        "3d-modern": "3D Modern",
+        "fotografia": "Fotografía",
+        "acuarela": "Acuarela",
+        "minimalista": "Minimalista",
+        "futurista": "Futurista",
+        "retro": "Retro",
+        "cyberpunk": "Cyberpunk",
+        "plano": "Ilustración plana",
+        "isometrico": "Isométrico",
+        "comic": "Cómic",
+        "neon": "Neón",
+        "pastel": "Pastel",
+        "noir": "Noir",
+        "vintage": "Vintage",
+        "sketch": "Sketch",
+        "low-poly": "Low Poly",
+        "surrealista": "Surrealista"
+    },
+    "labels": {
+        "voiceProfile": "Perfil de Voz",
+        "selectProfile": "Selecciona un perfil",
+        "target": "Destino",
+        "linkedinProfile": "Perfil Personal",
+        "linkedinPage": "Página de Empresa",
+        "timezone": "Zona horaria",
+        "scheduleDate": "Fecha de programación",
+        "imageStyle": "Estilo de imagen",
+        "extraContext": "Contexto adicional",
+        "personalProfile": "Perfil Personal",
+        "personalLinkedIn": "LinkedIn Personal",
+        "profile": "Perfil",
+        "page": "Página",
+        "corporatePage": "Página corporativa",
+        "aiAssistant": "Asistente IA",
+        "generatedWithAI": "Generado con IA",
+        "postContext": "Contexto del post",
+        "improveContext": "Mejorar contexto",
+        "characters": "Personajes",
+        "charactersLimit": "Máximo {max}",
+        "includePostTitle": "Título en la imagen",
+        "includePostTitleYes": "Incluir título",
+        "includePostTitleNo": "Sin título",
+        "postTitle": "Título del post",
+        "visualStyle": "Estilo visual",
+        "finalPrompt": "Prompt final",
+        "image": "Imagen",
+        "selectVoiceProfile": "Seleccionar perfil de voz",
+        "selectVoiceProfileTitle": "Seleccionar perfil de voz",
+        "selectedProfile": "Perfil seleccionado",
+        "chooseVoiceProfile": "Elige un perfil de voz",
+        "availableProfiles": "Perfiles disponibles",
+        "dateAndTime": "Fecha y hora",
+        "suggested": "Sugerida",
+        "scheduleDestinations": "Destinos de programación",
+        "manageProfiles": "Gestionar perfiles",
+        "timezone": "Zona horaria",
+        "personalProfile": "Perfil personal",
+        "personalLinkedIn": "LinkedIn personal",
+        "linkedinPage": "Página de LinkedIn",
+        "corporatePage": "Página corporativa",
+        "postPreview": "Vista previa de publicación",
+        "generatingContent": "Generando contenido...",
+        "generatingNewAiImage": "Se está generando una nueva imagen con IA",
+        "noStyleDefined": "Este perfil no tiene un estilo definido.",
+        "personality": "Personalidad:",
+        "tone": "Tono:",
+        "instructions": "Instrucciones:",
+        "examples": "Ejemplos:",
+        "postTopic": "Tema de la publicación",
+        "archivedDescription": "Gestiona y recupera tus publicaciones archivadas con una vista clara y ordenada."
+    },
+    "placeholders": {
+        "input": "Escribe tu idea aquí...",
+        "date": "Seleccionar fecha y hora",
+        "contextExample": "Ej: estilo minimalista, colores fríos, ambiente futurista",
+        "characterName": "Agregar persona o personaje",
+        "completeContext": "Completa el contexto y elige un estilo para ver el prompt final.",
+        "inputPrompt": "¿Sobre qué quieres escribir hoy? (Ej: 'Crea un post sobre liderazgo en tiempos de crisis')",
+        "topicPrompt": "¿Sobre qué quieres escribir hoy?"
+    },
+    "buttons": {
+        "generate": "Generar Post",
+        "schedule": "Programar",
+        "publish": "Publicar",
+        "publishNow": "Publicar ahora",
+        "schedulePost": "Programar publicación",
+        "connectPersonalProfile": "Conectar perfil personal",
+        "reconnectLinkedIn": "Reconectar LinkedIn",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "scheduling": "Programando...",
+        "generating": "Generando...",
+        "publishing": "Publicando...",
+        "confirm": "Confirmar",
+        "save": "Guardar",
+        "edit": "Editar",
+        "archive": "Archivar",
+        "back": "Atrás",
+        "next": "Siguiente",
+        "close": "Cerrar",
+        "addMedia": "Añadir Media",
+        "addImage": "Agregar imagen",
+        "addVideo": "Agregar video",
+        "addDocument": "Agregar documento",
+        "addCharacter": "Agregar",
+        "generateImage": "Generar Imagen",
+        "connectLinkedIn": "Conectar LinkedIn",
+        "previous": "Anterior",
+        "saveChanges": "Guardar cambios",
+        "customize": "Personalizar",
+        "saveDraft": "Solo guardar",
+        "viewPost": "Ver Post",
+        "improve": "Mejorar"
+    },
+    "errors": {
+        "maxFiles": "Solo puedes seleccionar hasta 9 imágenes",
+        "processError": "Error al ejecutar el proceso",
+        "scheduleError": "Error al programar el post",
+        "attachmentError": "Error al procesar el archivo adjunto",
+        "selectDestination": "Selecciona al menos un destino válido para publicar",
+        "selectDateAndTime": "Por favor selecciona una fecha y hora",
+        "linkedinDateAfterExpiry": "La fecha supera la expiración del perfil personal. Reconecta LinkedIn para renovar por 60 días.",
+        "selectPage": "Selecciona una o más páginas antes de publicar",
+        "selectProfile": "Por favor selecciona un perfil de voz antes de generar el post",
+        "processingRequest": "Lo siento, ha ocurrido un error al procesar tu solicitud.",
+        "noAIResponse": "No se recibió respuesta de la IA.",
+        "missingApiKey": "Falta DEEPSEEK_API_KEY en .env.local. Reinicia el servidor.",
+        "imageGeneration": "No se pudo generar la imagen",
+        "imageProcessing": "No se pudo procesar la imagen",
+        "imageLimitReached": "Solo puedes generar hasta 3 imágenes por post",
+        "contextRequired": "El contexto adicional es obligatorio.",
+        "unknown": "Error desconocido",
+        "configurePageToken": "Configura el token y URN de la página antes de programar.",
+        "selectPageBeforeSchedule": "Selecciona una o más páginas antes de programar.",
+        "selectProfileOrPage": "Selecciona perfil personal y/o una o más páginas antes de programar.",
+        "publishError": "Error al publicar: {error}",
+        "generationFailed": "Error al generar el contenido",
+        "saveFailed": "Error al guardar el post",
+        "scheduleFailed": "Error al programar el post",
+        "publishFailedGeneric": "Error al publicar el post"
+    },
+    "success": {
+        "postScheduled": "¡Post programado!",
+        "scheduledFor": "Tu publicación ha sido programada para el",
+        "published": "¡Publicado con éxito en {targets}! 🎉",
+        "passwordReset": "Contraseña restablecida exitosamente"
+    },
+    "prompts": {
+        "whatOnMind": "¿Qué tienes en mente?",
+        "ideaHelp": "Comparte tu idea y te ayudaremos a transformarla en un post potente.",
+        "mandatoryLanguage": "Idioma obligatorio: {language}. Usa solo este idioma.",
+        "includePostTitle": "Incluye el título del post en el texto de la imagen.",
+        "excludePostTitle": "No incluyas ningún título en la imagen.",
+        "creativeDirection": "Dirección creativa: imagen para publicación en LinkedIn con diseño tipo plantilla de Canva especializada para LinkedIn, layout limpio y moderno, jerarquía visual clara, bloques bien alineados, contraste elegante, diseño llamativo con un gancho visual claro que invite a detenerse, composición centrada y limpia, sujeto principal claro, fondo ordenado y sin ruido, iluminación suave y realista, colores armónicos, alto nivel de detalle, enfoque nítido, profundidad de campo sutil, estética profesional, incluir texto breve relacionado al post, tipografía nítida y de alta legibilidad, texto grande y perfectamente legible, alto contraste entre texto y fondo, sin hashtags, sin logos, sin marcas de agua, sin bordes.",
+        "textLegibility": "Tipografía: usa sans-serif, texto nítido y perfectamente legible, alto contraste, sin letras distorsionadas y sin errores ortográficos. Mantén pocas palabras (6–10 máx.), líneas cortas y composición clara.",
+        "formatSquare": "Formato: cuadrado 1:1."
+    },
+    "modals": {
+        "cronSuccess": "Proceso ejecutado",
+        "cronError": "Error al ejecutar",
+        "scheduleSuccess": "¡Post programado!",
+        "understood": "Entendido",
+        "generateImageTitle": "Generar imagen con IA",
+        "generateImageSubtitle": "Usa el contexto del post y define el estilo visual",
+        "scheduleTitle": "Programar publicación",
+        "scheduleSubtitle": "Planifica tu contenido con anticipación",
+        "forcePublish": "Forzar publicación",
+        "deleteImageTitle": "Eliminar imagen",
+        "deleteImageDescription": "Esta acción elimina la imagen seleccionada del carrusel.",
+        "connectAccount": "Conectar cuenta",
+        "connectForSchedule": "Conecta tu cuenta de LinkedIn para programar publicaciones.",
+        "connectForPublish": "Conecta tu cuenta de LinkedIn para publicar.",
+        "connectForFeatures": "Conecta tu cuenta de LinkedIn para acceder a todas las funciones."
+    },
+    "defaults": {
+        "personalProfile": "Perfil personal",
+        "personalLinkedIn": "LinkedIn personal",
+        "page": "Página",
+        "linkedinPage": "Página de LinkedIn",
+        "corporatePage": "Página corporativa",
+        "image": "Imagen"
+    },
+    "aiImageName": "Imagen IA"
+  },
+  "Settings": {
+    "header": {
+      "title": "Configuración de usuario",
+      "subtitle": "Actualiza los datos de la cuenta con la que iniciaste sesión."
+    },
+    "form": {
+      "nameLabel": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "emailLabel": "Email",
+      "emailPlaceholder": "tuemail@dominio.com",
+      "imageLabel": "Imagen de perfil",
+      "imageButton": "Subir imagen",
+      "imageHint": "JPG o PNG, hasta 5MB.",
+      "imageAlt": "Imagen de perfil"
+    },
+    "reset": {
+      "title": "Reset de contraseña",
+      "subtitle": "Te enviaremos un enlace al correo para crear una nueva contraseña.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "tuemail@dominio.com"
+    },
+    "buttons": {
+      "signOut": "Cerrar sesión",
+      "saving": "Guardando...",
+      "saveChanges": "Guardar cambios",
+      "sending": "Enviando...",
+      "sendLink": "Enviar enlace"
+    },
+    "messages": {
+      "updateSuccess": "Configuración actualizada",
+      "updateError": "No se pudo actualizar tu cuenta",
+      "resetSuccess": "Enviamos el correo para resetear tu contraseña",
+      "resetError": "No se pudo enviar el correo"
+    },
+    "errors": {
+      "nameRequired": "El nombre es obligatorio",
+      "nameMinLength": "El nombre debe tener al menos 2 caracteres",
+      "emailRequired": "El email es obligatorio",
+      "emailInvalid": "Email inválido"
+    }
+  },
+  "Blog": {
+    "meta": {
+      "title": "Blog de Postslify - Estrategias de LinkedIn e IA",
+      "description": "Descubre las últimas tendencias en LinkedIn, inteligencia artificial y automatización para potenciar tu marca personal y negocio.",
+      "keywords": ["Blog LinkedIn", "Estrategias B2B", "Inteligencia Artificial", "Automatización de redes sociales"],
+      "blogSuffix": "Blog de Postslify"
+    },
+    "title": "Blog de <span>Postslify</span>",
+    "subtitle": "Recursos, guías y consejos para dominar LinkedIn con el poder de la Inteligencia Artificial.",
+    "readTime": "{time} de lectura",
+    "backToBlog": "Volver al blog",
+    "postNotFoundTitle": "Artículo no encontrado - Postslify",
+    "cta": {
+      "title": "¿Listo para potenciar tu LinkedIn?",
+      "subtitle": "Prueba Postslify hoy y empieza a crear contenido viral con IA.",
+      "button": "Comenzar gratis"
+    }
+  },
+  "AboutPage": {
+    "metaTitle": "Sobre Nosotros - Postslify",
+    "metaDescription": "Conoce más sobre Postslify y nuestra misión de transformar la presencia en LinkedIn con IA.",
+    "label": "Nuestra Misión",
+    "title": "Empoderando a Profesionales en LinkedIn",
+    "intro": "Postslify se dedica a ayudar a profesionales y empresas a amplificar su voz en LinkedIn a través del poder de la Inteligencia Artificial.",
+    "sections": {
+      "story": {
+        "title": "Nuestra Historia",
+        "content": "<p>Postslify nació de la necesidad de simplificar la creación de contenido profesional. Nos dimos cuenta de que muchos expertos tenían ideas brillantes pero luchaban por plasmarlas de manera consistente en LinkedIn.</p><p>Lo que comenzó como una herramienta interna para optimizar nuestros propios procesos, rápidamente evolucionó en una plataforma completa impulsada por IA, diseñada para potenciar la marca personal de miles de usuarios.</p>"
+      },
+      "mission": {
+        "title": "Nuestra Misión",
+        "content": "<p>Nuestra misión es democratizar el acceso a herramientas de creación de contenido de alta calidad. Creemos que cada profesional merece tener una voz fuerte y clara en el mundo digital.</p><p>Nos esforzamos por eliminar las barreras técnicas y creativas, permitiendo que nuestros usuarios se concentren en lo que mejor saben hacer: compartir su conocimiento y experiencia.</p>"
+      },
+      "howItWorks": {
+        "title": "Cómo Funciona",
+        "content": "<p>Postslify utiliza algoritmos avanzados de inteligencia artificial para analizar tendencias, sugerir temas relevantes y redactar borradores que capturan tu tono de voz único.</p><ul><li><strong>Generación de Ideas:</strong> Nunca te quedes sin temas de los que hablar.</li><li><strong>Redacción Asistida:</strong> Crea posts atractivos en segundos, no horas.</li><li><strong>Programación Inteligente:</strong> Publica en el momento óptimo para maximizar el alcance.</li></ul>"
+      },
+      "values": {
+        "title": "Nuestros Valores",
+        "content": "<ul><li><strong>Innovación:</strong> Siempre estamos buscando nuevas formas de mejorar.</li><li><strong>Transparencia:</strong> Creemos en la honestidad y la claridad en todo lo que hacemos.</li><li><strong>Centrados en el Usuario:</strong> Tu éxito es nuestro éxito. Diseñamos cada función pensando en ti.</li></ul>"
+      }
+    }
+  },
+  "PrivacyPage": {
+    "metaTitle": "Política de Privacidad - Postslify",
+    "metaDescription": "Lee nuestra Política de Privacidad para entender cómo manejamos tus datos.",
+    "label": "Legal",
+    "title": "Política de Privacidad",
+    "intro": "Tu privacidad es importante para nosotros. Esta política explica en detalle cómo recopilamos, usamos, protegemos y compartimos tu información personal.",
+    "lastUpdated": "Última actualización: 6 de Marzo, 2026",
+    "sections": {
+      "introduction": {
+        "title": "1. Introducción",
+        "content": "Bienvenido a Postslify. Nos comprometemos a proteger tu información personal y tu derecho a la privacidad. Esta Política de Privacidad se aplica a toda la información recopilada a través de nuestro sitio web y servicios relacionados (colectivamente, nuestros \"Servicios\")."
+      },
+      "informationCollection": {
+        "title": "2. Información que recopilamos",
+        "content": "Recopilamos información personal que nos proporcionas voluntariamente cuando te registras en los Servicios, cuando participas en actividades en los Servicios o cuando te pones en contacto con nosotros.\n\n<ul><li><strong>Información personal:</strong> Nombres, direcciones de correo electrónico, contraseñas, preferencias de contacto y datos de perfil.</li><li><strong>Datos de redes sociales:</strong> Cuando conectas tu cuenta de LinkedIn, recopilamos información básica de perfil y tokens de acceso necesarios para publicar contenido en tu nombre. No almacenamos tus contraseñas de LinkedIn.</li><li><strong>Contenido generado:</strong> Almacenamos los posts, imágenes y configuraciones de voz que creas utilizando nuestra plataforma.</li></ul>"
+      },
+      "useOfInformation": {
+        "title": "3. Cómo usamos tu información",
+        "content": "Procesamos tu información para fines basados en intereses comerciales legítimos, el cumplimiento de nuestro contrato contigo, el cumplimiento de nuestras obligaciones legales y/o tu consentimiento.\n\n<ul><li><strong>Prestación de servicios:</strong> Para facilitar la creación de cuentas, el inicio de sesión y la gestión de tus publicaciones en LinkedIn.</li><li><strong>Mejora del producto:</strong> Para analizar el uso y optimizar nuestros algoritmos de IA y la experiencia de usuario.</li><li><strong>Comunicaciones:</strong> Para enviarte actualizaciones administrativas, notificaciones de seguridad y, con tu consentimiento, información de marketing.</li></ul>"
+      },
+      "dataSharing": {
+        "title": "4. Compartir tu información",
+        "content": "Solo compartimos información con el consentimiento del usuario, para cumplir con las leyes, para proporcionar servicios, para proteger tus derechos o para cumplir con obligaciones comerciales.\n\n<ul><li><strong>Proveedores de servicios:</strong> Compartimos datos con proveedores externos que nos ayudan con el alojamiento, análisis de datos, procesamiento de pagos y servicio al cliente (ej. Vercel, Supabase, OpenAI).</li></ul>"
+      },
+      "dataSecurity": {
+        "title": "5. Seguridad de los datos",
+        "content": "Hemos implementado rigurosas medidas de seguridad técnicas y organizativas diseñadas para proteger la integridad y confidencialidad de tu información personal. Utilizamos cifrado avanzado y protocolos seguros para garantizar que tus datos estén protegidos en todo momento durante su transmisión y almacenamiento en nuestros sistemas."
+      },
+      "userRights": {
+        "title": "6. Tus derechos de privacidad",
+        "content": "Dependiendo de tu ubicación, puedes tener ciertos derechos con respecto a tu información personal:\n\n<ul><li><strong>Derecho de acceso y portabilidad:</strong> Solicitar copias de tu información personal.</li><li><strong>Derecho de rectificación:</strong> Solicitar que corrijamos información inexacta.</li><li><strong>Derecho de supresión:</strong> Solicitar que eliminemos tu información personal.</li><li><strong>Derecho a retirar el consentimiento:</strong> Si confiamos en tu consentimiento para procesar tu información personal, tienes derecho a retirarlo en cualquier momento.</li></ul>"
+      },
+      "cookies": {
+        "title": "7. Política de Cookies",
+        "content": "Utilizamos cookies y tecnologías de seguimiento similares (como balizas web y píxeles) para acceder o almacenar información. Esta información se utiliza para mantener tu sesión activa, recordar tus preferencias y analizar el tráfico del sitio."
+      },
+      "changes": {
+        "title": "8. Cambios en esta política",
+        "content": "Podemos actualizar esta política de privacidad de vez en cuando. La versión actualizada se indicará con una fecha de \"Última actualización\" actualizada y la versión actualizada entrará en vigor tan pronto como sea accesible."
+      },
+      "contact": {
+        "title": "9. Contacto",
+        "content": "Si tienes preguntas o comentarios sobre esta política, puedes enviarnos un correo electrónico a soporte@postslify.com."
+      }
+    }
+  },
+  "TermsPage": {
+    "metaTitle": "Términos de Servicio - Postslify",
+    "metaDescription": "Lee nuestros Términos de Servicio.",
+    "label": "Legal",
+    "title": "Términos de Servicio",
+    "intro": "Al usar Postslify, aceptas estos términos. Por favor léelos cuidadosamente.",
+    "lastUpdated": "Última actualización: 6 de Marzo, 2026",
+    "sections": {
+      "introduction": {
+        "title": "1. Introducción",
+        "content": "Bienvenido a Postslify. Al acceder o utilizar nuestro sitio web y servicios, aceptas estar sujeto a estos Términos de Servicio y a nuestra Política de Privacidad. Si no estás de acuerdo con estos términos, no debes utilizar nuestros servicios."
+      },
+      "services": {
+        "title": "2. Descripción del Servicio",
+        "content": "Postslify es una plataforma impulsada por IA diseñada para ayudar a los usuarios a crear, programar y optimizar contenido para LinkedIn. Ofrecemos herramientas para la generación de ideas, redacción de posts y gestión de publicaciones."
+      },
+      "accounts": {
+        "title": "3. Cuentas de Usuario",
+        "content": "Para acceder a ciertas funciones, debes registrarte y crear una cuenta. Eres responsable de mantener la confidencialidad de tu cuenta y contraseña. Nos reservamos el derecho de suspender o cancelar tu cuenta si violas estos términos."
+      },
+      "responsibilities": {
+        "title": "4. Responsabilidades del Usuario",
+        "content": "Te comprometes a utilizar nuestros servicios solo para fines legales y de acuerdo con estos términos.\n\n<ul><li>No usarás el servicio para publicar contenido ilegal, ofensivo o que infrinja derechos de terceros.</li><li>No intentarás interferir con el funcionamiento adecuado del servicio.</li><li>Eres el único responsable del contenido que generas y publicas a través de nuestra plataforma.</li></ul>"
+      },
+      "intellectualProperty": {
+        "title": "5. Propiedad Intelectual",
+        "content": "El servicio y su contenido original (excluyendo el contenido proporcionado por los usuarios) son propiedad exclusiva de Postslify. El contenido que generas te pertenece, pero nos otorgas una licencia para usarlo con el fin de proporcionar el servicio."
+      },
+      "thirdParty": {
+        "title": "6. Servicios de Terceros",
+        "content": "Nuestro servicio se integra con LinkedIn. Tu uso de LinkedIn se rige por sus propios términos y políticas. No somos responsables de las acciones o políticas de LinkedIn."
+      },
+      "liability": {
+        "title": "7. Limitación de Responsabilidad",
+        "content": "En la medida máxima permitida por la ley, Postslify no será responsable de daños indirectos, incidentales o consecuentes que surjan de tu uso del servicio."
+      },
+      "termination": {
+        "title": "8. Terminación",
+        "content": "Podemos terminar o suspender tu acceso al servicio inmediatamente, sin previo aviso ni responsabilidad, por cualquier motivo, incluido el incumplimiento de estos Términos."
+      },
+      "changes": {
+        "title": "9. Cambios en los Términos",
+        "content": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Te notificaremos sobre cualquier cambio importante."
+      },
+      "contact": {
+        "title": "10. Contacto",
+        "content": "Si tienes alguna pregunta sobre estos Términos, contáctanos en soporte@postslify.com."
+      }
+    }
+  },
+  "Footer": {
+    "product": "Producto",
+    "features": "Funcionalidades",
+    "pricing": "Precios",
+    "blog": "Blog",
+    "company": "Compañía",
+    "about": "Sobre nosotros",
+    "careers": "Carreras",
+    "legal": "Legal",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "rights": "Todos los derechos reservados.",
+    "description": "Transforma tu presencia en LinkedIn con IA."
+  },
+  "Common": {
+    "footerRights": "Todos los derechos reservados."
+  }
+}
