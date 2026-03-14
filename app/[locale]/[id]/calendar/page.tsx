@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { getProxiedImageUrl } from "@/lib/image-proxy";
 import type { ScheduledPost } from "@/types/posts";
 import { PREDEFINED_TIMEZONES } from "@/lib/timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +19,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useLocale, useTranslations } from "next-intl";
 
-export default function CalendarioPage() {
+import { DateTimePicker } from "@/app/components/DateTimePicker";
+import { Select } from "@/app/components/Select";
+
+export default function CalendarPage() {
   const t = useTranslations("Calendar");
   const locale = useLocale();
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -445,11 +449,12 @@ export default function CalendarioPage() {
                             >
                               {target.image ? (
                                 <Image
-                                  src={target.image}
+                                  src={getProxiedImageUrl(target.image) || target.image}
                                   alt={target.name}
                                   width={20}
                                   height={20}
                                   className="h-full w-full rounded-full object-cover"
+                                  unoptimized={!!getProxiedImageUrl(target.image)?.startsWith('/api/proxy-image')}
                                 />
                               ) : (
                                 <span>{target.initial}</span>
@@ -561,11 +566,12 @@ export default function CalendarioPage() {
                                 >
                                   {target.image ? (
                                     <Image
-                                      src={target.image}
+                                      src={getProxiedImageUrl(target.image) || target.image}
                                       alt={target.name}
                                       width={32}
                                       height={32}
                                       className="h-full w-full rounded-full object-cover"
+                                      unoptimized={!!getProxiedImageUrl(target.image)?.startsWith('/api/proxy-image')}
                                     />
                                   ) : (
                                     <span className="text-sm font-semibold">{target.initial}</span>
@@ -648,11 +654,12 @@ export default function CalendarioPage() {
                           >
                             {target.image ? (
                               <Image
-                                src={target.image}
+                                src={getProxiedImageUrl(target.image) || target.image}
                                 alt={target.name}
                                 width={56}
                                 height={56}
                                 className="h-full w-full rounded-full object-cover"
+                                unoptimized={!!getProxiedImageUrl(target.image)?.startsWith('/api/proxy-image')}
                               />
                             ) : (
                               <span>{target.initial}</span>
@@ -839,12 +846,14 @@ export default function CalendarioPage() {
                           </p>
                         </div>
                       </div>
-                      <button
-                        onClick={() => setIsEditingSchedule(true)}
-                        className="shrink-0 cursor-pointer rounded-xl bg-blue-500 px-4 py-2.5 text-xs font-bold text-white shadow-sm ring-1 ring-blue-400 transition-all hover:bg-blue-600 hover:shadow-md active:scale-95"
-                      >
-                        {t("schedule.reschedule")}
-                      </button>
+                      {selectedPost.status !== "published" && (
+                        <button
+                          onClick={() => setIsEditingSchedule(true)}
+                          className="shrink-0 cursor-pointer rounded-xl bg-blue-500 px-4 py-2.5 text-xs font-bold text-white shadow-sm ring-1 ring-blue-400 transition-all hover:bg-blue-600 hover:shadow-md active:scale-95"
+                        >
+                          {t("schedule.reschedule")}
+                        </button>
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -855,29 +864,23 @@ export default function CalendarioPage() {
                       <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500">
                         {t("schedule.timezone")}
                       </label>
-                      <select
+                      <Select
                         value={editTimezone}
-                        onChange={(e) => setEditTimezone(e.target.value)}
-                        className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-900 outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-                      >
-                        {PREDEFINED_TIMEZONES.map((timezone) => (
-                          <option key={timezone.value} value={timezone.value}>
-                            {timezone.label}
-                          </option>
-                        ))}
-                      </select>
+                        onChange={(value) => setEditTimezone(value)}
+                        options={PREDEFINED_TIMEZONES}
+                        className="w-full"
+                      />
                     </div>
 
                     <div className="mb-6">
                       <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500">
                         {t("schedule.dateTime")}
                       </label>
-                      <input
-                        type="datetime-local"
-                        value={editDate}
-                        onChange={(e) => setEditDate(e.target.value)}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-                      />
+                      <DateTimePicker
+                  value={editDate}
+                  onChange={(value) => setEditDate(value)}
+                  className="w-full"
+                />
                     </div>
                     
                     <div className="flex justify-end gap-3">

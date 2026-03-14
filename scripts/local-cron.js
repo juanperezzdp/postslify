@@ -3,7 +3,7 @@ const path = require('path');
 const http = require('http');
 
 
-let cronSecret = '';
+let cronSecret = process.env.CRON_SECRET || '';
 let targetPort = Number.parseInt(process.env.PORT || '', 10);
 try {
   const envPath = path.join(__dirname, '..', '.env.local');
@@ -33,7 +33,7 @@ if (!Number.isFinite(targetPort)) {
   targetPort = 3000;
 }
 
-const interval = 60 * 1000;
+const interval = 10 * 60 * 1000;
 
 function triggerCron() {
   const options = {
@@ -68,6 +68,7 @@ function triggerCron() {
   req.end();
 }
 
-triggerCron();
+// Wait 10 seconds before first run to allow Next.js to start
+setTimeout(triggerCron, 10000);
 
 setInterval(triggerCron, interval);

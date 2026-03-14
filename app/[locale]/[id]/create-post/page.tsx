@@ -41,6 +41,7 @@ import type { VoiceProfile, VoiceProfileSnapshot } from "@/types/voice-profile";
 import type { ChatHistoryListResponse, ChatHistoryUpdateRequest } from "@/types/chat-history";
 import type { ImageStyleOption, ImagePromptFormValues, ImageGenerationRequest, ImageGenerationResponse } from "@/types/image-generation";
 import { useTranslations } from "next-intl";
+import { getProxiedImageUrl } from "@/lib/image-proxy";
  
 
 const styleEmojis: Record<string, string> = {
@@ -88,12 +89,16 @@ const imageStyleOptions: ImageStyleOption[] = [
   { id: "surrealista", label: "Surrealista", emoji: "🌀", image: "/images/styles/surreal.png" },
 ];
 
+import { DateTimePicker } from "@/app/components/DateTimePicker";
+import { Select } from "@/app/components/Select";
+
 export default function CrearPostPage() {
   const t = useTranslations('CreatePost');
   const params = useParams<{ id: string; locale: string }>();
   const activeLocale = params?.locale === "es" ? "es" : "en";
   const CHARACTER_LIMIT = 10;
   const CHARACTER_NAME_MAX = 400;
+  const CHAT_INPUT_MAX_LENGTH = 5000;
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -1901,13 +1906,14 @@ export default function CrearPostPage() {
                       <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-slate-100 text-sm font-bold text-slate-600 ring-2 ring-white shadow-sm transition-transform group-hover:scale-105">
                         {user?.picture ? (
                           <Image
-                            src={user.picture}
-                          alt={user.name || t('labels.profile')}
-                          width={48}
-                          height={48}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
+                            src={getProxiedImageUrl(user.picture) || user.picture}
+                            alt={user.name || t('labels.profile')}
+                            width={48}
+                            height={48}
+                            className="h-full w-full object-cover"
+                            unoptimized={!!getProxiedImageUrl(user.picture)?.startsWith('/api/proxy-image')}
+                          />
+                        ) : (
                         (user?.name || "P").charAt(0).toUpperCase()
                       )}
                       {publishTargets.linkedinProfile && (
@@ -1972,13 +1978,14 @@ export default function CrearPostPage() {
                       <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-slate-100 text-sm font-bold text-slate-600 ring-2 ring-white shadow-sm transition-transform group-hover:scale-105">
                         {page.logoUrl ? (
                           <Image
-                            src={page.logoUrl}
+                            src={getProxiedImageUrl(page.logoUrl) || page.logoUrl}
                             alt={page.name || t('defaults.page')}
                             width={48}
                             height={48}
                             className={`h-full w-full object-cover ${
                               !pageIsActive ? "grayscale" : ""
                             }`}
+                            unoptimized={!!getProxiedImageUrl(page.logoUrl)?.startsWith('/api/proxy-image')}
                           />
                         ) : (
                           (page.name || "P").charAt(0).toUpperCase()
@@ -2506,11 +2513,12 @@ export default function CrearPostPage() {
                       <div className="relative h-12 w-12 overflow-hidden rounded-full bg-slate-100 ring-2 ring-white shadow-sm">
                         {user?.picture ? (
                           <Image
-                            src={user.picture}
+                            src={getProxiedImageUrl(user.picture) || user.picture}
                             alt={user.name || "User"}
                             width={48}
                             height={48}
                             className="h-full w-full object-cover"
+                            unoptimized={!!getProxiedImageUrl(user.picture)?.startsWith('/api/proxy-image')}
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center text-base font-bold text-slate-500">
@@ -2580,7 +2588,7 @@ export default function CrearPostPage() {
                                     className="group relative aspect-square bg-slate-100"
                                   >
                                     <Image
-                                      src={item.url}
+                                      src={getProxiedImageUrl(item.url) || item.url}
                                       alt={item.name || "Imagen adjunta"}
                                       fill
                                       unoptimized
@@ -2602,7 +2610,7 @@ export default function CrearPostPage() {
                                 className="group relative aspect-video w-full bg-slate-100"
                               >
                                 <Image
-                                  src={primaryItem?.url || messageToPublish.media.url}
+                                  src={getProxiedImageUrl(primaryItem?.url || messageToPublish.media.url) || primaryItem?.url || messageToPublish.media.url}
                                   alt={primaryItem?.name || messageToPublish.media.name || "Imagen adjunta"}
                                   fill
                                   unoptimized
@@ -3256,6 +3264,7 @@ export default function CrearPostPage() {
               placeholder={t('placeholders.inputPrompt')}
               className="max-h-[200px] min-h-[40px] md:min-h-[60px] w-full resize-none bg-transparent px-3 py-1.5 md:px-5 md:py-3 text-sm md:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent"
               rows={1}
+              maxLength={CHAT_INPUT_MAX_LENGTH}
             />
             
             <div className="flex items-center justify-between gap-2 px-3 pb-1">
@@ -3396,12 +3405,19 @@ export default function CrearPostPage() {
           </form>
           
           <div className="mt-1 md:mt-3 flex items-center justify-between px-2">
-            {profileError &&
-               <p className="flex items-center gap-1.5 text-xs font-medium text-red-500 animate-in slide-in-from-top-1">
+            {profileError && (
+              <p className="flex items-center gap-1.5 text-xs font-medium text-red-500 animate-in slide-in-from-top-1">
                 <FontAwesomeIcon icon={faExclamationTriangle} className="h-3 w-3" />
                 {profileError}
               </p>
-            }
+            )}
+            
+            {input.length >= CHAT_INPUT_MAX_LENGTH && (
+              <p className="flex items-center gap-1.5 text-xs font-medium text-red-500 animate-in slide-in-from-top-1 ml-auto">
+                <FontAwesomeIcon icon={faExclamationTriangle} className="h-3 w-3" />
+                {activeLocale === "es" ? "Has excedido el límite de 5.000 caracteres." : "You have exceeded the limit of 5,000 characters."}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -3438,14 +3454,13 @@ export default function CrearPostPage() {
                     {t('labels.dateAndTime')}
                   </label>
                   <div className="relative">
-                    <input
-                      type="datetime-local"
+                    <DateTimePicker
                       value={scheduledDate}
-                      onChange={(e) => {
-                        setScheduledDate(e.target.value);
+                      onChange={(value) => {
+                        setScheduledDate(value);
                         if (scheduleError) setScheduleError(null);
                       }}
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-900 outline-none ring-0 transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full"
                     />
                   </div>
                 </div>
@@ -3455,20 +3470,12 @@ export default function CrearPostPage() {
                       {t('labels.timezone')}
                     </label>
                   <div className="relative">
-                    <select
+                    <Select
                       value={selectedTimezone}
-                      onChange={(e) => setSelectedTimezone(e.target.value)}
-                      className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-900 outline-none ring-0 transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
-                    >
-                      {PREDEFINED_TIMEZONES.map((timezone) => (
-                        <option key={timezone.value} value={timezone.value}>
-                          {timezone.label}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                      <FontAwesomeIcon icon={faChevronDown} className="h-3 w-3" />
-                    </div>
+                      onChange={setSelectedTimezone}
+                      options={PREDEFINED_TIMEZONES}
+                      className="w-full"
+                    />
                   </div>
                   {selectedProfileId && voiceProfiles.find(p => p.id === selectedProfileId)?.timezone && (
                      <div className="mt-2 flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-xs font-medium text-blue-700 ring-1 ring-blue-500/10">

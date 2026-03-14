@@ -6,6 +6,7 @@ import type { VoiceTag, VoiceProfileFormValues } from "@/types/voice-profile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useTranslations } from "next-intl";
+import { Select } from "@/app/components/Select";
 import { PREDEFINED_TIMEZONES } from "@/lib/timezone";
 
 const PREDEFINED_LANGUAGES = [
@@ -314,22 +315,13 @@ export default function PerfilPage() {
                 {t('fields.timezone.label')}
               </label>
               <div className="relative">
-                <select
-                  {...register("timezone", { required: t('errors.timezoneRequired') })}
-                  className={`h-11 w-full appearance-none rounded-2xl border bg-slate-50 px-4 text-sm font-medium text-slate-900 outline-none transition-all focus:bg-white focus:ring-4 focus:ring-blue-500/10 cursor-pointer ${errors.timezone ? "border-red-500 focus:border-red-500" : "border-slate-200 focus:border-blue-500"}`}
-                >
-                  <option value="">{t('fields.timezone.placeholder')}</option>
-                  {PREDEFINED_TIMEZONES.map((tz) => (
-                    <option key={tz.value} value={tz.value}>
-                      {tz.label}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </div>
+                <Select
+                  value={watch("timezone")}
+                  onChange={(value) => setValue("timezone", value, { shouldValidate: true })}
+                  options={PREDEFINED_TIMEZONES}
+                  placeholder={t('fields.timezone.placeholder')}
+                  className={errors.timezone ? "border-red-500" : ""}
+                />
               </div>
               {errors.timezone && <span className="text-xs text-red-500">{errors.timezone.message}</span>}
             </div>
@@ -339,22 +331,13 @@ export default function PerfilPage() {
                 {t('fields.language.label')}
               </label>
               <div className="relative">
-                <select
-                  {...register("language", { required: t('errors.languageRequired') })}
-                  className={`h-11 w-full appearance-none rounded-2xl border bg-slate-50 px-4 text-sm font-medium text-slate-900 outline-none transition-all focus:bg-white focus:ring-4 focus:ring-blue-500/10 cursor-pointer ${errors.language ? "border-red-500 focus:border-red-500" : "border-slate-200 focus:border-blue-500"}`}
-                >
-                  <option value="">{t('fields.language.placeholder')}</option>
-                  {PREDEFINED_LANGUAGES.map((lang) => (
-                    <option key={lang.value} value={lang.value}>
-                      {lang.label}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </div>
+                <Select
+                  value={watch("language")}
+                  onChange={(value) => setValue("language", value, { shouldValidate: true })}
+                  options={PREDEFINED_LANGUAGES}
+                  placeholder={t('fields.language.placeholder')}
+                  className={errors.language ? "border-red-500" : ""}
+                />
               </div>
               {errors.language && <span className="text-xs text-red-500">{errors.language.message}</span>}
             </div>
@@ -364,11 +347,17 @@ export default function PerfilPage() {
             <label className="text-sm font-bold text-slate-700">
               {t('fields.context.label')}
             </label>
-            <textarea
-              {...register("context", { required: t('errors.contextRequired') })}
-              className={`min-h-[100px] w-full rounded-2xl border bg-slate-50 px-4 py-3 text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10 ${errors.context ? "border-red-500 focus:border-red-500" : "border-slate-200 focus:border-blue-500"}`}
-              placeholder={t('fields.context.placeholder')}
-            />
+            <div className="relative">
+              <textarea
+                {...register("context", { required: t('errors.contextRequired') })}
+                className={`min-h-[100px] w-full rounded-2xl border bg-slate-50 px-4 py-3 text-sm font-medium text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:bg-white focus:ring-4 focus:ring-blue-500/10 ${errors.context ? "border-red-500 focus:border-red-500" : "border-slate-200 focus:border-blue-500"}`}
+                placeholder={t('fields.context.placeholder')}
+                maxLength={2250}
+              />
+              <div className="absolute bottom-3 right-3 rounded-lg bg-white/80 px-2 py-1 text-[10px] font-bold text-slate-400 backdrop-blur-sm">
+                {watch("context")?.length || 0}/2250
+              </div>
+            </div>
             {errors.context && <span className="text-xs text-red-500">{errors.context.message}</span>}
           </div>
 

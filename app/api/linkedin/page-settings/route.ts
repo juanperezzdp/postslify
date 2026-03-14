@@ -115,7 +115,7 @@ export async function GET() {
 
       const [orgResponse, followerResponse] = await Promise.all([
         fetch(
-          `https://api.linkedin.com/v2/organizations/${orgId}`,
+          `https://api.linkedin.com/v2/organizations/${orgId}?projection=(id,localizedName,vanityName,logoV2(original~:playableStreams,cropped~:playableStreams),staffCountRange)`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -137,6 +137,46 @@ export async function GET() {
       ]);
 
       if (!orgResponse.ok) {
+        // Fallback: Try fetching without projection
+        const responseFallback = await fetch(
+          `https://api.linkedin.com/v2/organizations/${orgId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "X-Restli-Protocol-Version": "2.0.0",
+            },
+            cache: "no-store",
+          }
+        );
+
+        if (responseFallback.ok) {
+            const orgFallback = await responseFallback.json();
+            // Reuse the same processing logic or simplified
+             const logoUrlFallback =
+                orgFallback.logoV2?.["original~"]?.elements?.[0]?.identifiers?.[0]?.identifier ||
+                orgFallback.logoV2?.["cropped~"]?.elements?.[0]?.identifiers?.[0]?.identifier ||
+                null;
+            
+            dataPage = {
+                id: String(orgFallback.id),
+                name: orgFallback.localizedName || null,
+                description: orgFallback.localizedDescription || null,
+                vanityName: orgFallback.vanityName || null,
+                logoUrl: logoUrlFallback,
+                urn: entry.pageUrn,
+                metrics: {
+                  followerCount: null,
+                  followerDelta: null,
+                  employeeCountRange: null
+                },
+                isValid: true,
+                canRefresh: !!entry.tokenLongEncrypted,
+                createdAt: entry.createdAt,
+                expiresAt: entry.expiresAt,
+            };
+            return { page: dataPage, pageError: null, pageWarning: "Data loaded via fallback (limited metrics)." };
+        }
+
         const errorPayload = await orgResponse.json().catch(() => null);
         const message =
           errorPayload?.message ||
@@ -147,9 +187,14 @@ export async function GET() {
       }
 
       const org = await orgResponse.json();
-      const logoUrl =
-        org?.logoV2?.["original~"]?.elements?.[0]?.identifiers?.[0]?.identifier ||
-        null;
+      
+      let logoUrl = null;
+      if (org?.logoV2?.["original~"]?.elements?.[0]?.identifiers?.[0]?.identifier) {
+        logoUrl = org.logoV2["original~"].elements[0].identifiers[0].identifier;
+      } else if (org?.logoV2?.["cropped~"]?.elements?.[0]?.identifiers?.[0]?.identifier) {
+        logoUrl = org.logoV2["cropped~"].elements[0].identifiers[0].identifier;
+      }
+      
       const staffStart = org?.staffCountRange?.start ?? null;
       const staffEnd = org?.staffCountRange?.end ?? null;
       const employeeCountRange =
@@ -308,7 +353,43 @@ export async function POST(request: NextRequest) {
   }
 
   const validateToken = async (accessToken: string) => {
+    // Intenta obtener la información básica de la organización
+    // Se usa proyección para asegurar que vengan los campos de logo
+    const projection = "(id,localizedName,vanityName,logoV2(original~:playableStreams,cropped~:playableStreams))";
     const response = await fetch(
+      `https://api.linkedin.com/v2/organizations/${orgId}?projection=${projection}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "X-Restli-Protocol-Version": "2.0.0",
+        },
+        cache: "no-store",
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      const name = data.localizedName;
+      
+      // Intentar extraer el logo de varias formas posibles
+      let logoUrl = null;
+      
+      // 1. Original
+      if (data.logoV2?.["original~"]?.elements?.[0]?.identifiers?.[0]?.identifier) {
+        logoUrl = data.logoV2["original~"].elements[0].identifiers[0].identifier;
+      } 
+      // 2. Cropped (a veces es lo que hay disponible)
+      else if (data.logoV2?.["cropped~"]?.elements?.[0]?.identifiers?.[0]?.identifier) {
+        logoUrl = data.logoV2["cropped~"].elements[0].identifiers[0].identifier;
+      }
+
+      console.log("LinkedIn Organization Data fetched:", { name, logoUrlFound: !!logoUrl });
+
+      return { valid: true, name, logoUrl };
+    }
+    
+    // Si falla con proyección, intentamos sin ella (fallback)
+    const responseFallback = await fetch(
       `https://api.linkedin.com/v2/organizations/${orgId}`,
       {
         headers: {
@@ -318,19 +399,25 @@ export async function POST(request: NextRequest) {
         cache: "no-store",
       }
     );
-    if (response.ok) {
-      const data = await response.json();
-      const name = data.localizedName;
-      const logoUrl =
-        data.logoV2?.["original~"]?.elements?.[0]?.identifiers?.[0]?.identifier ||
-        null;
-      return { valid: true, name, logoUrl };
+
+    if (responseFallback.ok) {
+        const data = await responseFallback.json();
+        const name = data.localizedName;
+        const logoUrl =
+            data.logoV2?.["original~"]?.elements?.[0]?.identifiers?.[0]?.identifier ||
+            data.logoV2?.["cropped~"]?.elements?.[0]?.identifiers?.[0]?.identifier ||
+            null;
+            
+        console.log("LinkedIn Organization Data fetched (fallback):", { name, logoUrlFound: !!logoUrl });
+        return { valid: true, name, logoUrl };
     }
+
     const errorPayload = await response.json().catch(() => null);
     const message =
       errorPayload?.message ||
       errorPayload?.error ||
       `Status ${response.status}`;
+    console.error("LinkedIn Validate Token Error:", message);
     return { valid: false, message };
   };
 
@@ -484,6 +571,9 @@ export async function POST(request: NextRequest) {
   const payload = writeLinkedInPages(updatedPages);
 
   user.linkedin_page_access_token_encrypted = payload;
+  if (finalLogoUrl) {
+    user.linkedin_page_image = finalLogoUrl;
+  }
   await user.save();
 
   return NextResponse.json({ ok: true, pageUrn }, { status: 200 });

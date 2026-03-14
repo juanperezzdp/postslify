@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       }
     | null;
 
-  if (!body || !body.text || !body.text.trim()) {
+  if (!body || typeof body.text !== "string" || !body.text.trim()) {
     return NextResponse.json(
       { error: "El texto del post es obligatorio" },
       { status: 400 },

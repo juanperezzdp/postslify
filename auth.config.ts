@@ -34,6 +34,9 @@ export default {
         "voice-profiles",
         "voice-profile",
         "billing",
+        "settings",
+        "business-page",
+        "archived-posts",
       ];
       
       const isProtectedRoute =

@@ -221,15 +221,15 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   {t('comparison.before')}
                 </span>
                 <PostCard 
-                  authorName="Juan Perez"
-                  authorRole="Frontend developer ( React & Nextjs ) Siempre aprendiendo nuevas tecnologías."
+                  authorName="David Miller"
+                  authorRole={t('comparison.authorRole')}
                   timeAgo="2d"
                   content={t('comparison.example.before')}
                   likes={12}
                   comments={2}
                   reposts={0}
                   isOptimized={false}
-                  avatarUrl="https://media.licdn.com/dms/image/v2/D4E03AQFNn0blqhfbPg/profile-displayphoto-shrink_100_100/B4EZRcKErqGwAY-/0/1736712932981?e=1773273600&v=beta&t=JWbctdor1l9VMSNcZ_IyzV2Ud5oFcy-X2KaoCmz82h4"
+                  avatarUrl="/perfil.png"
                 />
              </div>
           </div>
@@ -276,7 +276,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   <span>{t('comparison.optimized')}</span>
                 </div>
                 <PostCard 
-                  authorName="Juan Perez"
+                  authorName="David Miller"
                   authorRole={t('comparison.authorRole')}
                   timeAgo={t('comparison.timeAgo')}
                   content={t('comparison.example.after')}
@@ -285,7 +285,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   reposts={45}
                   views={15400}
                   isOptimized={true}
-                  avatarUrl="https://media.licdn.com/dms/image/v2/D4E03AQFNn0blqhfbPg/profile-displayphoto-shrink_100_100/B4EZRcKErqGwAY-/0/1736712932981?e=1773273600&v=beta&t=JWbctdor1l9VMSNcZ_IyzV2Ud5oFcy-X2KaoCmz82h4"
+                  avatarUrl="/perfil.png"
                   postImageUrl={Marketing}
                 />
             </div>

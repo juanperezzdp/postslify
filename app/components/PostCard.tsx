@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { PostCardProps } from "@/types/landing";
 import { useTranslations } from "next-intl";
+import { getProxiedImageUrl } from "@/lib/image-proxy";
 
 export function PostCard({
   authorName,
@@ -25,6 +26,9 @@ export function PostCard({
   postImageUrl,
 }: PostCardProps) {
   const t = useTranslations('PostCard');
+  
+  const proxiedAvatarUrl = avatarUrl ? getProxiedImageUrl(avatarUrl) : null;
+  const proxiedPostImageUrl = typeof postImageUrl === "string" ? getProxiedImageUrl(postImageUrl) : postImageUrl;
 
   return (
     <div
@@ -35,8 +39,15 @@ export function PostCard({
       {/* Header */}
       <div className="mb-3 flex items-start gap-3">
         <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-full bg-slate-200">
-          {avatarUrl ? (
-            <img src={avatarUrl} alt={authorName} className="h-full w-full object-cover" />
+          {proxiedAvatarUrl ? (
+            <Image
+              src={proxiedAvatarUrl}
+              alt={authorName}
+              width={40}
+              height={40}
+              className="h-full w-full object-cover"
+              unoptimized={proxiedAvatarUrl.startsWith('data:') || proxiedAvatarUrl.startsWith('/api/proxy-image')}
+            />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-400">
               <FontAwesomeIcon icon={faUser} className="h-5 w-5" />
@@ -59,17 +70,17 @@ export function PostCard({
 
       {/* Content */}
       <div className="mb-4 space-y-2">
-        {postImageUrl && (
+        {proxiedPostImageUrl && (
           <div className="relative overflow-hidden rounded-lg border border-slate-100">
-            {typeof postImageUrl === "string" ? (
+            {typeof proxiedPostImageUrl === "string" ? (
               <img 
-                src={postImageUrl} 
+                src={proxiedPostImageUrl} 
                 alt="Post content" 
                 className="w-full object-cover"
               />
             ) : (
               <Image 
-                src={postImageUrl} 
+                src={proxiedPostImageUrl} 
                 alt="Post content" 
                 className="w-full object-cover"
               />

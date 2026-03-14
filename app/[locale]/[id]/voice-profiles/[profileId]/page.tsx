@@ -249,7 +249,7 @@ export default function PerfilDetallePage() {
         <div className="grid gap-8 lg:grid-cols-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
           {/* Main Info */}
           <div className="lg:col-span-2 flex flex-col gap-8">
-            <div className="group flex flex-col gap-6 rounded-[2rem] border border-slate-100 bg-gradient-to-br from-white via-white to-blue-50/50 p-8 shadow-xl shadow-slate-200/40 transition-all hover:shadow-2xl hover:shadow-blue-200/20 sm:flex-row sm:items-start">
+            <div className="group flex flex-col gap-6 rounded-[2rem] border border-slate-100 bg-gradient-to-br from-white via-white to-blue-50/50 p-8 shadow-lg shadow-slate-200 transition-all hover:shadow-2xl hover:shadow-blue-200/20 sm:flex-row sm:items-start">
               <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-3xl bg-blue-300 text-5xl shadow-lg shadow-blue-100 ring-4 ring-white transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
                 {getProfileEmoji(profile.style_tag)}
               </div>
@@ -271,7 +271,7 @@ export default function PerfilDetallePage() {
             </div>
 
             {/* Contexto */}
-            <div className="flex flex-col gap-6 rounded-[2rem] border border-slate-100 bg-white p-8 shadow-xl shadow-slate-200/40">
+            <div className="flex flex-col gap-6 rounded-[2rem] border border-slate-100 bg-white p-8 shadow-lg shadow-slate-200">
               <h2 className="flex items-center gap-3 text-lg font-bold text-slate-900">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
                   <FontAwesomeIcon icon={faFileLines} className="h-4 w-4" />
@@ -294,7 +294,7 @@ export default function PerfilDetallePage() {
             </div>
 
             {/* Ejemplos */}
-            <div className="flex flex-col gap-6 rounded-[2rem] border border-slate-100 bg-white p-8 shadow-xl shadow-slate-200/40">
+            <div className="flex flex-col gap-6 rounded-[2rem] border border-slate-100 bg-white p-8 shadow-lg shadow-slate-200">
               <h2 className="flex items-center gap-3 text-lg font-bold text-slate-900">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
                   <FontAwesomeIcon icon={faMessage} className="h-4 w-4" />
@@ -382,7 +382,7 @@ export default function PerfilDetallePage() {
 
           {/* Sidebar Info */}
           <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-6 rounded-[2rem] border border-slate-100 bg-white p-6 shadow-xl shadow-slate-200/40">
+            <div className="flex flex-col gap-6 rounded-[2rem] border border-slate-100 bg-white p-6 shadow-lg shadow-slate-200">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                 {t("details.title")}
               </h3>
@@ -394,7 +394,7 @@ export default function PerfilDetallePage() {
                       {profile.style_tag || t("details.unspecified")}
                     </span>
                   </div>
-                  <div className="text-2xl opacity-50 group-hover:scale-110 group-hover:opacity-100 transition-all">
+                  <div className="text-2xl group-hover:scale-110 transition-all">
                     {getProfileEmoji(profile.style_tag)}
                   </div>
                 </div>
@@ -406,7 +406,7 @@ export default function PerfilDetallePage() {
                       {getLanguageLabel(profile.language) || t("details.unspecified")}
                     </span>
                   </div>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm ring-1 ring-slate-200 group-hover:text-blue-500 group-hover:ring-blue-200 transition-all">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-blue-600 shadow-sm ring-1 ring-slate-200 group-hover:text-blue-500 group-hover:ring-blue-200 transition-all">
                     <FontAwesomeIcon icon={faLanguage} className="h-4 w-4" />
                   </div>
                 </div>
@@ -418,7 +418,7 @@ export default function PerfilDetallePage() {
                       {formatTimezone(profile.timezone) || t("details.unspecified")}
                     </span>
                   </div>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm ring-1 ring-slate-200 group-hover:text-blue-500 group-hover:ring-blue-200 transition-all">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-blue-600 shadow-sm ring-1 ring-slate-200 group-hover:text-blue-500 group-hover:ring-blue-200 transition-all">
                     <FontAwesomeIcon icon={faClock} className="h-4 w-4" />
                   </div>
                 </div>
@@ -427,14 +427,14 @@ export default function PerfilDetallePage() {
                   <div className="flex flex-col gap-3 pt-4 border-t border-slate-100">
                     <button
                       onClick={() => setIsEditing(true)}
-                      className="flex cursor-pointer w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-4 text-sm font-bold text-white shadow-lg shadow-blue-200 transition-all hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-300 active:scale-95"
+                      className="flex cursor-pointer w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-4 text-sm font-bold text-white transition-all hover:bg-blue-700 active:scale-95"
                     >
                       <FontAwesomeIcon icon={faPen} className="h-4 w-4" />
                       {t("actions.edit")}
                     </button>
                     <button
                       onClick={handleDeleteClick}
-                      className="flex cursor-pointer w-full items-center justify-center gap-2 rounded-2xl border-2 border-red-100 bg-red-50 px-4 py-4 text-sm font-bold text-red-600 transition-all hover:border-red-200 hover:bg-red-100 active:scale-95"
+                      className="flex cursor-pointer w-full items-center justify-center gap-2 rounded-2xl bg-red-600 px-4 py-4 text-sm font-bold text-white transition-all hover:bg-red-700 active:scale-95"
                     >
                       <FontAwesomeIcon icon={faTrash} className="h-4 w-4" />
                       {t("actions.delete")}
@@ -445,7 +445,7 @@ export default function PerfilDetallePage() {
                     <button
                       onClick={handleSave}
                       disabled={isSaving}
-                      className="flex cursor-pointer w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-4 text-sm font-bold text-white shadow-lg shadow-blue-200 transition-all hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-300 active:scale-95 disabled:pointer-events-none disabled:opacity-50"
+                      className="flex cursor-pointer w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-4 text-sm font-bold text-white transition-all hover:bg-blue-700 active:scale-95 disabled:pointer-events-none disabled:opacity-50"
                     >
                       {isSaving ? (
                         <FontAwesomeIcon icon={faSpinner} className="h-4 w-4 animate-spin" />

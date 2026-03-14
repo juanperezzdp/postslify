@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { getProxiedImageUrl } from "@/lib/image-proxy";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -81,6 +82,9 @@ const imageStyleOptions: ImageStyleOption[] = [
   { id: "low-poly", label: "Low Poly", emoji: "🔷", image: "/images/styles/low-poly.png" },
   { id: "surrealista", label: "Surrealista", emoji: "🌀", image: "/images/styles/surreal.png" },
 ];
+
+import { DateTimePicker } from "@/app/components/DateTimePicker";
+import { Select } from "@/app/components/Select";
 
 export default function ArchivedPostsPage() {
   const t = useTranslations("CreatePost");
@@ -1492,7 +1496,7 @@ export default function ArchivedPostsPage() {
                                     className="group relative aspect-square overflow-hidden bg-slate-100"
                                   >
                                     <Image
-                                      src={item.url}
+                                      src={getProxiedImageUrl(item.url) || item.url}
                                       alt={item.name || "Imagen adjunta"}
                                       fill
                                       unoptimized
@@ -1520,7 +1524,7 @@ export default function ArchivedPostsPage() {
                                   className="absolute inset-0"
                                 >
                                   <Image
-                                    src={primaryItem?.url || message.media.url}
+                                    src={getProxiedImageUrl(primaryItem?.url || message.media.url) || primaryItem?.url || message.media.url}
                                     alt={primaryItem?.name || message.media.name || "Imagen adjunta"}
                                     fill
                                     unoptimized
@@ -2214,14 +2218,13 @@ export default function ArchivedPostsPage() {
                     {t("labels.dateAndTime")}
                   </label>
                   <div className="relative">
-                    <input
-                      type="datetime-local"
+                    <DateTimePicker
                       value={scheduledDate}
-                      onChange={(event) => {
-                        setScheduledDate(event.target.value);
+                      onChange={(value) => {
+                        setScheduledDate(value);
                         if (scheduleError) setScheduleError(null);
                       }}
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-900 outline-none ring-0 transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full"
                     />
                   </div>
                 </div>
@@ -2231,20 +2234,12 @@ export default function ArchivedPostsPage() {
                     {t("labels.timezone")}
                   </label>
                   <div className="relative">
-                    <select
+                    <Select
                       value={selectedTimezone}
-                      onChange={(event) => setSelectedTimezone(event.target.value)}
-                      className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-900 outline-none ring-0 transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
-                    >
-                      {PREDEFINED_TIMEZONES.map((timezone) => (
-                        <option key={timezone.value} value={timezone.value}>
-                          {timezone.label}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                      <FontAwesomeIcon icon={faChevronDown} className="h-3 w-3" />
-                    </div>
+                      onChange={setSelectedTimezone}
+                      options={PREDEFINED_TIMEZONES}
+                      className="w-full"
+                    />
                   </div>
                 </div>
 

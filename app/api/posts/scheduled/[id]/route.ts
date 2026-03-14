@@ -94,6 +94,14 @@ export async function PATCH(
     }
 
     
+    if (post.status === "published") {
+      return NextResponse.json(
+        { error: "Cannot reschedule a published post" },
+        { status: 400 }
+      );
+    }
+
+    // Convert local time to UTC
     const utcDate = fromZonedTime(scheduledAt, timezone);
 
     

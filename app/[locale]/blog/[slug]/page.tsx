@@ -8,6 +8,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import LanguageSwitcher from "@/app/components/LanguageSwitcher";
 import type { BlogLocale } from "@/types/blog";
+import Image from "next/image";
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
@@ -113,9 +114,9 @@ export default async function BlogPostPage({ params }: Props) {
                 {t("backToBlog")}
             </Link>
             
-            <div className="mb-8 flex flex-wrap gap-2">
+            <div className="mb-8 flex flex-wrap gap-4">
                 {postTranslation.tags.map(tag => (
-                    <span key={tag} className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600">
+                    <span key={tag} className="rounded-full bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-100">
                         {tag}
                     </span>
                 ))}
@@ -140,8 +141,21 @@ export default async function BlogPostPage({ params }: Props) {
                 </div>
             </div>
 
+            {post.imageUrl && (
+              <div className="mb-10 overflow-hidden rounded-2xl shadow-lg shadow-blue-900/5">
+                <Image
+                  src={post.imageUrl}
+                  alt={postTranslation.title}
+                  width={1200}
+                  height={630}
+                  className="h-auto w-full object-cover"
+                  priority
+                />
+              </div>
+            )}
+
             <div 
-                className="prose prose-lg prose-slate prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-500"
+                className="blog-content prose prose-lg prose-slate prose-headings:font-bold prose-headings:mt-12 prose-headings:mb-6 prose-p:mb-8 prose-li:mb-2 prose-a:text-blue-600 hover:prose-a:text-blue-500 prose-p:leading-relaxed prose-li:leading-relaxed max-w-none"
                 dangerouslySetInnerHTML={{ __html: postTranslation.content }} 
             />
             

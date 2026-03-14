@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 import { useLocale, useTranslations } from "next-intl";
+import { getProxiedImageUrl } from "@/lib/image-proxy";
 import type {
   Testimonial,
   TestimonialListResponse,
@@ -95,10 +97,13 @@ export default function TestimonialsSection() {
                             <div className="flex items-start gap-3">
                               <div className="h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
                                 {item.image ? (
-                                  <img
-                                    src={item.image}
+                                  <Image
+                                    src={getProxiedImageUrl(item.image) || item.image}
                                     alt={item.name}
+                                    width={48}
+                                    height={48}
                                     className="h-full w-full object-cover"
+                                    unoptimized={!!getProxiedImageUrl(item.image)?.startsWith('/api/proxy-image')}
                                   />
                                 ) : (
                                   <div className="flex h-full w-full items-center justify-center bg-blue-800 text-sm font-semibold text-white">
@@ -150,10 +155,13 @@ export default function TestimonialsSection() {
                             <div className="flex items-start gap-3">
                               <div className="h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
                                 {item.image ? (
-                                  <img
-                                    src={item.image}
+                                  <Image
+                                    src={getProxiedImageUrl(item.image) || item.image}
                                     alt={item.name}
+                                    width={48}
+                                    height={48}
                                     className="h-full w-full object-cover"
+                                    unoptimized={!!getProxiedImageUrl(item.image)?.startsWith('/api/proxy-image')}
                                   />
                                 ) : (
                                   <div className="flex h-full w-full items-center justify-center bg-blue-800 text-sm font-semibold text-white">
@@ -210,10 +218,13 @@ export default function TestimonialsSection() {
                       <div className="flex items-start gap-3">
                         <div className="h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
                           {item.image ? (
-                            <img
-                              src={item.image}
+                            <Image
+                              src={getProxiedImageUrl(item.image) || item.image}
                               alt={item.name}
+                              width={48}
+                              height={48}
                               className="h-full w-full object-cover"
+                              unoptimized={!!getProxiedImageUrl(item.image)?.startsWith('/api/proxy-image')}
                             />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center bg-blue-800 text-sm font-semibold text-white">
@@ -267,10 +278,13 @@ export default function TestimonialsSection() {
                     <div className="flex items-start gap-3">
                       <div className="h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
                         {item.image ? (
-                          <img
-                            src={item.image}
+                          <Image
+                            src={getProxiedImageUrl(item.image) || item.image}
                             alt={item.name}
+                            width={48}
+                            height={48}
                             className="h-full w-full object-cover"
+                            unoptimized={!!getProxiedImageUrl(item.image)?.startsWith('/api/proxy-image')}
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center bg-blue-800 text-sm font-semibold text-white">

@@ -21,6 +21,7 @@ import {
   faTriangleExclamation
 } from "@fortawesome/free-solid-svg-icons";
 import { useLocale, useTranslations } from "next-intl";
+import { getProxiedImageUrl } from "@/lib/image-proxy";
 
 const isTokenCreatedToday = (createdAt?: string) => {
   if (!createdAt) return false;
@@ -391,7 +392,7 @@ export default function BusinessPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="cursor-pointer mt-4 group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl bg-blue-500 px-6 py-4 text-sm font-bold text-white shadow-xl shadow-blue-500/20 transition-all duration-300 ease-out hover:bg-blue-600 hover:shadow-blue-500/40 hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                  className="cursor-pointer mt-4 group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl bg-blue-500 px-6 py-4 text-sm font-bold text-white transition-all duration-300 ease-out hover:bg-blue-600 hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                 >
                   <span className="relative z-10">{isSubmitting ? t("actions.saving") : t("actions.saveConfig")}</span>
                   {!isSubmitting && <FontAwesomeIcon icon={faArrowRight} className="relative z-10 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />}
@@ -487,7 +488,7 @@ export default function BusinessPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="cursor-pointer mt-4 group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl bg-blue-500 px-6 py-4 text-sm font-bold text-white shadow-xl shadow-blue-500/20 transition-all duration-300 ease-out hover:bg-blue-600 hover:shadow-blue-500/40 hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                  className="cursor-pointer mt-4 group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-2xl bg-blue-500 px-6 py-4 text-sm font-bold text-white transition-all duration-300 ease-out hover:bg-blue-600 hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                 >
                   <span className="relative z-10">{isSubmitting ? t("actions.saving") : t("actions.saveCredentials")}</span>
                   {!isSubmitting && <FontAwesomeIcon icon={faArrowRight} className="relative z-10 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />}
@@ -556,13 +557,14 @@ export default function BusinessPage() {
                         <div className="flex gap-4">
                           {page.logoUrl ? (
                             <Image
-                              src={page.logoUrl}
+                              src={getProxiedImageUrl(page.logoUrl) || page.logoUrl}
                               alt={page.name || t("list.card.logoAltFallback")}
                               width={56}
                               height={56}
                               className={`rounded-2xl object-cover ring-4 ring-slate-50 ${
                                 page.isValid === false ? "opacity-50 grayscale" : ""
                               }`}
+                              unoptimized={!!getProxiedImageUrl(page.logoUrl)?.startsWith('/api/proxy-image')}
                             />
                           ) : (
                             <div className={`flex h-14 w-14 items-center justify-center rounded-2xl text-xl font-bold shadow-inner ring-4 ring-slate-50 ${

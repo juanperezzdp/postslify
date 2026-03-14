@@ -9,9 +9,15 @@ export async function POST(request: NextRequest) {
     | RegisterInputs
     | null;
 
-  if (!body || !body.email || !body.password) {
+  if (
+    !body ||
+    !body.email ||
+    !body.password ||
+    typeof body.email !== "string" ||
+    typeof body.password !== "string"
+  ) {
     return NextResponse.json(
-      { error: "Email y contraseña son obligatorios" },
+      { error: "Email y contraseña son obligatorios y deben ser texto válido" },
       { status: 400 },
     );
   }

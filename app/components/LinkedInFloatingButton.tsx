@@ -21,6 +21,7 @@ import {
   faExclamationTriangle
 } from "@fortawesome/free-solid-svg-icons";
 import type { LinkedInUser, PageSettingsResponse, DraggablePosition, DragState } from "@/types/linkedin";
+import { getProxiedImageUrl } from "@/lib/image-proxy";
 
 export function LinkedInFloatingButton() {
   const t = useTranslations("LinkedInFloating");
@@ -40,6 +41,7 @@ export function LinkedInFloatingButton() {
 
   const userId = session?.user?.id;
   const avatarUrl = user?.picture ?? session?.user?.image ?? null;
+  const proxiedAvatarUrl = avatarUrl ? getProxiedImageUrl(avatarUrl) : null;
 
   const pages = pageSettings?.pages?.length
     ? pageSettings.pages
@@ -223,13 +225,14 @@ export function LinkedInFloatingButton() {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="relative shrink-0">
-                    {avatarUrl ? (
+                    {proxiedAvatarUrl ? (
                       <Image
-                        src={avatarUrl}
+                        src={proxiedAvatarUrl}
                         alt={user.name || t("userFallback")}
                         width={48}
                         height={48}
                         className="rounded-full object-cover ring-2 ring-white/30 shadow-md"
+                        unoptimized={proxiedAvatarUrl.startsWith('/api/proxy-image')}
                       />
                     ) : (
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-sm font-bold text-blue-600 ring-2 ring-white/30 shadow-md">
@@ -301,14 +304,15 @@ export function LinkedInFloatingButton() {
                         href={`/${userId}/business-page`}
                         className="group flex items-center gap-3 rounded-xl bg-blue-500/40 p-2 transition-all hover:bg-blue-500/70 border border-white/5 hover:border-white/10"
                       >
-                        <div className={`relative h-8 w-8 shrink-0 overflow-hidden rounded-lg bg-blue-800 ${pageSettings?.page?.id !== page.id ? "grayscale" : ""}`}>
+                        <div className={`relative h-8 w-8 shrink-0 overflow-hidden rounded-lg bg-blue-800 ${!page.isValid ? "grayscale" : ""}`}>
                           {page.logoUrl ? (
                             <Image
-                              src={page.logoUrl}
+                              src={getProxiedImageUrl(page.logoUrl) || page.logoUrl}
                               alt={page.name || t("pageAltFallback")}
                               width={32}
                               height={32}
                               className="h-full w-full object-cover"
+                              unoptimized={!!getProxiedImageUrl(page.logoUrl)?.startsWith('/api/proxy-image')}
                             />
                           ) : (
                             <div className="flex h-full w-full items-center justify-center bg-blue-700 text-white text-xs font-bold">
@@ -316,8 +320,8 @@ export function LinkedInFloatingButton() {
                             </div>
                           )}
                           {/* Inactive Status Overlay */}
-                          {pageSettings?.page?.id !== page.id && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/5">
+                          {!page.isValid && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/5" title="Página no válida o token expirado">
                               <FontAwesomeIcon icon={faXmark} className="h-5 w-5 text-white drop-shadow-md" />
                             </div>
                           )}

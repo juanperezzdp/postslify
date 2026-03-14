@@ -4,16 +4,17 @@ import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faEnvelope,
   faCircleCheck,
   faTriangleExclamation,
-  faRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
+  faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import type { ResetPasswordRequestValues, UserSettingsFormValues } from "@/types/user-settings";
 import { useTranslations } from "next-intl";
+import { getProxiedImageUrl } from "@/lib/image-proxy";
 
 type StatusState =
   | { type: "success"; message: string }
@@ -224,10 +225,13 @@ export default function SettingsClient({ user }: SettingsClientProps) {
               <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4">
                 <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white">
                   {imagePreview ? (
-                    <img
-                      src={imagePreview}
+                    <Image
+                      src={getProxiedImageUrl(imagePreview) || imagePreview}
                       alt={t("form.imageAlt")}
+                      width={64}
+                      height={64}
                       className="h-full w-full object-cover"
+                      unoptimized={!!getProxiedImageUrl(imagePreview)?.startsWith('/api/proxy-image') || imagePreview.startsWith('data:')}
                     />
                   ) : (
                     <FontAwesomeIcon icon={faUser} className="h-6 w-6 text-slate-400" />

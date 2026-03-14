@@ -16,6 +16,7 @@ export interface IUser extends mongoose.Document {
   linkedin_refresh_token?: string;
   linkedin_refresh_expires_at?: number;
   linkedin_page_access_token_encrypted?: string;
+  linkedin_page_image?: string;
   reset_token?: string;
   reset_token_expires?: Date;
   createdAt: Date;
