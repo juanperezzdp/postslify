@@ -32,6 +32,7 @@ import {
   faChevronDown,
   faArrowRight,
   faTrash,
+  faLightbulb,
 } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { PREDEFINED_TIMEZONES } from "@/lib/timezone";
@@ -99,6 +100,7 @@ export default function CrearPostPage() {
   const CHARACTER_LIMIT = 10;
   const CHARACTER_NAME_MAX = 400;
   const CHAT_INPUT_MAX_LENGTH = 5000;
+  const IMPROVE_CONTEXT_MAX_LENGTH = 1250;
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -2917,17 +2919,35 @@ export default function CrearPostPage() {
             <form onSubmit={handleImageFormSubmit(handleGenerateImage)}>
               <div className="max-h-[70vh] overflow-y-auto p-6 space-y-6">
                 <div className="space-y-2">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                    {t('labels.improveContext')}
-                  </label>
-                  <textarea
-                    {...registerImagePrompt("extraContext", {
-                      required: t('errors.contextRequired'),
-                    })}
-                    placeholder={t('placeholders.contextExample')}
-                    rows={3}
-                    className="w-full resize-none rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none ring-0 transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-                  />
+                  <div className="flex items-center gap-2">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
+                      {t('labels.improveContext')}
+                    </label>
+                  </div>
+                  <div className="flex items-start gap-2.5 rounded-xl border border-blue-100 bg-blue-50/50 p-3">
+                    <FontAwesomeIcon icon={faLightbulb} className="mt-0.5 h-3.5 w-3.5 text-blue-600" />
+                    <p className="text-xs font-medium leading-relaxed text-blue-900">
+                      {t('labels.improveContextWarning')}
+                    </p>
+                  </div>
+                  <div className="relative">
+                    <textarea
+                      {...registerImagePrompt("extraContext", {
+                        required: t('errors.contextRequired'),
+                        maxLength: {
+                          value: IMPROVE_CONTEXT_MAX_LENGTH,
+                          message: activeLocale === "es" ? `Máximo ${IMPROVE_CONTEXT_MAX_LENGTH} caracteres` : `Max ${IMPROVE_CONTEXT_MAX_LENGTH} characters`
+                        }
+                      })}
+                      placeholder={t('placeholders.contextExample')}
+                      rows={3}
+                      className="w-full resize-none rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none ring-0 transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                      maxLength={IMPROVE_CONTEXT_MAX_LENGTH}
+                    />
+                    <div className="absolute bottom-3 right-3 rounded-lg bg-white/80 px-2 py-1 text-[10px] font-bold text-slate-400 backdrop-blur-sm">
+                      {extraContextValue.length}/{IMPROVE_CONTEXT_MAX_LENGTH}
+                    </div>
+                  </div>
                   {imagePromptErrors.extraContext && (
                     <p className="text-xs font-semibold text-rose-500">
                       {imagePromptErrors.extraContext.message}
@@ -2943,6 +2963,12 @@ export default function CrearPostPage() {
                     <span className="text-[11px] font-semibold text-slate-400">
                       {characterFields.length}/{CHARACTER_LIMIT}
                     </span>
+                  </div>
+                  <div className="flex items-start gap-2.5 rounded-xl border border-blue-100 bg-blue-50/50 p-3">
+                    <FontAwesomeIcon icon={faLightbulb} className="mt-0.5 h-3.5 w-3.5 text-blue-600" />
+                    <p className="text-xs font-medium leading-relaxed text-blue-900">
+                      {t('labels.charactersWarning')}
+                    </p>
                   </div>
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                     <div className="relative w-full">

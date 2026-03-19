@@ -39,6 +39,15 @@ export type ScheduledPost = {
   linkedin_target_image?: string | null;
 };
 
+export type ScheduledTargetSummary = {
+  id: string;
+  name: string;
+  image: string | null;
+  initial: string;
+  count: number;
+  type: "profile" | "page";
+};
+
 export type PublishTargets = {
   linkedinProfile: boolean;
   linkedinPage: boolean;

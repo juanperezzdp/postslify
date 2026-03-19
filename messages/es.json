@@ -398,6 +398,10 @@
   "Calendar": {
     "title": "Calendario de Contenidos",
     "subtitle": "Visualiza y gestiona tus publicaciones programadas con facilidad.",
+    "scheduledTopTitle": "Perfiles y Páginas con Posts Programados",
+    "typePage": "Página",
+    "typeProfile": "Perfil",
+    "scheduledCountTooltip": "{count, plural, =1 {# post} other {# posts}}",
     "days": {
       "mon": "Lun",
       "tue": "Mar",
@@ -519,6 +523,56 @@
         "analytics": { "title": "Análisis de Rendimiento", "desc": "Toma decisiones basadas en datos. Visualiza el impacto de tus publicaciones y optimiza tu estrategia con métricas detalladas en tiempo real." },
         "virtualAssistant": { "title": "Asistente Virtual 24/7", "desc": "Tu copiloto de LinkedIn. Recibe sugerencias de temas, mejoras en tiempo real y respuestas automáticas inteligentes para tus comentarios." },
         "multiAccount": { "title": "Gestión de Múltiples Cuentas", "desc": "Ideal para agencias y equipos. Gestiona múltiples perfiles personales y páginas de empresa desde un solo panel de control unificado." }
+      }
+    },
+    "powerSection": {
+      "title": "Llega a tu <span>cliente ideal</span>",
+      "subtitle": "Postslify te ayuda a que cada publicación llegue a las personas correctas: tus clientes deseados, tu comunidad y el público que realmente puede convertir.",
+      "items": {
+        "idealClient": {
+          "title": "Habla a tu cliente soñado",
+          "desc": "Usa perfiles de voz y contenido estratégico para que tus posts resuenen con las personas que decides atraer, no con cualquiera."
+        },
+        "rightCommunity": {
+          "title": "Conecta con tu comunidad",
+          "desc": "Mantén una presencia constante frente a la audiencia correcta gracias a la programación inteligente y a mensajes pensados para tu nicho."
+        },
+        "turnVisibility": {
+          "title": "Convierte alcance en oportunidades",
+          "desc": "Transforma likes y visualizaciones en conversaciones, leads y relaciones reales con clientes ideales y decisores."
+        }
+      }
+    },
+    "scheduleSection": {
+      "title": "Programa cada post con <span>claridad</span>",
+      "subtitle": "Elige el día, la hora y el destino de cada publicación y deja que Postslify se encargue del resto mientras tú sigues con tu negocio.",
+      "items": {
+        "howItWorks": {
+          "title": "Programa en pocos clics",
+          "desc": "Escribe tu post, elige perfil o página, selecciona fecha y hora y confirma. Tu contenido se publica de forma automática en el mejor momento."
+        },
+        "benefits": {
+          "title": "Gana constancia sin estar conectado",
+          "desc": "Mantén una presencia constante en LinkedIn sin tener que recordar cuándo publicar. Crea en bloque una vez y llena tu calendario por semanas."
+        },
+        "calendar": {
+          "title": "Ve todo en el calendario",
+          "desc": "Visualiza todos los posts programados en un solo calendario, con colores y etiquetas que te muestran qué sale cada día y en qué perfil o página."
+        }
+      },
+      "metrics": {
+        "timeSaved": {
+          "label": "Tiempo ahorrado",
+          "value": "+6 h/sem"
+        },
+        "consistency": {
+          "label": "Constancia al publicar",
+          "value": "3x más"
+        },
+        "clarity": {
+          "label": "Visibilidad en el calendario",
+          "value": "100% de posts"
+        }
       }
     },
     "testimonials": {
@@ -726,7 +780,9 @@
         "generatedWithAI": "Generado con IA",
         "postContext": "Contexto del post",
         "improveContext": "Mejorar contexto",
+        "improveContextWarning": "Por favor especifica muy bien la idea que tienes en mente para la imagen, para que la imagen generada sea la deseada por ti.",
         "characters": "Personajes",
+        "charactersWarning": "Especifica bien el sujeto, persona u objeto, el lugar, qué está haciendo, etc.",
         "charactersLimit": "Máximo {max}",
         "includePostTitle": "Título en la imagen",
         "includePostTitleYes": "Incluir título",

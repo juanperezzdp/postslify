@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { getProxiedImageUrl } from "@/lib/image-proxy";
-import type { ScheduledPost } from "@/types/posts";
+import type { ScheduledPost, ScheduledTargetSummary } from "@/types/posts";
 import { PREDEFINED_TIMEZONES } from "@/lib/timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
@@ -21,6 +21,7 @@ import { useLocale, useTranslations } from "next-intl";
 
 import { DateTimePicker } from "@/app/components/DateTimePicker";
 import { Select } from "@/app/components/Select";
+import { ScheduledProfilesTop } from "@/app/components/ScheduledProfilesTop";
 
 export default function CalendarPage() {
   const t = useTranslations("Calendar");
@@ -101,20 +102,46 @@ export default function CalendarPage() {
   const getTargetsForPost = (post: ScheduledPost, pool: ScheduledPost[]) => {
     const key = getPostGroupKey(post);
     const matches = pool.filter((candidate) => getPostGroupKey(candidate) === key);
-    const unique = new Map<string, { name: string; image: string | null; initial: string }>();
+    const unique = new Map<string, { name: string; image: string | null; initial: string; type: "profile" | "page" }>();
     matches.forEach((match) => {
       const name = resolveTargetName(match);
       const image = resolveTargetImage(match);
-      const id = `${name}|${image ?? ""}`;
+      const type = match.linkedin_target ?? "profile";
+      const id = `${type}|${name}|${image ?? ""}`;
       if (!unique.has(id)) {
         unique.set(id, {
           name,
           image,
           initial: name.charAt(0).toUpperCase(),
+          type,
         });
       }
     });
     return Array.from(unique.values());
+  };
+
+  const getTargetSummaries = (pool: ScheduledPost[]) => {
+    const statsMap = new Map<string, ScheduledTargetSummary>();
+    pool.forEach((post) => {
+      const name = resolveTargetName(post);
+      const image = resolveTargetImage(post);
+      const type = post.linkedin_target ?? "profile";
+      const id = `${type}|${name}|${image ?? ""}`;
+      const existing = statsMap.get(id);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        statsMap.set(id, {
+          id,
+          name,
+          image,
+          initial: name.charAt(0).toUpperCase(),
+          count: 1,
+          type,
+        });
+      }
+    });
+    return Array.from(statsMap.values()).sort((a, b) => b.count - a.count);
   };
 
   const openImageCarousel = (items: { url: string; name: string }[], startIndex: number) => {
@@ -208,6 +235,7 @@ export default function CalendarPage() {
     : [];
   const selectedTargetNames = selectedTargets.map((target) => target.name).join(" / ");
   const groupedDayPosts = groupPostsByKey(dayPosts);
+  const topTargets = getTargetSummaries(posts);
 
   const getPostsForDay = (day: number) => {
     return posts.filter((post) => {
@@ -355,7 +383,7 @@ export default function CalendarPage() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
       <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mb-10 flex flex-col gap-2">
+        <div className=" bg-white rounded-2xl py-5 px-6 border border-slate-200 shadow-md mb-10 flex flex-col gap-2">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">
             {t("title")}
           </h1>
@@ -364,7 +392,9 @@ export default function CalendarPage() {
           </p>
         </div>
 
-        <div className="overflow-hidden rounded-[2.5rem] bg-white shadow-2xl shadow-slate-200/50 ring-1 ring-slate-200">
+        <ScheduledProfilesTop targets={topTargets} />
+
+        <div className="overflow-hidden rounded-[2.5rem] bg-white shadow-md shadow-slate-200 ring-1 ring-slate-200">
           {/* Calendar Header */}
           <div className="flex items-center justify-between border-b border-slate-100 bg-white p-8">
             <h2 className="text-3xl font-bold text-slate-900 capitalize tracking-tight">
@@ -473,12 +503,12 @@ export default function CalendarPage() {
                         
                         {group.post.status === 'published' && (
                           <div className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-500 shadow-sm ring-2 ring-white">
-                            <FontAwesomeIcon icon={faCheck} className="h-2 w-2 text-white" />
+                            <FontAwesomeIcon icon={faCheck} className="text-xs text-white" />
                           </div>
                         )}
                         {group.post.status === 'failed' && (
                           <div className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 shadow-sm ring-2 ring-white">
-                            <FontAwesomeIcon icon={faTimes} className="h-2 w-2 text-white" />
+                            <FontAwesomeIcon icon={faTimes} className="text-xs text-white" />
                           </div>
                         )}
                       </div>

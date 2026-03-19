@@ -19,6 +19,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { PostCard } from "@/app/components/PostCard";
+import Image from "next/image";
 import { Metadata } from "next";
 import Marketing  from "@/public/marketing.png";
 import LanguageSwitcher from "../components/LanguageSwitcher";
@@ -171,7 +172,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </div>
             <Link
                 href="/login"
-                className="rounded-full bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-blue-600/20 transition-all hover:bg-blue-700 hover:shadow-blue-600/30 active:scale-95"
+                className="rounded-full bg-blue-500 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-blue-700 active:scale-95"
             >
                 {t('nav.login')}
             </Link>
@@ -208,13 +209,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
         </div>
 
-        {/* Visual Comparison Section */}
         <div className="relative mt-20 flex w-full max-w-5xl flex-col items-center justify-center md:flex-row md:gap-12">
-          {/* Background Decorations */}
           <div className="absolute left-1/2 top-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-100/50 blur-3xl filter" />
           <div className="absolute left-1/4 top-1/3 -z-10 h-64 w-64 rounded-full bg-indigo-100/40 blur-3xl filter" />
-
-          {/* Before Card */}
           <div className="relative z-0 mb-8 scale-90 opacity-80 transition-all duration-500 hover:z-20 hover:scale-100 hover:opacity-100 md:mb-0 md:-mr-12 md:rotate-[-6deg]">
              <div className="relative">
                 <span className="absolute -top-3 -left-3 z-10 rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-500 shadow-sm ring-1 ring-red-100">
@@ -292,7 +289,178 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
         </div>
 
-        {/* Services Section */}
+        <section className="mt-24 w-full max-w-7xl ">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-50 p-[1px] shadow-[0_18px_55px_rgba(15,23,42,0.12)]">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(59,130,246,0.18),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(129,140,248,0.16),transparent_55%)]" />
+            <div className="relative z-10 flex flex-col gap-10 rounded-[22px] bg-white px-6 py-8 md:flex-row md:items-center md:px-10 md:py-10">
+              <div className="w-full md:w-1/2">
+                <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                  {t.rich("powerSection.title", {
+                    span: (chunks) => <span className="text-slate-900">{chunks}</span>,
+                  })}
+                </h2>
+                <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600">
+                  {t("powerSection.subtitle")}
+                </p>
+
+                <div className="mt-6 space-y-4">
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-900">
+                      {t("powerSection.items.idealClient.title")}
+                    </h3>
+                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
+                      {t("powerSection.items.idealClient.desc")}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-900">
+                      {t("powerSection.items.rightCommunity.title")}
+                    </h3>
+                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
+                      {t("powerSection.items.rightCommunity.desc")}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-900">
+                      {t("powerSection.items.turnVisibility.title")}
+                    </h3>
+                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
+                      {t("powerSection.items.turnVisibility.desc")}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 grid grid-cols-3 gap-3 text-[11px] text-slate-500">
+                  <div className="rounded-xl bg-emerald-50 px-3 py-2 ring-1 ring-emerald-100">
+                    <p className="text-[10px] uppercase tracking-[0.16em] text-emerald-400">
+                      Clics ideales
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-emerald-600">
+                      +214%
+                    </p>
+                  </div>
+                  <div className="rounded-xl bg-sky-50 px-3 py-2 ring-1 ring-sky-100">
+                    <p className="text-[10px] uppercase tracking-[0.16em] text-sky-400">
+                      Comunidad
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-sky-600">
+                      x3 alcance
+                    </p>
+                  </div>
+                  <div className="rounded-xl bg-indigo-50 px-3 py-2 ring-1 ring-indigo-100">
+                    <p className="text-[10px] uppercase tracking-[0.16em] text-indigo-400">
+                      Oportunidades
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-indigo-600">
+                      +78 leads
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full md:w-1/2">
+                <div className="relative mx-auto max-w-xl">
+                  <Image
+                    src={locale === 'es' ? '/mockup-post-es.png' : '/mockup-post.png'}
+                    alt="Mockup de posts optimizados en LinkedIn"
+                    width={960}
+                    height={720}
+                    className="block h-auto w-full object-contain sm:object-cover pointer-events-none select-none"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-20 w-full max-w-7xl">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 via-sky-50 to-blue-50 p-[1px] shadow-[0_18px_55px_rgba(15,23,42,0.12)]">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(16,185,129,0.18),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(59,130,246,0.16),transparent_55%)]" />
+            <div className="relative z-10 flex flex-col gap-10 rounded-[22px] bg-white px-6 py-8 md:flex-row md:items-center md:px-10 md:py-10">
+              <div className="w-full md:w-1/2">
+                <div className="relative mx-auto max-w-xl ">
+                  <Image
+                    src="/calendar.png"
+                    alt="Calendar View"
+                    width={960}
+                    height={720}
+                    className="border border-slate-200 block h-auto w-full object-contain sm:object-cover pointer-events-none select-none rounded-lg"
+                  />
+                </div>
+              </div>
+
+              <div className="w-full md:w-1/2">
+                <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                  {t.rich("scheduleSection.title", {
+                    span: (chunks) => <span className="text-emerald-600">{chunks}</span>,
+                  })}
+                </h2>
+                <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600">
+                  {t("scheduleSection.subtitle")}
+                </p>
+
+                <div className="mt-6 space-y-4">
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-900">
+                      {t("scheduleSection.items.howItWorks.title")}
+                    </h3>
+                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
+                      {t("scheduleSection.items.howItWorks.desc")}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-900">
+                      {t("scheduleSection.items.benefits.title")}
+                    </h3>
+                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
+                      {t("scheduleSection.items.benefits.desc")}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-900">
+                      {t("scheduleSection.items.calendar.title")}
+                    </h3>
+                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
+                      {t("scheduleSection.items.calendar.desc")}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 grid grid-cols-3 gap-3 text-[11px] text-slate-500">
+                  <div className="rounded-xl bg-emerald-50 px-3 py-2 ring-1 ring-emerald-100">
+                    <p className="text-[10px] uppercase tracking-[0.16em] text-emerald-400">
+                      {t("scheduleSection.metrics.timeSaved.label")}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-emerald-600">
+                      {t("scheduleSection.metrics.timeSaved.value")}
+                    </p>
+                  </div>
+                  <div className="rounded-xl bg-sky-50 px-3 py-2 ring-1 ring-sky-100">
+                    <p className="text-[10px] uppercase tracking-[0.16em] text-sky-400">
+                      {t("scheduleSection.metrics.consistency.label")}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-sky-600">
+                      {t("scheduleSection.metrics.consistency.value")}
+                    </p>
+                  </div>
+                  <div className="rounded-xl bg-indigo-50 px-3 py-2 ring-1 ring-indigo-100">
+                    <p className="text-[10px] uppercase tracking-[0.16em] text-indigo-400">
+                      {t("scheduleSection.metrics.clarity.label")}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-indigo-600">
+                      {t("scheduleSection.metrics.clarity.value")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div id="services" className="mt-32 flex w-full flex-col items-center">
           <div className="mx-auto max-w-4xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl">

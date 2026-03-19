@@ -19,7 +19,6 @@ export async function GET() {
       .sort({ scheduled_at: -1 })
       .lean();
 
-    
     const formattedPosts = posts.map((post) => ({
       ...post,
       id: post._id.toString(),

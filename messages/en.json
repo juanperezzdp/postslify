@@ -394,6 +394,10 @@
   "Calendar": {
     "title": "Content Calendar",
     "subtitle": "View and manage your scheduled posts with ease.",
+    "scheduledTopTitle": "Profiles and Pages with Scheduled Posts",
+    "typePage": "Page",
+    "typeProfile": "Profile",
+    "scheduledCountTooltip": "{count, plural, =1 {# post} other {# posts}}",
     "days": {
       "mon": "Mon",
       "tue": "Tue",
@@ -515,6 +519,56 @@
         "analytics": { "title": "Performance Analysis", "desc": "Make data-driven decisions. Visualize the impact of your posts and optimize your strategy with detailed real-time metrics." },
         "virtualAssistant": { "title": "24/7 Virtual Assistant", "desc": "Your LinkedIn co-pilot. Receive topic suggestions, real-time improvements, and smart automatic responses for your comments." },
         "multiAccount": { "title": "Multi-Account Management", "desc": "Ideal for agencies and teams. Manage multiple personal profiles and company pages from a single unified dashboard." }
+      }
+    },
+    "powerSection": {
+      "title": "Reach your <span>ideal clients</span>",
+      "subtitle": "Postslify helps every post reach the right people: your dream clients, your community and the audience that can truly convert.",
+      "items": {
+        "idealClient": {
+          "title": "Speak to your dream client",
+          "desc": "Use voice profiles and strategic content so your posts resonate with the exact people you want to attract, not just anyone."
+        },
+        "rightCommunity": {
+          "title": "Connect with the right community",
+          "desc": "Stay consistently visible to the right audience thanks to smart scheduling and messaging tailored to your niche."
+        },
+        "turnVisibility": {
+          "title": "Turn reach into opportunities",
+          "desc": "Transform likes and views into conversations, leads and real relationships with ideal clients and decision makers."
+        }
+      }
+    },
+    "scheduleSection": {
+      "title": "Schedule every post with <span>clarity</span>",
+      "subtitle": "Choose the day, time and destination for each post and let Postslify take care of the rest while you focus on your business.",
+      "items": {
+        "howItWorks": {
+          "title": "Program in a few clicks",
+          "desc": "Write your post, choose the profile or page, select date and time and confirm. Your content will be published automatically at the best moment."
+        },
+        "benefits": {
+          "title": "Win consistency without being online",
+          "desc": "Maintain a constant presence on LinkedIn without having to remember when to post. Batch create once and keep your calendar full for weeks."
+        },
+        "calendar": {
+          "title": "See everything in the calendar",
+          "desc": "Visualize all scheduled posts in a single calendar view, with colors and labels that help you understand what goes out each day and where."
+        }
+      },
+      "metrics": {
+        "timeSaved": {
+          "label": "Time saved",
+          "value": "+6 h/week"
+        },
+        "consistency": {
+          "label": "Posting consistency",
+          "value": "3x more"
+        },
+        "clarity": {
+          "label": "Calendar visibility",
+          "value": "100% of posts"
+        }
       }
     },
     "testimonials": {
@@ -722,7 +776,9 @@
         "generatedWithAI": "Generated with AI",
         "postContext": "Post Context",
         "improveContext": "Improve Context",
+        "improveContextWarning": "Please specify clearly the idea you have in mind for the image, so that the generated image is the one desired by you.",
         "characters": "Characters",
+        "charactersWarning": "Specify clearly the subject, person or object, the place, what they are doing, etc.",
         "charactersLimit": "Max {max}",
         "includePostTitle": "Post title in image",
         "includePostTitleYes": "Include title",

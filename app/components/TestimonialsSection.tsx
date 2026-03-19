@@ -92,48 +92,46 @@ export default function TestimonialsSection() {
                         <div className="absolute right-5 top-6 text-blue-100">
                           <FontAwesomeIcon icon={faQuoteLeft} className="h-7 w-7" />
                         </div>
-                        <div className="relative z-10 flex flex-col gap-5">
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex items-start gap-3">
-                              <div className="h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
-                                {item.image ? (
-                                  <Image
-                                    src={getProxiedImageUrl(item.image) || item.image}
-                                    alt={item.name}
-                                    width={48}
-                                    height={48}
-                                    className="h-full w-full object-cover"
-                                    unoptimized={!!getProxiedImageUrl(item.image)?.startsWith('/api/proxy-image')}
-                                  />
-                                ) : (
-                                  <div className="flex h-full w-full items-center justify-center bg-blue-800 text-sm font-semibold text-white">
-                                    {item.name.slice(0, 1).toUpperCase()}
-                                  </div>
-                                )}
-                              </div>
-                              <div>
-                                <p className="text-sm font-semibold text-slate-900">
-                                  {item.name}
-                                </p>
-                                {item.createdAt && (
-                                  <p className="text-xs font-medium text-slate-400">
-                                    {formatDate(item.createdAt)}
-                                  </p>
-                                )}
-                                {(item.role || item.company) && (
-                                  <p className="text-xs text-slate-500">
-                                    {[item.role, item.company].filter(Boolean).join(" · ")}
-                                  </p>
-                                )}
-                              </div>
+                        <div className="relative z-10 flex flex-col items-center justify-center gap-3 text-center sm:items-stretch sm:text-left">
+                          <div className="flex flex-col items-center  justify-center gap-2 sm:flex-row sm:items-center sm:gap-3">
+                            <div className="flex h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
+                              {item.image ? (
+                                <Image
+                                  src={getProxiedImageUrl(item.image) || item.image}
+                                  alt={item.name}
+                                  width={48}
+                                  height={48}
+                                  className="h-full w-full object-cover"
+                                  unoptimized={!!getProxiedImageUrl(item.image)?.startsWith('/api/proxy-image')}
+                                />
+                              ) : (
+                                <div className="flex h-full w-full items-center justify-center bg-blue-800 text-sm font-semibold text-white">
+                                  {item.name.slice(0, 1).toUpperCase()}
+                                </div>
+                              )}
                             </div>
-                            <div className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-slate-50/80 px-3 py-1 text-blue-500">
-                              {starArray.slice(0, item.rating ?? 5).map((star) => (
-                                <FontAwesomeIcon key={star} icon={faStar} className="text-sm sm:text-xl" />
-                              ))}
+                            <div className="flex flex-col items-center sm:items-start">
+                              <p className="text-sm font-semibold text-slate-900">
+                                {item.name}
+                              </p>
+                              {item.createdAt && (
+                                <p className="text-xs font-medium text-slate-400">
+                                  {formatDate(item.createdAt)}
+                                </p>
+                              )}
+                              {(item.role || item.company) && (
+                                <p className="text-xs text-slate-500">
+                                  {[item.role, item.company].filter(Boolean).join(" · ")}
+                                </p>
+                              )}
                             </div>
                           </div>
-                          <p className="text-sm leading-relaxed text-slate-600">
+                          <div className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-slate-50/80 px-3 py-1 text-blue-500">
+                            {starArray.slice(0, item.rating ?? 5).map((star) => (
+                              <FontAwesomeIcon key={star} icon={faStar} className="text-sm sm:text-xl" />
+                            ))}
+                          </div>
+                          <p className="mt-2 text-sm leading-relaxed text-slate-600">
                             {item.content}
                           </p>
                         </div>
@@ -150,48 +148,46 @@ export default function TestimonialsSection() {
                         <div className="absolute right-5 top-6 text-blue-100">
                           <FontAwesomeIcon icon={faQuoteLeft} className="h-7 w-7" />
                         </div>
-                        <div className="relative z-10 flex flex-col gap-5">
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex items-start gap-3">
-                              <div className="h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
-                                {item.image ? (
-                                  <Image
-                                    src={getProxiedImageUrl(item.image) || item.image}
-                                    alt={item.name}
-                                    width={48}
-                                    height={48}
-                                    className="h-full w-full object-cover"
-                                    unoptimized={!!getProxiedImageUrl(item.image)?.startsWith('/api/proxy-image')}
-                                  />
-                                ) : (
-                                  <div className="flex h-full w-full items-center justify-center bg-blue-800 text-sm font-semibold text-white">
-                                    {item.name.slice(0, 1).toUpperCase()}
-                                  </div>
-                                )}
-                              </div>
-                              <div>
-                                <p className="text-sm font-semibold text-slate-900">
-                                  {item.name}
-                                </p>
-                                {item.createdAt && (
-                                  <p className="text-xs font-medium text-slate-400">
-                                    {formatDate(item.createdAt)}
-                                  </p>
-                                )}
-                                {(item.role || item.company) && (
-                                  <p className="text-xs text-slate-500">
-                                    {[item.role, item.company].filter(Boolean).join(" · ")}
-                                  </p>
-                                )}
-                              </div>
+                        <div className="relative z-10 flex flex-col items-center gap-3 text-center sm:items-stretch sm:text-left">
+                          <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-center sm:gap-3">
+                            <div className="h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
+                              {item.image ? (
+                                <Image
+                                  src={getProxiedImageUrl(item.image) || item.image}
+                                  alt={item.name}
+                                  width={48}
+                                  height={48}
+                                  className="h-full w-full object-cover"
+                                  unoptimized={!!getProxiedImageUrl(item.image)?.startsWith('/api/proxy-image')}
+                                />
+                              ) : (
+                                <div className="flex h-full w-full items-center justify-center bg-blue-800 text-sm font-semibold text-white">
+                                  {item.name.slice(0, 1).toUpperCase()}
+                                </div>
+                              )}
                             </div>
-                            <div className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-slate-50/80 px-3 py-1 text-blue-500">
-                              {starArray.slice(0, item.rating ?? 5).map((star) => (
-                                <FontAwesomeIcon key={star} icon={faStar} className="h-3.5 w-3.5" />
-                              ))}
+                            <div className="flex flex-col items-center sm:items-start">
+                              <p className="text-sm font-semibold text-slate-900">
+                                {item.name}
+                              </p>
+                              {item.createdAt && (
+                                <p className="text-xs font-medium text-slate-400">
+                                  {formatDate(item.createdAt)}
+                                </p>
+                              )}
+                              {(item.role || item.company) && (
+                                <p className="text-xs text-slate-500">
+                                  {[item.role, item.company].filter(Boolean).join(" · ")}
+                                </p>
+                              )}
                             </div>
                           </div>
-                          <p className="text-sm leading-relaxed text-slate-600">
+                          <div className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-slate-50/80 px-3 py-1 text-blue-500">
+                            {starArray.slice(0, item.rating ?? 5).map((star) => (
+                              <FontAwesomeIcon key={star} icon={faStar} className="h-3.5 w-3.5" />
+                            ))}
+                          </div>
+                          <p className="mt-2 text-sm leading-relaxed text-slate-600">
                             {item.content}
                           </p>
                         </div>
@@ -213,48 +209,46 @@ export default function TestimonialsSection() {
                   <div className="absolute right-5 top-6 text-blue-100">
                     <FontAwesomeIcon icon={faQuoteLeft} className="h-7 w-7" />
                   </div>
-                  <div className="relative z-10 flex flex-col gap-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex items-start gap-3">
-                        <div className="h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
-                          {item.image ? (
-                            <Image
-                              src={getProxiedImageUrl(item.image) || item.image}
-                              alt={item.name}
-                              width={48}
-                              height={48}
-                              className="h-full w-full object-cover"
-                              unoptimized={!!getProxiedImageUrl(item.image)?.startsWith('/api/proxy-image')}
-                            />
-                          ) : (
-                            <div className="flex h-full w-full items-center justify-center bg-blue-800 text-sm font-semibold text-white">
-                              {item.name.slice(0, 1).toUpperCase()}
-                            </div>
-                          )}
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-slate-900">
-                            {item.name}
-                          </p>
-                          {item.createdAt && (
-                            <p className="text-xs font-medium text-slate-400">
-                              {formatDate(item.createdAt)}
-                            </p>
-                          )}
-                          {(item.role || item.company) && (
-                            <p className="text-xs text-slate-500">
-                              {[item.role, item.company].filter(Boolean).join(" · ")}
-                            </p>
-                          )}
-                        </div>
+                  <div className="relative z-10 flex flex-col items-center gap-3 text-center sm:items-stretch sm:text-left">
+                    <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-center sm:gap-3">
+                      <div className="h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
+                        {item.image ? (
+                          <Image
+                            src={getProxiedImageUrl(item.image) || item.image}
+                            alt={item.name}
+                            width={48}
+                            height={48}
+                            className="h-full w-full object-cover"
+                            unoptimized={!!getProxiedImageUrl(item.image)?.startsWith('/api/proxy-image')}
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center bg-blue-800 text-sm font-semibold text-white">
+                            {item.name.slice(0, 1).toUpperCase()}
+                          </div>
+                        )}
                       </div>
-                      <div className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-slate-50/80 px-3 py-1 text-blue-500">
-                        {starArray.slice(0, item.rating ?? 5).map((star) => (
-                          <FontAwesomeIcon key={star} icon={faStar} className="h-3.5 w-3.5" />
-                        ))}
+                      <div className="flex flex-col items-center sm:items-start">
+                        <p className="text-sm font-semibold text-slate-900">
+                          {item.name}
+                        </p>
+                        {item.createdAt && (
+                          <p className="text-xs font-medium text-slate-400">
+                            {formatDate(item.createdAt)}
+                          </p>
+                        )}
+                        {(item.role || item.company) && (
+                          <p className="text-xs text-slate-500">
+                            {[item.role, item.company].filter(Boolean).join(" · ")}
+                          </p>
+                        )}
                       </div>
                     </div>
-                    <p className="text-sm leading-relaxed text-slate-600">
+                    <div className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-slate-50/80 px-3 py-1 text-blue-500 sm:self-end">
+                      {starArray.slice(0, item.rating ?? 5).map((star) => (
+                        <FontAwesomeIcon key={star} icon={faStar} className="h-3.5 w-3.5" />
+                      ))}
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
                       {item.content}
                     </p>
                   </div>
@@ -273,9 +267,9 @@ export default function TestimonialsSection() {
                 <div className="absolute right-5 top-6 text-blue-100">
                   <FontAwesomeIcon icon={faQuoteLeft} className="h-7 w-7" />
                 </div>
-                <div className="relative z-10 flex flex-col gap-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-start gap-3">
+                <div className="relative z-10 flex flex-col items-center justify-center gap-3 text-center sm:items-stretch sm:text-left">
+                  <div className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <div className="flex flex-col items-center gap-2 sm:flex-row sm:items-center sm:gap-3">
                       <div className="h-12 w-12 overflow-hidden rounded-full border border-slate-200/80 bg-slate-100">
                         {item.image ? (
                           <Image
@@ -292,7 +286,7 @@ export default function TestimonialsSection() {
                           </div>
                         )}
                       </div>
-                      <div>
+                      <div className="flex flex-col items-center sm:items-start">
                         <p className="text-sm font-semibold text-slate-900">
                           {item.name}
                         </p>
@@ -314,7 +308,7 @@ export default function TestimonialsSection() {
                       ))}
                     </div>
                   </div>
-                  <p className="text-sm leading-relaxed text-slate-600">
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
                     {item.content}
                   </p>
                 </div>
