@@ -1755,8 +1755,8 @@ export default function CrearPostPage() {
       console.error("Error submitting message:", error);
       const errorMessage = getErrorMessage(error);
       if (
-        errorMessage.toLowerCase().includes("deepseek api key not found") ||
-        errorMessage.toLowerCase().includes("deepseek_api_key")
+        errorMessage.toLowerCase().includes("openai api key not found") ||
+        errorMessage.toLowerCase().includes("openai_api_key")
       ) {
         setProfileError(t('errors.missingApiKey'));
       }

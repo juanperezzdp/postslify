@@ -1,7 +1,9 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* Estilos manuales para el contenido del blog para asegurar formato */
+button{
+  cursor: pointer;
+}
 .blog-content h2 {
   font-size: 1.875rem;
   line-height: 2.25rem;

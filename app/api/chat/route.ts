@@ -37,10 +37,10 @@ export async function POST(req: Request) {
       sessionId?: string;
     };
 
-    const apiKey = process.env.DEEPSEEK_API_KEY;
+    const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: "DeepSeek API key not found. Please add DEEPSEEK_API_KEY to your .env file." },
+        { error: "OpenAI API key not found. Please add OPENAI_API_KEY to your .env file." },
         { status: 500 }
       );
     }
@@ -144,14 +144,14 @@ Make sure your responses sound as if they were written by this person, preservin
       ? { role: "user", content: normalizeUserPrompt(resolvedPrompt) }
       : fallbackUserMessage;
 
-    const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "deepseek-chat",
+        model: "gpt-4o",
         messages: [
           {
             role: "system",
@@ -169,9 +169,9 @@ Make sure your responses sound as if they were written by this person, preservin
       });
 
       const error = await response.json();
-      console.error("DeepSeek API Error:", error);
+      console.error("OpenAI API Error:", error);
       return NextResponse.json(
-        { error: error.message || "Error communicating with DeepSeek API" },
+        { error: error.message || "Error communicating with OpenAI API" },
         { status: response.status }
       );
     }
