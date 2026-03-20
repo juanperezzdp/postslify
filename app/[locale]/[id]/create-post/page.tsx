@@ -2093,7 +2093,7 @@ export default function CrearPostPage() {
                  return (
                   <div key={index} className="flex justify-end px-4 mb-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
                     <div className="group relative max-w-[85%] rounded-2xl rounded-tr-sm bg-slate-900 px-5 py-3.5 text-white shadow-md transition-all hover:shadow-lg">
-                      <p className="text-sm font-medium leading-relaxed">
+                      <p className="text-sm font-medium leading-relaxed whitespace-pre-wrap break-words">
                         {message.content}
                       </p>
                       <div className="absolute -right-1 top-0 h-3 w-3 bg-slate-900 [clip-path:polygon(0_0,100%_0,0_100%)]"></div>
