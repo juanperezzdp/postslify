@@ -2221,6 +2221,20 @@ export default function CrearPostPage() {
                     )}
                   </div>
 
+                  {/* Loading Image Display */}
+                  {isGeneratingImage && messageForImageIndex === index && (
+                    <div className="w-full px-5 pb-5 sm:px-6 sm:pb-6">
+                      <div className="overflow-hidden rounded-xl border border-blue-200 bg-blue-50/60">
+                        <div className="flex aspect-video w-full flex-col items-center justify-center gap-3 bg-blue-100 animate-pulse">
+                          <FontAwesomeIcon icon={faImage} className="text-7xl text-blue-500" />
+                          <span className="px-4 text-center text-sm font-bold text-blue-700 sm:text-base">
+                            {t('labels.generatingNewAiImage')}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Media Display */}
                   {message.media && (
                     <div className="w-full px-5 pb-5 sm:px-6 sm:pb-6">
@@ -2351,19 +2365,6 @@ export default function CrearPostPage() {
                           </button>
                         </div>
                       )}
-                    </div>
-                  )}
-
-                  {isGeneratingImage && messageForImageIndex === index && (
-                    <div className="w-full px-5 pb-5 sm:px-6 sm:pb-6">
-                      <div className="mt-4 overflow-hidden rounded-xl border border-blue-200 bg-blue-50/60">
-                        <div className="flex aspect-video w-full flex-col items-center justify-center gap-3 bg-blue-100 animate-pulse">
-                          <FontAwesomeIcon icon={faImage} className="text-7xl text-blue-500" />
-                          <span className="px-4 text-center text-sm font-bold text-blue-700 sm:text-base">
-                            {t('labels.generatingNewAiImage')}
-                          </span>
-                        </div>
-                      </div>
                     </div>
                   )}
 
