@@ -291,7 +291,7 @@ export default function BillingPage() {
   };
 
   const balanceUsd = balance ? (balance.balanceCents / 100).toFixed(2) : "0.00";
-  const requestCredits = balance ? Math.floor(balance.balanceCents / 5) : 0;
+  const requestCredits = balance ? Math.floor(balance.balanceCents / 3) : 0;
 
   return (
     <div className="flex min-h-screen items-start justify-center bg-slate-50 font-sans">
@@ -370,7 +370,7 @@ export default function BillingPage() {
               <div className="rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium text-slate-600">
                 {t.rich("plans.selected", {
                   label: selectedPlan.label,
-                  requests: (selectedPlan.amountCents / 5).toFixed(0),
+                  requests: (selectedPlan.amountCents / 3).toFixed(0),
                   strong: (chunks) => <span className="font-bold text-slate-900">{chunks}</span>,
                   highlight: (chunks) => <span className="text-blue-600 font-bold">{chunks}</span>,
                 })}

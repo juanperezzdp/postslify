@@ -816,10 +816,6 @@ export default function ArchivedPostsPage() {
       messageForImage.media?.type === "image"
         ? messageForImage.media.items?.length ?? 1
         : 0;
-    if (existingImageCount >= 3) {
-      setImageGenerationError(t("errors.imageLimitReached"));
-      return;
-    }
     const extraContext = values.extraContext.trim();
     const characterNames = values.characters
       .map((item) => item.name.trim())
@@ -1543,16 +1539,16 @@ export default function ArchivedPostsPage() {
                         );
                       })()}
 
-                    {!hasMedia &&
-                      isGeneratingImage &&
-                      messageForImageIndex === index &&
-                      messageForImage?.content === message.ai_response && (
-                        <div className="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
-                          <div className="flex aspect-video items-center justify-center bg-slate-100 animate-pulse">
-                            <FontAwesomeIcon icon={faImage} className="h-10 w-10 text-slate-300" />
-                          </div>
+                    {isGeneratingImage && messageForImageIndex === index && (
+                        <div className={`${hasMedia ? 'absolute inset-0 z-10' : 'relative mt-3 aspect-video'} flex w-full items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-black/80`}>
+                          <div className="flex flex-col items-center gap-2">
+                          <FontAwesomeIcon icon={faImage} className="text-4xl text-slate-300 animate-pulse" />
+                          <span className="text-xs font-medium text-slate-400 animate-pulse">
+                            {t('labels.generatingImagePosition', { position: (currentImageCount || 0) + 1 })}
+                          </span>
                         </div>
-                      )}
+                      </div>
+                    )}
 
                     {hasMedia && message.media?.type === "video" && (
                       <div className="mt-4">
@@ -2016,11 +2012,6 @@ export default function ArchivedPostsPage() {
                     {imageGenerationError}
                   </p>
                 )}
-                {currentImageCount >= 3 && (
-                  <p className="text-xs font-semibold text-rose-500">
-                    {t("errors.imageLimitReached")}
-                  </p>
-                )}
                 <div className="flex items-center justify-end gap-3">
                 <button
                   type="button"
@@ -2035,8 +2026,7 @@ export default function ArchivedPostsPage() {
                     !selectedImageStyleId ||
                     isGeneratingImage ||
                     !includePostTitle ||
-                    extraContextValue.trim().length === 0 ||
-                    currentImageCount >= 3
+                    extraContextValue.trim().length === 0
                   }
                   className="flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-slate-900/20 hover:bg-blue-600 hover:shadow-blue-600/30 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
                 >

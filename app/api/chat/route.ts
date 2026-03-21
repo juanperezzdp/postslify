@@ -9,7 +9,7 @@ import type { VoiceProfile } from "@/types/voice-profile";
 const MAX_REQUESTS_PER_MINUTE_PER_USER = 50;
 const MAX_REQUESTS_PER_MINUTE_GLOBAL = 500;
 const REQUEST_WINDOW_MS = 60_000;
-const COST_PER_MESSAGE = 5; 
+const COST_PER_MESSAGE = 3; 
 const GLOBAL_BUCKET_KEY = "global";
 
 const requestBuckets = new Map<

@@ -4,7 +4,7 @@ import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import type { ImageGenerationRequest, ImageGenerationResponse } from "@/types/image-generation";
 
-const COST_PER_IMAGE = 7;
+const COST_PER_IMAGE = 8;
 const MAX_IMAGE_REQUESTS_PER_MINUTE_PER_USER = 10;
 const MAX_IMAGE_REQUESTS_PER_MINUTE_GLOBAL = 500;
 const REQUEST_WINDOW_MS = 60_000;

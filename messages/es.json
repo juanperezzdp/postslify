@@ -787,10 +787,12 @@
         "includePostTitle": "Título en la imagen",
         "includePostTitleYes": "Incluir título",
         "includePostTitleNo": "Sin título",
+        "imageTitleWarning": "Si dejas este campo vacío, la imagen se generará sin título en ella. El título no debería ser muy largo.",
         "postTitle": "Título del post",
         "visualStyle": "Estilo visual",
         "finalPrompt": "Prompt final",
         "image": "Imagen",
+        "generatingImagePosition": "Generando imagen {position}",
         "selectVoiceProfile": "Seleccionar perfil de voz",
         "selectVoiceProfileTitle": "Seleccionar perfil de voz",
         "selectedProfile": "Perfil seleccionado",
@@ -823,7 +825,8 @@
         "characterName": "Agregar persona o personaje",
         "completeContext": "Completa el contexto y elige un estilo para ver el prompt final.",
         "inputPrompt": "¿Sobre qué quieres escribir hoy? (Ej: 'Crea un post sobre liderazgo en tiempos de crisis')",
-        "topicPrompt": "¿Sobre qué quieres escribir hoy?"
+        "topicPrompt": "¿Sobre qué quieres escribir hoy?",
+        "imageTitle": "Ej: Estrategia SaaS..."
     },
     "buttons": {
         "generate": "Generar Post",
@@ -874,7 +877,6 @@
         "missingApiKey": "Falta DEEPSEEK_API_KEY en .env.local. Reinicia el servidor.",
         "imageGeneration": "No se pudo generar la imagen",
         "imageProcessing": "No se pudo procesar la imagen",
-        "imageLimitReached": "Solo puedes generar hasta 3 imágenes por post",
         "contextRequired": "El contexto adicional es obligatorio.",
         "unknown": "Error desconocido",
         "configurePageToken": "Configura el token y URN de la página antes de programar.",

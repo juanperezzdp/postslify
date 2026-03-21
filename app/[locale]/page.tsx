@@ -98,7 +98,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const pricingPlans = [
     {
       id: "start",
-      credits: 100,
+      credits: 166,
       price: "$5.00",
       featuresCount: 5,
       icon: faBolt,
@@ -107,7 +107,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     },
     {
       id: "basic",
-      credits: 200,
+      credits: 333,
       price: "$10.00",
       featuresCount: 5,
       icon: faStar,
@@ -116,7 +116,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     },
     {
       id: "advanced",
-      credits: 500,
+      credits: 833,
       price: "$25.00",
       featuresCount: 5,
       icon: faRocket,
@@ -125,7 +125,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     },
     {
       id: "expert",
-      credits: 1000,
+      credits: 1666,
       price: "$50.00",
       featuresCount: 5,
       icon: faCrown,

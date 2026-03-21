@@ -1041,7 +1041,6 @@ export default function CrearPostPage() {
     if (
       !messageForImage ||
       !selectedImageStyleId ||
-      !values.includePostTitle ||
       values.extraContext.trim().length === 0
     )
       return;
@@ -1049,10 +1048,6 @@ export default function CrearPostPage() {
       messageForImage.media?.type === "image"
         ? messageForImage.media.items?.length ?? 1
         : 0;
-    if (existingImageCount >= 3) {
-      setImageGenerationError(t('errors.imageLimitReached'));
-      return;
-    }
     const extraContext = values.extraContext.trim();
     const characterNames = values.characters
       .map((item) => item.name.trim())
@@ -1085,12 +1080,12 @@ export default function CrearPostPage() {
     const isSurrealistStyle = selectedImageStyle?.id === "surrealista";
     const isCustomStyle = isSketchStyle || isCaricatureStyle || isNeonStyle || isIsometricStyle || isRetroStyle || isWatercolorStyle || is3DModernStyle || isGraphicsStyle || isNoirStyle || isPhotographyStyle || isMinimalistStyle || isFuturistStyle || isCyberpunkStyle || isFlatStyle || isComicStyle || isPastelStyle || isVintageStyle || isLowPolyStyle || isSurrealistStyle;
     const includeTitleInstruction =
-      values.includePostTitle === "withTitle"
+      values.includePostTitle.trim().length > 0
         ? t('prompts.includePostTitle')
         : t('prompts.excludePostTitle');
     const titleLine =
-      values.includePostTitle === "withTitle"
-        ? `${t('labels.postTitle')}: ${resolvePostTitle(messageForImage.content)}`
+      values.includePostTitle.trim().length > 0
+        ? `${t('labels.postTitle')}: ${values.includePostTitle.trim()}`
         : "";
     const topicLine =
       messageForImage.content
@@ -2221,24 +2216,14 @@ export default function CrearPostPage() {
                     )}
                   </div>
 
-                  {/* Loading Image Display */}
-                  {isGeneratingImage && messageForImageIndex === index && (
+                  {/* Media and Loading Display */}
+                  {(message.media || (isGeneratingImage && messageForImageIndex === index)) && (
                     <div className="w-full px-5 pb-5 sm:px-6 sm:pb-6">
-                      <div className="overflow-hidden rounded-xl border border-blue-200 bg-blue-50/60">
-                        <div className="flex aspect-video w-full flex-col items-center justify-center gap-3 bg-blue-100 animate-pulse">
-                          <FontAwesomeIcon icon={faImage} className="text-7xl text-blue-500" />
-                          <span className="px-4 text-center text-sm font-bold text-blue-700 sm:text-base">
-                            {t('labels.generatingNewAiImage')}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Media Display */}
-                  {message.media && (
-                    <div className="w-full px-5 pb-5 sm:px-6 sm:pb-6">
-                      {message.media.type === "image" ? (() => {
+                      <div className="relative w-full">
+                        {/* Media Display */}
+                        {message.media && (
+                          <div className="w-full">
+                            {message.media.type === "image" ? (() => {
                         const mediaItems =
                           message.media.items && message.media.items.length > 0
                             ? message.media.items
@@ -2365,8 +2350,23 @@ export default function CrearPostPage() {
                           </button>
                         </div>
                       )}
-                    </div>
-                  )}
+                           </div>
+                         )}
+
+                         {/* Loading Image Display overlay - shown ABOVE images when media exists */}
+                        {isGeneratingImage && messageForImageIndex === index && (
+                          <div className={`${message.media ? 'absolute inset-0 z-10' : 'relative mt-3 aspect-video'} flex w-full items-center justify-center overflow-hidden rounded-xl bg-black/80`}>
+                            <div className="flex flex-col items-center gap-2">
+                              <FontAwesomeIcon icon={faImage} className="text-4xl text-slate-300 animate-pulse" />
+                              <span className="text-xs font-medium text-slate-400 animate-pulse">
+                                {t('labels.generatingImagePosition', { position: (currentImageCount || 0) + 1 })}
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                       </div>
+                     </div>
+                   )}
 
                   {/* Utility Toolbar */}
                   <div className="flex flex-col gap-3 border-t border-slate-100 bg-slate-50/50 px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
@@ -2920,6 +2920,39 @@ export default function CrearPostPage() {
             <form onSubmit={handleImageFormSubmit(handleGenerateImage)}>
               <div className="max-h-[70vh] overflow-y-auto p-6 space-y-6">
                 <div className="space-y-2">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
+                    {t('labels.includePostTitle')}
+                  </label>
+                  <div className="flex items-start gap-2.5 rounded-xl border border-blue-100 bg-blue-50/50 p-3">
+                    <FontAwesomeIcon icon={faLightbulb} className="mt-0.5 h-3.5 w-3.5 text-blue-600" />
+                    <p className="text-xs font-medium leading-relaxed text-blue-900">
+                      {t('labels.imageTitleWarning')}
+                    </p>
+                  </div>
+                  <div className="relative">
+                    <input
+                      {...registerImagePrompt("includePostTitle", {
+                        maxLength: {
+                          value: 100,
+                          message: activeLocale === "es" ? "Máximo 100 caracteres" : "Max 100 characters"
+                        }
+                      })}
+                      placeholder={t('placeholders.imageTitle')}
+                      maxLength={100}
+                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 pr-14 text-sm text-slate-900 outline-none ring-0 transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-slate-400">
+                      {(watchImagePrompt("includePostTitle") || "").length}/100
+                    </span>
+                  </div>
+                  {imagePromptErrors.includePostTitle && (
+                    <p className="text-xs font-semibold text-rose-500">
+                      {imagePromptErrors.includePostTitle.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
                       {t('labels.improveContext')}
@@ -3022,36 +3055,6 @@ export default function CrearPostPage() {
                   )}
                 </div>
 
-                <div className="space-y-2">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                    {t('labels.includePostTitle')}
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setImagePromptValue("includePostTitle", "withTitle")}
-                      className={`rounded-2xl border px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
-                        includePostTitle === "withTitle"
-                          ? "border-blue-500 bg-blue-500 text-white shadow-md shadow-blue-500/20"
-                          : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
-                      }`}
-                    >
-                      {t('labels.includePostTitleYes')}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setImagePromptValue("includePostTitle", "withoutTitle")}
-                      className={`rounded-2xl border px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
-                        includePostTitle === "withoutTitle"
-                          ? "border-blue-500 bg-blue-500 text-white shadow-md shadow-blue-500/20"
-                          : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
-                      }`}
-                    >
-                      {t('labels.includePostTitleNo')}
-                    </button>
-                  </div>
-                </div>
-
                 <div className="space-y-3">
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
                     {t('labels.visualStyle')}
@@ -3115,26 +3118,12 @@ export default function CrearPostPage() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                    {t('labels.postContext')}
-                  </label>
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 whitespace-pre-wrap">
-                    {messageForImage.content}
-                  </div>
-                </div>
-
               </div>
 
               <div className="flex flex-col gap-3 border-t border-slate-100 bg-slate-50/80 px-6 py-5 backdrop-blur-sm">
                 {imageGenerationError && (
                   <p className="text-xs font-semibold text-rose-500">
                     {imageGenerationError}
-                  </p>
-                )}
-                {currentImageCount >= 3 && (
-                  <p className="text-xs font-semibold text-rose-500">
-                    {t('errors.imageLimitReached')}
                   </p>
                 )}
                 <div className="flex items-center justify-end gap-3">
@@ -3150,9 +3139,7 @@ export default function CrearPostPage() {
                   disabled={
                     !selectedImageStyleId ||
                     isGeneratingImage ||
-                    !includePostTitle ||
-                    extraContextValue.trim().length === 0 ||
-                    currentImageCount >= 3
+                    extraContextValue.trim().length === 0
                   }
                   className="flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-slate-900/20 hover:bg-blue-600 hover:shadow-blue-600/30 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
                 >

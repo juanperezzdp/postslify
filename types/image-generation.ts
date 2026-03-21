@@ -5,13 +5,13 @@ export type ImageStyleOption = {
   image?: string;
 };
 
-export type ImageTitleSelection = "withTitle" | "withoutTitle" | "";
+
 
 export type ImagePromptFormValues = {
   extraContext: string;
   characterInput: string;
   characters: { name: string }[];
-  includePostTitle: ImageTitleSelection;
+  includePostTitle: string;
 };
 
 export type ImageGenerationRequest = {
