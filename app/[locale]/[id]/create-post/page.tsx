@@ -1079,13 +1079,14 @@ export default function CrearPostPage() {
     const isLowPolyStyle = selectedImageStyle?.id === "low-poly";
     const isSurrealistStyle = selectedImageStyle?.id === "surrealista";
     const isCustomStyle = isSketchStyle || isCaricatureStyle || isNeonStyle || isIsometricStyle || isRetroStyle || isWatercolorStyle || is3DModernStyle || isGraphicsStyle || isNoirStyle || isPhotographyStyle || isMinimalistStyle || isFuturistStyle || isCyberpunkStyle || isFlatStyle || isComicStyle || isPastelStyle || isVintageStyle || isLowPolyStyle || isSurrealistStyle;
+    const titleText = values.includePostTitle.trim();
     const includeTitleInstruction =
-      values.includePostTitle.trim().length > 0
-        ? t('prompts.includePostTitle')
+      titleText.length > 0
+        ? t('prompts.includePostTitle', { title: titleText })
         : t('prompts.excludePostTitle');
     const titleLine =
-      values.includePostTitle.trim().length > 0
-        ? `${t('labels.postTitle')}: ${values.includePostTitle.trim()}`
+      titleText.length > 0
+        ? `${t('labels.postTitle')}: "${titleText}"`
         : "";
     const topicLine =
       messageForImage.content

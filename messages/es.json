@@ -898,7 +898,7 @@
         "whatOnMind": "¿Qué tienes en mente?",
         "ideaHelp": "Comparte tu idea y te ayudaremos a transformarla en un post potente.",
         "mandatoryLanguage": "Idioma obligatorio: {language}. Usa solo este idioma.",
-        "includePostTitle": "Incluye el título del post en el texto de la imagen.",
+        "includePostTitle": "Debes incluir el texto exacto \"{title}\" de forma prominente, clara y legible dentro de la imagen.",
         "excludePostTitle": "No incluyas ningún título en la imagen.",
         "creativeDirection": "Dirección creativa: imagen para publicación en LinkedIn con diseño tipo plantilla de Canva especializada para LinkedIn, layout limpio y moderno, jerarquía visual clara, bloques bien alineados, contraste elegante, diseño llamativo con un gancho visual claro que invite a detenerse, composición centrada y limpia, sujeto principal claro, fondo ordenado y sin ruido, iluminación suave y realista, colores armónicos, alto nivel de detalle, enfoque nítido, profundidad de campo sutil, estética profesional, incluir texto breve relacionado al post, tipografía nítida y de alta legibilidad, texto grande y perfectamente legible, alto contraste entre texto y fondo, sin hashtags, sin logos, sin marcas de agua, sin bordes.",
         "textLegibility": "Tipografía: usa sans-serif, texto nítido y perfectamente legible, alto contraste, sin letras distorsionadas y sin errores ortográficos. Mantén pocas palabras (6–10 máx.), líneas cortas y composición clara.",

@@ -891,7 +891,7 @@
         "whatOnMind": "What’s on your mind?",
         "ideaHelp": "Share your idea and we’ll help you turn it into a powerful post.",
         "mandatoryLanguage": "Mandatory language: {language}. Use only this language.",
-        "includePostTitle": "Include the post title in the image text.",
+        "includePostTitle": "You MUST include the exact text \"{title}\" prominently, clearly and legibly inside the image.",
         "excludePostTitle": "Do not include any title text in the image.",
         "creativeDirection": "Creative direction: image for LinkedIn post with Canva template style specialized for LinkedIn, clean and modern layout, clear visual hierarchy, well-aligned blocks, elegant contrast, eye-catching design with a clear visual hook that invites stopping, centered and clean composition, clear main subject, tidy and noise-free background, soft and realistic lighting, harmonious colors, high level of detail, sharp focus, subtle depth of field, professional aesthetic, include brief text related to the post, sharp and highly legible typography, large and perfectly legible text, high contrast between text and background, no hashtags, no logos, no watermarks, no borders.",
         "textLegibility": "Typography: use a sans-serif font, crisp and perfectly readable text, high contrast, no distorted letters and no misspellings. Keep few words (6–10 max), short line(s), and a clear composition.",

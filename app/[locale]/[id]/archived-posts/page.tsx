@@ -808,7 +808,6 @@ export default function ArchivedPostsPage() {
     if (
       !messageForImage ||
       !selectedImageStyleId ||
-      !values.includePostTitle ||
       values.extraContext.trim().length === 0
     )
       return;
@@ -846,13 +845,14 @@ export default function ArchivedPostsPage() {
     const isLowPolyStyle = selectedImageStyle?.id === "low-poly";
     const isSurrealistStyle = selectedImageStyle?.id === "surrealista";
     const isCustomStyle = isSketchStyle || isCaricatureStyle || isNeonStyle || isIsometricStyle || isRetroStyle || isWatercolorStyle || is3DModernStyle || isGraphicsStyle || isNoirStyle || isPhotographyStyle || isMinimalistStyle || isFuturistStyle || isCyberpunkStyle || isFlatStyle || isComicStyle || isPastelStyle || isVintageStyle || isLowPolyStyle || isSurrealistStyle;
+    const titleText = values.includePostTitle.trim();
     const includeTitleInstruction =
-      values.includePostTitle === "withTitle"
-        ? t("prompts.includePostTitle")
+      titleText.length > 0
+        ? t("prompts.includePostTitle", { title: titleText })
         : t("prompts.excludePostTitle");
     const titleLine =
-      values.includePostTitle === "withTitle"
-        ? `${t("labels.postTitle")}: ${resolvePostTitle(messageForImage.content)}`
+      titleText.length > 0
+        ? `${t("labels.postTitle")}: "${titleText}"`
         : "";
     const topicLine =
       messageForImage.content
@@ -1915,30 +1915,33 @@ export default function ArchivedPostsPage() {
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
                     {t("labels.includePostTitle")}
                   </label>
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setImagePromptValue("includePostTitle", "withTitle")}
-                      className={`rounded-2xl border px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
-                        includePostTitle === "withTitle"
-                          ? "border-blue-500 bg-blue-500 text-white shadow-md shadow-blue-500/20"
-                          : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
-                      }`}
-                    >
-                      {t("labels.includePostTitleYes")}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setImagePromptValue("includePostTitle", "withoutTitle")}
-                      className={`rounded-2xl border px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
-                        includePostTitle === "withoutTitle"
-                          ? "border-blue-500 bg-blue-500 text-white shadow-md shadow-blue-500/20"
-                          : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
-                      }`}
-                    >
-                      {t("labels.includePostTitleNo")}
-                    </button>
+                  <div className="flex items-start gap-2.5 rounded-xl border border-blue-100 bg-blue-50/50 p-3">
+                    <FontAwesomeIcon icon={faLightbulb} className="mt-0.5 h-3.5 w-3.5 text-blue-600" />
+                    <p className="text-xs font-medium leading-relaxed text-blue-900">
+                      {t("labels.imageTitleWarning")}
+                    </p>
                   </div>
+                  <div className="relative">
+                    <input
+                      {...registerImagePrompt("includePostTitle", {
+                        maxLength: {
+                          value: 100,
+                          message: activeLocale === "es" ? "Máximo 100 caracteres" : "Max 100 characters"
+                        }
+                      })}
+                      placeholder={t("placeholders.imageTitle")}
+                      maxLength={100}
+                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 pr-14 text-sm text-slate-900 outline-none ring-0 transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] font-semibold text-slate-400">
+                      {(watchImagePrompt("includePostTitle") || "").length}/100
+                    </span>
+                  </div>
+                  {imagePromptErrors.includePostTitle && (
+                    <p className="text-xs font-semibold text-rose-500">
+                      {imagePromptErrors.includePostTitle.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-3">
@@ -2025,7 +2028,6 @@ export default function ArchivedPostsPage() {
                   disabled={
                     !selectedImageStyleId ||
                     isGeneratingImage ||
-                    !includePostTitle ||
                     extraContextValue.trim().length === 0
                   }
                   className="flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-slate-900/20 hover:bg-blue-600 hover:shadow-blue-600/30 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
