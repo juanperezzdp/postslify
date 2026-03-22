@@ -203,14 +203,6 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 {t("header.subtitle")}
               </p>
             </div>
-            <button
-              type="button"
-              onClick={() => signOut({ callbackUrl: "/login" })}
-              className="inline-flex items-center bg-red-600 gap-2 rounded-2xl px-4 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-sm transition hover:bg-red-700"
-            >
-              <FontAwesomeIcon icon={faRightFromBracket} className="h-3.5 w-3.5" />
-              {t("buttons.signOut")}
-            </button>
           </div>
         </div>
 
@@ -335,13 +327,23 @@ export default function SettingsClient({ user }: SettingsClientProps) {
               </div>
             )}
 
-            <button
-              type="submit"
-              disabled={isSavingSettings}
-              className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-70"
-            >
-              {isSavingSettings ? t("buttons.saving") : t("buttons.saveChanges")}
-            </button>
+            <div className="flex justify-between  items-center gap-4">
+              <button
+                type="submit"
+                disabled={isSavingSettings}
+                className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-6 py-3 text-sm font-bold text-white  transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {isSavingSettings ? t("buttons.saving") : t("buttons.saveChanges")}
+              </button>
+              <button
+                type="button"
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="inline-flex items-center bg-red-600 gap-2 rounded-2xl px-6 py-3 text-sm font-bold text-white transition hover:bg-red-700"
+              >
+                <FontAwesomeIcon icon={faRightFromBracket} className="h-4 w-4" />
+                {t("buttons.signOut")}
+              </button>
+            </div>
           </form>
         </div>
 

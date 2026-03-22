@@ -34,7 +34,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-slate-900" aria-labelledby="footer-heading">
+    <footer className="bg-blue-950" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
@@ -52,12 +52,12 @@ export function Footer() {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-slate-400 hover:text-blue-400 transition-colors"
+                  className="text-slate-400 hover:text-white transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <span className="sr-only">{item.name}</span>
-                  <FontAwesomeIcon icon={item.icon} className="h-6 w-6" aria-hidden="true" />
+                  <FontAwesomeIcon icon={item.icon} className="text-3xl" aria-hidden="true" />
                 </a>
               ))}
             </div>

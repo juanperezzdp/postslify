@@ -289,169 +289,201 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
         </div>
 
-        <section className="mt-24 w-full max-w-7xl ">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-50 p-[1px] shadow-[0_18px_55px_rgba(15,23,42,0.12)]">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(59,130,246,0.18),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(129,140,248,0.16),transparent_55%)]" />
-            <div className="relative z-10 flex flex-col gap-10 rounded-[22px] bg-white px-6 py-8 md:flex-row md:items-center md:px-10 md:py-10">
-              <div className="w-full md:w-1/2">
-                <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+        <section className="mt-32 w-full max-w-7xl ">
+          <div className="group relative overflow-hidden rounded-[2.5rem] bg-white p-[1px] shadow-xl shadow-blue-900/10 transition-all hover:shadow-2xl hover:shadow-blue-900/20">
+            <div className="absolute inset-0 bg-white" />
+
+            <div className="relative z-10 grid grid-cols-1 gap-16 rounded-[2.4rem] bg-white px-6 py-16 sm:py-24 lg:grid-cols-2 lg:items-center lg:px-20">
+              <div className="text-left">
+                <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
                   {t.rich("powerSection.title", {
-                    span: (chunks) => <span className="text-slate-900">{chunks}</span>,
+                    span: (chunks) => <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{chunks}</span>,
                   })}
                 </h2>
-                <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600">
+                <p className="mt-6 text-lg leading-8 text-slate-600">
                   {t("powerSection.subtitle")}
                 </p>
 
-                <div className="mt-6 space-y-4">
-                  <div>
-                    <h3 className="text-sm font-semibold text-slate-900">
-                      {t("powerSection.items.idealClient.title")}
-                    </h3>
-                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
-                      {t("powerSection.items.idealClient.desc")}
-                    </p>
+                <div className="mt-10 space-y-8">
+                  <div className="flex gap-4">
+                    <div className="flex h-8 w-8 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-600 ring-1 ring-blue-200">
+                      <FontAwesomeIcon icon={faUsers} className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">
+                        {t("powerSection.items.idealClient.title")}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                        {t("powerSection.items.idealClient.desc")}
+                      </p>
+                    </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-sm font-semibold text-slate-900">
-                      {t("powerSection.items.rightCommunity.title")}
-                    </h3>
-                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
-                      {t("powerSection.items.rightCommunity.desc")}
-                    </p>
+                  <div className="flex gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600 ring-1 ring-indigo-200">
+                      <FontAwesomeIcon icon={faRobot} className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">
+                        {t("powerSection.items.rightCommunity.title")}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                        {t("powerSection.items.rightCommunity.desc")}
+                      </p>
+                    </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-sm font-semibold text-slate-900">
-                      {t("powerSection.items.turnVisibility.title")}
-                    </h3>
-                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
-                      {t("powerSection.items.turnVisibility.desc")}
-                    </p>
+                  <div className="flex gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-100 text-purple-600 ring-1 ring-purple-200">
+                      <FontAwesomeIcon icon={faChartLine} className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">
+                        {t("powerSection.items.turnVisibility.title")}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                        {t("powerSection.items.turnVisibility.desc")}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-6 grid grid-cols-3 gap-3 text-[11px] text-slate-500">
-                  <div className="rounded-xl bg-emerald-50 px-3 py-2 ring-1 ring-emerald-100">
-                    <p className="text-[10px] uppercase tracking-[0.16em] text-emerald-400">
-                      Clics ideales
+                <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                  <div className="rounded-2xl bg-blue-50/80 p-4 ring-1 ring-blue-100 transition-all hover:bg-blue-100 hover:scale-105">
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-blue-600 font-semibold">
+                      Clics
                     </p>
-                    <p className="mt-1 text-sm font-semibold text-emerald-600">
+                    <p className="mt-2 text-2xl font-bold text-slate-900">
                       +214%
                     </p>
                   </div>
-                  <div className="rounded-xl bg-sky-50 px-3 py-2 ring-1 ring-sky-100">
-                    <p className="text-[10px] uppercase tracking-[0.16em] text-sky-400">
-                      Comunidad
+                  <div className="rounded-2xl bg-indigo-50/80 p-4 ring-1 ring-indigo-100 transition-all hover:bg-indigo-100 hover:scale-105">
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-indigo-600 font-semibold">
+                      Alcance
                     </p>
-                    <p className="mt-1 text-sm font-semibold text-sky-600">
-                      x3 alcance
+                    <p className="mt-2 text-2xl font-bold text-slate-900">
+                      x3
                     </p>
                   </div>
-                  <div className="rounded-xl bg-indigo-50 px-3 py-2 ring-1 ring-indigo-100">
-                    <p className="text-[10px] uppercase tracking-[0.16em] text-indigo-400">
-                      Oportunidades
+                  <div className="rounded-2xl bg-purple-50/80 p-4 ring-1 ring-purple-100 transition-all hover:bg-purple-100 hover:scale-105">
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-purple-600 font-semibold">
+                      Leads
                     </p>
-                    <p className="mt-1 text-sm font-semibold text-indigo-600">
-                      +78 leads
+                    <p className="mt-2 text-2xl font-bold text-slate-900">
+                      +78
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="w-full md:w-1/2">
-                <div className="relative mx-auto max-w-xl">
-                  <Image
-                    src={locale === 'es' ? '/mockup-post-es.png' : '/mockup-post.png'}
-                    alt="Mockup de posts optimizados en LinkedIn"
-                    width={960}
-                    height={720}
-                    className="block h-auto w-full object-contain sm:object-cover pointer-events-none select-none"
-                  />
-                </div>
+              <div className="relative">
+                <div className="absolute -inset-4 rounded-3xl  opacity-30 blur-2xl transition-all group-hover:opacity-50" />
+                <Image
+                  src={locale === 'es' ? '/mockup-post-es.png' : '/mockup-post.png'}
+                  alt="Mockup de posts optimizados en LinkedIn"
+                  width={960}
+                  height={720}
+                  className="relative z-10 block h-auto w-full object-contain drop-shadow-[0_15px_25px_rgba(15,23,42,0.15)]"
+                />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="mt-20 w-full max-w-7xl">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 via-sky-50 to-blue-50 p-[1px] shadow-[0_18px_55px_rgba(15,23,42,0.12)]">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(16,185,129,0.18),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(59,130,246,0.16),transparent_55%)]" />
-            <div className="relative z-10 flex flex-col gap-10 rounded-[22px] bg-white px-6 py-8 md:flex-row md:items-center md:px-10 md:py-10">
-              <div className="w-full md:w-1/2">
-                <div className="relative mx-auto max-w-xl ">
-                  <Image
-                    src="/calendar.png"
-                    alt="Calendar View"
-                    width={960}
-                    height={720}
-                    className="border border-slate-200 block h-auto w-full object-contain sm:object-cover pointer-events-none select-none rounded-lg"
-                  />
-                </div>
+        <section className="mt-20 w-full  max-w-7xl  ">
+          <div className="group relative   overflow-hidden rounded-[2.5rem] bg-white p-[1px] shadow-xl shadow-blue-900/10 transition-all hover:shadow-2xl hover:shadow-blue-900/20">
+            <div className="absolute inset-0 bg-white" />
+            <div className="pointer-events-none absolute -top-40 -left-40 h-96 w-96 rounded-full bg-blue-100/50 blur-[100px] transition-all group-hover:bg-blue-200/50" />
+            <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-100/50 blur-[100px] transition-all group-hover:bg-indigo-200/50" />
+            
+            <div className="relative z-10 flex flex-col-reverse gap-16 rounded-[2.4rem] bg-white px-6 py-16 sm:py-24 lg:flex-row lg:items-center lg:px-20">
+              <div className="w-full lg:w-1/2 relative flex justify-center">
+                
+                <Image
+                  src="/calendar.png"
+                  alt="Calendar View"
+                  width={960}
+                  height={720}
+                  className="relative z-10 block h-auto w-[100%] sm:w-[75%] lg:w-[80%] rounded-lg border border-slate-100 object-contain shadow-blue-200 shadow-lg transition-transform duration-500 hover:scale-105"
+                />
               </div>
 
-              <div className="w-full md:w-1/2">
-                <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+              <div className="w-full lg:w-1/2 text-left">
+                <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
                   {t.rich("scheduleSection.title", {
-                    span: (chunks) => <span className="text-emerald-600">{chunks}</span>,
+                    span: (chunks) => <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">{chunks}</span>,
                   })}
                 </h2>
-                <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600">
+                <p className="mt-6 text-lg leading-8 text-slate-600">
                   {t("scheduleSection.subtitle")}
                 </p>
 
-                <div className="mt-6 space-y-4">
-                  <div>
-                    <h3 className="text-sm font-semibold text-slate-900">
-                      {t("scheduleSection.items.howItWorks.title")}
-                    </h3>
-                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
-                      {t("scheduleSection.items.howItWorks.desc")}
-                    </p>
+                <div className="mt-10 space-y-8">
+                  <div className="flex gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-1 ring-blue-200">
+                      <FontAwesomeIcon icon={faCalendarAlt} className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">
+                        {t("scheduleSection.items.howItWorks.title")}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                        {t("scheduleSection.items.howItWorks.desc")}
+                      </p>
+                    </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-sm font-semibold text-slate-900">
-                      {t("scheduleSection.items.benefits.title")}
-                    </h3>
-                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
-                      {t("scheduleSection.items.benefits.desc")}
-                    </p>
+                  <div className="flex gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-200">
+                      <FontAwesomeIcon icon={faRocket} className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">
+                        {t("scheduleSection.items.benefits.title")}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                        {t("scheduleSection.items.benefits.desc")}
+                      </p>
+                    </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-sm font-semibold text-slate-900">
-                      {t("scheduleSection.items.calendar.title")}
-                    </h3>
-                    <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
-                      {t("scheduleSection.items.calendar.desc")}
-                    </p>
+                  <div className="flex gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-50 text-purple-600 ring-1 ring-purple-200">
+                      <FontAwesomeIcon icon={faChartLine} className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">
+                        {t("scheduleSection.items.calendar.title")}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                        {t("scheduleSection.items.calendar.desc")}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-6 grid grid-cols-3 gap-3 text-[11px] text-slate-500">
-                  <div className="rounded-xl bg-emerald-50 px-3 py-2 ring-1 ring-emerald-100">
-                    <p className="text-[10px] uppercase tracking-[0.16em] text-emerald-400">
+                <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                  <div className="rounded-2xl bg-blue-50/80 p-4 ring-1 ring-blue-100 transition-all hover:bg-blue-100 hover:scale-105">
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-blue-600 font-semibold">
                       {t("scheduleSection.metrics.timeSaved.label")}
                     </p>
-                    <p className="mt-1 text-sm font-semibold text-emerald-600">
+                    <p className="mt-2 text-2xl font-bold text-slate-900">
                       {t("scheduleSection.metrics.timeSaved.value")}
                     </p>
                   </div>
-                  <div className="rounded-xl bg-sky-50 px-3 py-2 ring-1 ring-sky-100">
-                    <p className="text-[10px] uppercase tracking-[0.16em] text-sky-400">
+                  <div className="rounded-2xl bg-indigo-50/80 p-4 ring-1 ring-indigo-100 transition-all hover:bg-indigo-100 hover:scale-105">
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-indigo-600 font-semibold">
                       {t("scheduleSection.metrics.consistency.label")}
                     </p>
-                    <p className="mt-1 text-sm font-semibold text-sky-600">
+                    <p className="mt-2 text-2xl font-bold text-slate-900">
                       {t("scheduleSection.metrics.consistency.value")}
                     </p>
                   </div>
-                  <div className="rounded-xl bg-indigo-50 px-3 py-2 ring-1 ring-indigo-100">
-                    <p className="text-[10px] uppercase tracking-[0.16em] text-indigo-400">
+                  <div className="rounded-2xl bg-purple-50/80 p-4 ring-1 ring-purple-100 transition-all hover:bg-purple-100 hover:scale-105">
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-purple-600 font-semibold">
                       {t("scheduleSection.metrics.clarity.label")}
                     </p>
-                    <p className="mt-1 text-sm font-semibold text-indigo-600">
+                    <p className="mt-2 text-2xl font-bold text-slate-900">
                       {t("scheduleSection.metrics.clarity.value")}
                     </p>
                   </div>
@@ -461,48 +493,56 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
         </section>
 
-        <div id="services" className="mt-32 flex w-full flex-col items-center">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+        <div id="services" className="mt-32 w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-base font-semibold leading-7 text-blue-600 uppercase tracking-widest">{t('nav.services')}</h2>
+            <p className="mt-2 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
               {t.rich('services.title', {
-                span: (chunks) => <span className="text-blue-600">{chunks}</span>
+                span: (chunks) => <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{chunks}</span>
               })}
-            </h2>
+            </p>
             <p className="mt-6 text-lg leading-8 text-slate-600">
               {t('services.subtitle')}
             </p>
           </div>
 
-          <div className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-10 lg:gap-y-24">
+          <div className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:max-w-none lg:grid-cols-3">
             {services.map((service, index) => {
-               const rotations = ['rotate-1', '-rotate-2', 'rotate-2', '-rotate-1', 'rotate-3', '-rotate-2', 'rotate-1'];
-               const rotation = rotations[index % rotations.length];
-               
-               const colIndex = index % 3;
-               const isMiddleColumn = colIndex === 1;
+               const isLast = index === services.length - 1;
                
                return (
                 <div
                   key={service.id}
-                  className={`group relative flex flex-col items-start rounded-2xl bg-white p-6 shadow-lg ring-1 ring-slate-200/50 transition-all duration-500  hover:z-10 hover:-translate-y-2 hover:rotate-0 hover:shadow-xl hover:shadow-blue-100 hover:ring-blue-300 ${rotation} ${isMiddleColumn ? 'lg:mt-16' : ''}`}
+                  className={`group cursor-pointer relative flex flex-col justify-between overflow-hidden rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200 transition-all hover:shadow-xl hover:shadow-blue-900/5 hover:ring-blue-200 ${isLast ? 'sm:col-span-2 lg:col-span-3 lg:flex-row lg:items-center' : ''}`}
                 >
-                  {/* Number */}
-                  <span className="mb-2 font-[family-name:var(--font-tan)] text-4xl text-slate-200/80 select-none group-hover:text-blue-600 transition-colors">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-
-                  <div className="relative z-10 w-full">
-                    <div className={`mb-3 inline-flex h-8 w-8 items-center justify-center rounded-lg ${service.color} bg-opacity-20`}>
-                      <FontAwesomeIcon icon={service.icon} className="h-4 w-4" />
+                  
+                  <div className={`relative z-10 ${isLast ? 'lg:w-1/2' : ''}`}>
+                    <div className={`mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl ${service.color} bg-opacity-10 ring-1 ring-inset ring-current/20`}>
+                      <FontAwesomeIcon icon={service.icon} className="h-6 w-6" />
                     </div>
                     
-                    <h3 className="text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-xl font-bold tracking-tight text-slate-900">
                       {t(`services.items.${service.id}.title`)}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                    <p className="mt-4 text-sm leading-relaxed text-slate-500">
                       {t(`services.items.${service.id}.desc`)}
                     </p>
                   </div>
+                  
+                  {isLast && (
+                    <div className="relative z-10 mt-8 lg:mt-0 lg:w-1/3 flex justify-end">
+                      <span className="font-[family-name:var(--font-tan)] text-5xl text-slate-100 group-hover:text-blue-500 transition-colors">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                    </div>
+                  )}
+                  {!isLast && (
+                    <div className="mt-8 flex items-center justify-end">
+                      <span className="font-[family-name:var(--font-tan)] text-5xl text-slate-100 group-hover:text-blue-500 transition-colors">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -527,14 +567,14 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             {pricingPlans.map((plan) => (
               <div
                 key={plan.id}
-                className={`relative flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 transition-all duration-300 hover:scale-105 hover:shadow-xl xl:p-10 ${
+                className={`relative flex flex-col justify-between rounded-3xl p-8 ring-1 transition-all duration-300 xl:p-10 ${
                   plan.popular
-                    ? "ring-2 ring-blue-600 shadow-blue-200 z-10 scale-105"
-                    : "ring-slate-200 shadow-sm hover:ring-blue-200"
+                    ? "bg-blue-950 ring-2 ring-blue-500 shadow-2xl shadow-blue-900/40 z-10 scale-105 hover:scale-[1.07]"
+                    : "bg-white ring-slate-200 shadow-sm hover:shadow-xl hover:ring-blue-200 hover:-translate-y-1"
                 }`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-0 right-0 mx-auto w-32 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1 text-center text-sm font-medium text-white shadow-md">
+                  <div className="absolute -top-4 left-0 right-0 mx-auto w-32 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 px-3 py-1 text-center text-[11px] font-bold uppercase tracking-wider text-white shadow-md">
                     {t('pricing.mostPopular')}
                   </div>
                 )}
@@ -542,44 +582,46 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <div>
                   <div className="flex items-center justify-between gap-x-4">
                     <h3
-                      className={`text-lg font-semibold leading-8 ${
-                        plan.popular ? "text-blue-600" : "text-slate-900"
+                      className={`text-lg font-bold leading-8 ${
+                        plan.popular ? "text-white" : "text-slate-900"
                       }`}
                     >
                       {t(`pricing.plans.${plan.id}`)}
                     </h3>
-                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${
-                        plan.popular ? "bg-blue-50 text-blue-600" : "bg-slate-50 text-slate-600"
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${
+                        plan.popular ? "bg-white/10 text-blue-400" : "bg-blue-50 text-blue-600"
                     }`}>
                         <FontAwesomeIcon icon={plan.icon} className="h-5 w-5" />
                     </div>
                   </div>
                   
                   <p className="mt-6 flex items-baseline gap-x-1">
-                    <span className="text-4xl font-bold tracking-tight text-slate-900">{plan.price}</span>
-                    <span className="text-sm font-semibold leading-6 text-slate-600">{t('pricing.oneTime')}</span>
+                    <span className={`text-4xl font-extrabold tracking-tight ${plan.popular ? "text-white" : "text-slate-900"}`}>{plan.price}</span>
+                    <span className={`text-sm font-semibold leading-6 ${plan.popular ? "text-slate-300" : "text-slate-500"}`}>{t('pricing.oneTime')}</span>
                   </p>
                   
-                  <div className="mt-2 flex items-center gap-2 rounded-md bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 w-fit">
+                  <div className={`mt-4 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold w-fit ${
+                    plan.popular ? "bg-blue-500/20 text-blue-300 ring-1 ring-inset ring-blue-500/30" : "bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-200"
+                  }`}>
                     <FontAwesomeIcon icon={faBolt} className="h-3 w-3" />
                     <span>{plan.credits} {t('pricing.credits')}</span>
                   </div>
 
-                  <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-slate-600 text-left">
+                  <ul role="list" className={`mt-8 space-y-4 text-sm leading-6 text-left ${plan.popular ? "text-slate-300" : "text-slate-600"}`}>
                      <li className="flex gap-x-3">
-                        <FontAwesomeIcon icon={faCheck} className={`h-6 w-5 flex-none ${plan.popular ? "text-blue-600" : "text-blue-500"}`} aria-hidden="true" />
+                        <FontAwesomeIcon icon={faCheck} className={`h-5 w-4 flex-none ${plan.popular ? "text-blue-400" : "text-blue-500"}`} aria-hidden="true" />
                         {t('pricing.features.generation')}
                      </li>
                      <li className="flex gap-x-3">
-                        <FontAwesomeIcon icon={faCheck} className={`h-6 w-5 flex-none ${plan.popular ? "text-blue-600" : "text-blue-500"}`} aria-hidden="true" />
+                        <FontAwesomeIcon icon={faCheck} className={`h-5 w-4 flex-none ${plan.popular ? "text-blue-400" : "text-blue-500"}`} aria-hidden="true" />
                         {t('pricing.features.scheduling')}
                      </li>
                      <li className="flex gap-x-3">
-                        <FontAwesomeIcon icon={faCheck} className={`h-6 w-5 flex-none ${plan.popular ? "text-blue-600" : "text-blue-500"}`} aria-hidden="true" />
+                        <FontAwesomeIcon icon={faCheck} className={`h-5 w-4 flex-none ${plan.popular ? "text-blue-400" : "text-blue-500"}`} aria-hidden="true" />
                         {t('pricing.features.voice')}
                      </li>
                      <li className="flex gap-x-3">
-                        <FontAwesomeIcon icon={faCheck} className={`h-6 w-5 flex-none ${plan.popular ? "text-blue-600" : "text-blue-500"}`} aria-hidden="true" />
+                        <FontAwesomeIcon icon={faCheck} className={`h-5 w-4 flex-none ${plan.popular ? "text-blue-400" : "text-blue-500"}`} aria-hidden="true" />
                         {t('pricing.features.publishing')}
                      </li>
                   </ul>
@@ -587,10 +629,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 
                 <Link
                   href="/login?plan=credits"
-                  className={`mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all ${
+                  className={`mt-8 block rounded-xl px-3 py-3 text-center text-sm font-bold leading-6 shadow-sm transition-all active:scale-95 ${
                     plan.popular
-                      ? "bg-blue-600 text-white hover:bg-blue-500 focus-visible:outline-blue-600 shadow-blue-200"
-                      : "bg-white text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300 hover:bg-blue-50"
+                      ? "bg-blue-600 text-white hover:bg-blue-500 shadow-blue-900/20"
+                      : "bg-slate-50 text-slate-700 ring-1 ring-inset ring-slate-200 hover:bg-slate-100 hover:text-slate-900"
                   }`}
                 >
                   {t('pricing.buyNow')}
@@ -607,6 +649,33 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
              </p>
           </div>
         </div>
+
+        {/* Bottom CTA Section */}
+        <section className="mt-32 mb-20 w-full max-w-7xl  relative">
+           <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-b from-blue-50/50 to-white" />
+           <div className="group relative overflow-hidden rounded-[3rem] bg-blue-600 px-4 py-10 sm:py-32 text-center shadow-2xl shadow-blue-600/20">
+              <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-blue-500 blur-[80px] transition-all group-hover:bg-blue-400" />
+              <div className="pointer-events-none absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-indigo-500 blur-[80px] transition-all group-hover:bg-indigo-400" />
+              
+              
+              <div className="relative z-10 mx-auto max-w-3xl">
+                <h2 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl">
+                   {t('cta.title')}
+                </h2>
+                <p className="mt-6 text-lg leading-8 text-blue-100">
+                   {t('cta.subtitle')}
+                </p>
+                <div className="mt-10 flex items-center justify-center gap-x-6">
+                   <Link 
+                     href="/login" 
+                     className="rounded-full bg-white px-8 py-4 text-base font-bold text-blue-600 shadow-xl shadow-black/10 transition-all hover:scale-105 hover:bg-blue-50 hover:shadow-2xl hover:shadow-black/20 active:scale-95"
+                   >
+                     {t('cta.button')}
+                   </Link>
+                </div>
+              </div>
+           </div>
+        </section>
 
       </main>
       <Footer />
