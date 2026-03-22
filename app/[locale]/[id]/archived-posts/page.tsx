@@ -8,6 +8,7 @@ import { getProxiedImageUrl } from "@/lib/image-proxy";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faLightbulb,
   faPaperPlane,
   faImage,
   faVideo,
