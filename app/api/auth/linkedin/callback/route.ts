@@ -229,7 +229,7 @@ export async function GET(request: NextRequest) {
       linkedin_headline: headline,
       linkedin_picture: pictureUrl,
     });
-    targetPath = `/${defaultLocale}/${authSession.user.id}/`;
+    targetPath = `/${defaultLocale}/${authSession.user.id}/create-post`;
   }
 
   const baseUrl =
