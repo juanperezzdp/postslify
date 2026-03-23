@@ -1,5 +1,7 @@
 [variables]
 NODE_VERSION = "20.11.1"
+HOSTNAME = "0.0.0.0"
+PORT = "3000"
 
 [phases.setup]
 nixPkgs = ["nodejs_20"]
