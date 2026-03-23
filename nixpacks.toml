@@ -3,3 +3,6 @@ NODE_VERSION = "20.11.1"
 
 [phases.setup]
 nixPkgs = ["nodejs_20"]
+
+[start]
+cmd = "sh -c \"node .next/standalone/server.js & node scripts/local-cron.js\""
