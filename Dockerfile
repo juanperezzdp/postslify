@@ -62,4 +62,4 @@ ENV PORT 3000
 # set hostname to localhost
 ENV HOSTNAME "0.0.0.0"
 
-CMD ["sh", "-c", "node .next/standalone/server.js & node scripts/local-cron.js"]
+CMD ["sh", "-c", "node server.js & node scripts/local-cron.js & wait"]

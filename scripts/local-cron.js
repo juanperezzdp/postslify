@@ -26,7 +26,6 @@ try {
 
 if (!cronSecret) {
   console.warn('\x1b[33m%s\x1b[0m', 'ADVERTENCIA: CRON_SECRET no encontrado en .env.local. Asegúrate de tenerlo configurado.');
-} else {
 }
 
 if (!Number.isFinite(targetPort)) {
@@ -34,8 +33,11 @@ if (!Number.isFinite(targetPort)) {
 }
 
 const interval = 10 * 60 * 1000;
+console.log('⏱️  Cron iniciado. Intervalo:', interval / 1000, 'segundos. Puerto:', targetPort);
 
 function triggerCron() {
+  const time = new Date().toLocaleTimeString();
+  console.log(`[${time}] 🔁 Ejecutando cron...`);
   const options = {
   hostname: 'localhost',
   port: targetPort,
@@ -52,9 +54,10 @@ function triggerCron() {
       data += chunk;
     });
     res.on('end', () => {
-      const time = new Date().toLocaleTimeString();
       if (res.statusCode === 200) {
+        console.log(`[${time}] ✅ Cron OK`);
       } else {
+        console.warn(`[${time}] ⚠️ Cron respondió ${res.statusCode}: ${data || 'sin cuerpo'}`);
       }
     });
   });
