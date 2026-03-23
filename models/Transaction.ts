@@ -8,6 +8,7 @@ export interface ITransaction {
   provider: "paypal" | "stripe" | "system";
   provider_order_id?: string;
   status: "pending" | "completed" | "failed" | "canceled";
+  expiresAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -44,6 +45,10 @@ const TransactionSchema = new Schema<ITransaction>(
       type: String,
       enum: ["pending", "completed", "failed", "canceled"],
       default: "pending",
+    },
+    expiresAt: {
+      type: Date,
+      expires: 0,
     },
   },
   {

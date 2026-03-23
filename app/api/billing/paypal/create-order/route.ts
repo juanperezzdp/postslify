@@ -35,6 +35,8 @@ export async function POST(request: NextRequest) {
   const returnUrl = `${origin}/${session.user.id}/billing?paypal=success`;
   const cancelUrl = `${origin}/${session.user.id}/billing?paypal=cancel`;
   const amountCents = PLAN_AMOUNT_CENTS[planId];
+  const expiresAt = new Date();
+  expiresAt.setMonth(expiresAt.getMonth() + 6);
 
   try {
     const order = await createPayPalOrder({
@@ -60,6 +62,7 @@ export async function POST(request: NextRequest) {
       provider: "paypal",
       provider_order_id: order.id,
       status: "pending",
+      expiresAt,
     });
 
     const response: CreateOrderResponse = {

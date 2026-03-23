@@ -342,7 +342,8 @@
       "status": {
         "completed": "Completed",
         "failed": "Failed",
-        "pending": "Pending"
+        "pending": "Pending",
+        "rejected": "Rejected"
       }
     },
     "status": {

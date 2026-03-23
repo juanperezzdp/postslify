@@ -346,7 +346,8 @@
       "status": {
         "completed": "Completado",
         "failed": "Fallido",
-        "pending": "Pendiente"
+        "pending": "Pendiente",
+        "rejected": "Rechazado"
       }
     },
     "status": {

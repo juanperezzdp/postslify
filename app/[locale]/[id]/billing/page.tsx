@@ -436,7 +436,12 @@ export default function BillingPage() {
               {payments.map((p) => {
                 const amountUsd = (p.amountCents / 100).toFixed(2);
                 const isCompleted = p.status === "completed";
-                const isFailed = p.status === "failed" || p.status === "canceled";
+                const isRejected = p.status === "failed" || p.status === "canceled";
+                const statusLabel = isCompleted
+                  ? t("history.status.completed")
+                  : isRejected
+                  ? t("history.status.rejected")
+                  : t("history.status.pending");
                 
                 return (
                   <div
@@ -445,7 +450,7 @@ export default function BillingPage() {
                   >
                     <div className="flex items-center gap-4">
                       <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-                        isCompleted ? "bg-emerald-50 text-emerald-600" : isFailed ? "bg-red-50 text-red-600" : "bg-amber-50 text-amber-600"
+                        isCompleted ? "bg-emerald-50 text-emerald-600" : isRejected ? "bg-red-50 text-red-600" : "bg-amber-50 text-amber-600"
                       }`}>
                         <span className="text-lg font-bold">$</span>
                       </div>
@@ -463,11 +468,11 @@ export default function BillingPage() {
                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold ${
                           isCompleted
                             ? "bg-emerald-100 text-emerald-700"
-                            : isFailed
+                            : isRejected
                             ? "bg-red-100 text-red-700"
                             : "bg-amber-100 text-amber-700"
                         }`}>
-                          {isCompleted ? t("history.status.completed") : isFailed ? t("history.status.failed") : t("history.status.pending")}
+                          {statusLabel}
                         </span>
                       </div>
                     </div>

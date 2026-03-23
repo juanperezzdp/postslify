@@ -34,9 +34,18 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    await dbConnect();
     const capture = await capturePayPalOrder(orderId);
 
     if (capture.status !== "COMPLETED") {
+      const fallbackExpiry = new Date();
+      fallbackExpiry.setMonth(fallbackExpiry.getMonth() + 6);
+      const existing = await Transaction.findOne({ provider_order_id: orderId });
+      if (existing) {
+        existing.status = "failed";
+        existing.expiresAt = existing.expiresAt ?? fallbackExpiry;
+        await existing.save();
+      }
       return NextResponse.json(
         { error: "La captura no fue completada" },
         { status: 400 }
@@ -56,8 +65,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await dbConnect();
-
     const existing = await Transaction.findOne({ provider_order_id: orderId });
 
     if (existing && existing.user_id.toString() !== session.user.id) {
@@ -68,6 +75,10 @@ export async function POST(request: NextRequest) {
     }
 
     if (existing?.status === "completed") {
+      if (existing.expiresAt) {
+        existing.expiresAt = undefined;
+        await existing.save();
+      }
       const user = await User.findById(session.user.id);
       return NextResponse.json({
         success: true,
@@ -84,6 +95,7 @@ export async function POST(request: NextRequest) {
 
     if (existing) {
       existing.status = "completed";
+      existing.expiresAt = undefined;
       await existing.save();
     } else {
         await Transaction.create({
@@ -94,6 +106,7 @@ export async function POST(request: NextRequest) {
             provider: "paypal",
             provider_order_id: orderId,
             status: "completed",
+            expiresAt: undefined,
         });
     }
 
