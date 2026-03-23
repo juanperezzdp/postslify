@@ -4,6 +4,7 @@ import type { LinkedInSession } from "@/types/linkedin";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import { encryptToken } from "@/lib/linkedin";
+import { routing } from "@/i18n/routing";
 
 export async function GET(request: NextRequest) {
   const clientId = process.env.LINKEDIN_CLIENT_ID;
@@ -200,7 +201,8 @@ export async function GET(request: NextRequest) {
   );
 
   const authSession = await auth();
-  let targetPath = "/";
+  const defaultLocale = routing.defaultLocale;
+  let targetPath = `/${defaultLocale}/`;
 
   if (authSession?.user?.id) {
     let encryptedRefreshToken = undefined;
@@ -227,10 +229,14 @@ export async function GET(request: NextRequest) {
       linkedin_headline: headline,
       linkedin_picture: pictureUrl,
     });
-    targetPath = `/${authSession.user.id}/create-post`;
+    targetPath = `/${defaultLocale}/${authSession.user.id}/`;
   }
 
-  const redirectUrl = new URL(targetPath, request.url);
+  const baseUrl =
+    process.env.NEXT_PUBLIC_APP_URL ||
+    process.env.APP_URL ||
+    request.nextUrl.origin;
+  const redirectUrl = new URL(targetPath, baseUrl);
   const response = NextResponse.redirect(redirectUrl.toString());
 
   response.cookies.set("linkedin_session", sessionValue, {
