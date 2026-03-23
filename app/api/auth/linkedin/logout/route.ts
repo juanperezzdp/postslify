@@ -5,6 +5,7 @@ import User from "@/models/User";
 
 export async function POST() {
   const session = await auth();
+  const cookieDomain = process.env.COOKIE_DOMAIN;
   if (!session?.user?.id) {
     return NextResponse.json({ error: "No autorizado" }, { status: 401 });
   }
@@ -20,11 +21,16 @@ export async function POST() {
 
   const response = NextResponse.json({ success: true }, { status: 200 });
 
-  
-  response.cookies.delete("linkedin_session");
-  
-  
-  response.cookies.delete("linkedin_oauth_state");
+  if (cookieDomain) {
+    response.cookies.delete({ name: "linkedin_session", domain: cookieDomain });
+    response.cookies.delete({
+      name: "linkedin_oauth_state",
+      domain: cookieDomain,
+    });
+  } else {
+    response.cookies.delete("linkedin_session");
+    response.cookies.delete("linkedin_oauth_state");
+  }
 
   return response;
 }

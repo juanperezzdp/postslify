@@ -4,6 +4,7 @@ export async function GET() {
   const clientId = process.env.LINKEDIN_CLIENT_ID;
   const redirectUri = process.env.LINKEDIN_REDIRECT_URI;
   const scope = ["openid", "profile", "email", "w_member_social"].join(" ");
+  const cookieDomain = process.env.COOKIE_DOMAIN;
 
   if (!clientId || !redirectUri) {
     return NextResponse.json(
@@ -30,6 +31,7 @@ export async function GET() {
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 10,
+    ...(cookieDomain ? { domain: cookieDomain } : {}),
   });
 
   return response;

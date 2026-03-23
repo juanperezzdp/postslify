@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
   const clientId = process.env.LINKEDIN_CLIENT_ID;
   const clientSecret = process.env.LINKEDIN_CLIENT_SECRET;
   const redirectUri = process.env.LINKEDIN_REDIRECT_URI;
+  const cookieDomain = process.env.COOKIE_DOMAIN;
 
   if (!clientId || !clientSecret || !redirectUri) {
     return NextResponse.json(
@@ -32,7 +33,14 @@ export async function GET(request: NextRequest) {
       },
       { status: 400 },
     );
-    response.cookies.delete("linkedin_oauth_state");
+    if (cookieDomain) {
+      response.cookies.delete({
+        name: "linkedin_oauth_state",
+        domain: cookieDomain,
+      });
+    } else {
+      response.cookies.delete("linkedin_oauth_state");
+    }
     return response;
   }
 
@@ -245,9 +253,17 @@ export async function GET(request: NextRequest) {
     sameSite: "lax",
     path: "/",
     maxAge: expiresIn,
+    ...(cookieDomain ? { domain: cookieDomain } : {}),
   });
 
-  response.cookies.delete("linkedin_oauth_state");
+  if (cookieDomain) {
+    response.cookies.delete({
+      name: "linkedin_oauth_state",
+      domain: cookieDomain,
+    });
+  } else {
+    response.cookies.delete("linkedin_oauth_state");
+  }
 
   return response;
 }
