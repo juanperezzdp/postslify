@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -5,6 +6,10 @@ export async function GET() {
   const redirectUri = process.env.LINKEDIN_REDIRECT_URI;
   const scope = ["openid", "profile", "email", "w_member_social"].join(" ");
   const cookieDomain = process.env.COOKIE_DOMAIN;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_APP_URL ||
+    process.env.APP_URL ||
+    "";
   const responseHeaders = {
     "X-Robots-Tag": "noindex, nofollow, noarchive",
     "Cache-Control": "no-store",
@@ -17,6 +22,41 @@ export async function GET() {
     );
   }
 
+  let redirectUrl: URL;
+  try {
+    redirectUrl = new URL(redirectUri);
+  } catch {
+    return NextResponse.json(
+      { error: "LINKEDIN_REDIRECT_URI inválido" },
+      { status: 500, headers: responseHeaders },
+    );
+  }
+
+  if (process.env.NODE_ENV === "production" && redirectUrl.protocol !== "https:") {
+    return NextResponse.json(
+      { error: "LINKEDIN_REDIRECT_URI debe usar https" },
+      { status: 500, headers: responseHeaders },
+    );
+  }
+
+  if (baseUrl) {
+    let baseUrlParsed: URL;
+    try {
+      baseUrlParsed = new URL(baseUrl);
+    } catch {
+      return NextResponse.json(
+        { error: "APP_URL inválido" },
+        { status: 500, headers: responseHeaders },
+      );
+    }
+    if (redirectUrl.host !== baseUrlParsed.host) {
+      return NextResponse.json(
+        { error: "LINKEDIN_REDIRECT_URI no coincide con APP_URL" },
+        { status: 500, headers: responseHeaders },
+      );
+    }
+  }
+
   const state = crypto.randomUUID();
 
   const authorizeUrl = new URL(
@@ -24,7 +64,7 @@ export async function GET() {
   );
   authorizeUrl.searchParams.set("response_type", "code");
   authorizeUrl.searchParams.set("client_id", clientId);
-  authorizeUrl.searchParams.set("redirect_uri", redirectUri);
+  authorizeUrl.searchParams.set("redirect_uri", redirectUrl.toString());
   authorizeUrl.searchParams.set("scope", scope);
   authorizeUrl.searchParams.set("state", state);
 
