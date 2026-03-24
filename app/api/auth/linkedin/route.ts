@@ -5,11 +5,15 @@ export async function GET() {
   const redirectUri = process.env.LINKEDIN_REDIRECT_URI;
   const scope = ["openid", "profile", "email", "w_member_social"].join(" ");
   const cookieDomain = process.env.COOKIE_DOMAIN;
+  const responseHeaders = {
+    "X-Robots-Tag": "noindex, nofollow, noarchive",
+    "Cache-Control": "no-store",
+  };
 
   if (!clientId || !redirectUri) {
     return NextResponse.json(
       { error: "Faltan variables de entorno de LinkedIn" },
-      { status: 500 },
+      { status: 500, headers: responseHeaders },
     );
   }
 
@@ -25,6 +29,8 @@ export async function GET() {
   authorizeUrl.searchParams.set("state", state);
 
   const response = NextResponse.redirect(authorizeUrl.toString());
+  response.headers.set("X-Robots-Tag", responseHeaders["X-Robots-Tag"]);
+  response.headers.set("Cache-Control", responseHeaders["Cache-Control"]);
   response.cookies.set("linkedin_oauth_state", state, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
