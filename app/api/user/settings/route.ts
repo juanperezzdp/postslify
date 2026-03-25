@@ -33,7 +33,7 @@ export async function PATCH(request: NextRequest) {
   const updatedUser = await User.findByIdAndUpdate(
     session.user.id,
     update,
-    { new: true }
+    { returnDocument: "after" }
   ).select("name image");
 
   if (!updatedUser) {

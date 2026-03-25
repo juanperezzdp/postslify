@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
     const updatedUser = await User.findByIdAndUpdate(
         session.user.id,
         { $inc: { credits_balance_cents: amountCents } },
-        { new: true }
+        { returnDocument: "after" }
     );
 
     return NextResponse.json({

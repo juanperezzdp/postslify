@@ -205,7 +205,7 @@ export async function POST(request: NextRequest) {
             rating: rating ?? undefined,
           },
         },
-        { new: true }
+        { returnDocument: "after" }
       ).lean();
 
       await User.updateOne(

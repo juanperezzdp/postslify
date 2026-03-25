@@ -134,7 +134,7 @@ export async function PATCH(request: Request) {
     const updated = await ChatHistory.findOneAndUpdate(
       { _id: id, user_id: session.user.id },
       updatePayload,
-      { new: true }
+      { returnDocument: "after" }
     );
 
     if (!updated) {
