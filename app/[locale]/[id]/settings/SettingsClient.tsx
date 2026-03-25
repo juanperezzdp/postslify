@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -32,11 +31,10 @@ interface SettingsClientProps {
 
 export default function SettingsClient({ user }: SettingsClientProps) {
   const { data: session } = useSession();
-  const router = useRouter();
   const t = useTranslations("Settings");
   const [formStatus, setFormStatus] = useState<StatusState>(null);
   const [resetStatus, setResetStatus] = useState<StatusState>(null);
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState(session?.user?.image ?? user.image ?? "");
 
   const currentUser = {
     ...user,
@@ -46,10 +44,10 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
   const defaultValues = useMemo(
     () => ({
-      name: currentUser?.name ?? "",
-      image: currentUser?.image ?? "",
+      name: currentUser.name ?? "",
+      image: currentUser.image ?? "",
     }),
-    [currentUser?.name, currentUser?.image]
+    [currentUser.name, currentUser.image]
   );
 
   const {
@@ -64,9 +62,9 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
   const resetDefaults = useMemo(
     () => ({
-      email: currentUser?.email ?? "",
+      email: currentUser.email ?? "",
     }),
-    [currentUser?.email]
+    [currentUser.email]
   );
 
   const {
@@ -85,10 +83,6 @@ export default function SettingsClient({ user }: SettingsClientProps) {
   useEffect(() => {
     resetReset(resetDefaults);
   }, [resetDefaults, resetReset]);
-
-  useEffect(() => {
-    setImagePreview(currentUser?.image ?? "");
-  }, [currentUser?.image]);
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

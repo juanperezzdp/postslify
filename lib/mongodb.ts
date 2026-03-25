@@ -8,11 +8,15 @@ if (!MONGODB_URI) {
   );
 }
 
+type MongooseCache = {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
 
-let cached = (global as any).mongoose;
+let cached: MongooseCache = (global as { mongoose?: MongooseCache }).mongoose || { conn: null, promise: null };
 
 if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+  cached = (global as { mongoose?: MongooseCache }).mongoose = { conn: null, promise: null };
 }
 
 async function dbConnect() {

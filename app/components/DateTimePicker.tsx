@@ -5,17 +5,17 @@ import { faCalendar, faChevronLeft, faChevronRight } from "@fortawesome/free-sol
 interface DateTimePickerProps {
   value: string;
   onChange: (value: string) => void;
-  minDate?: string;
   className?: string;
 }
 
-export function DateTimePicker({ value, onChange, minDate, className }: DateTimePickerProps) {
+export function DateTimePicker({ value, onChange, className }: DateTimePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(value ? new Date(value) : null);
   const [viewDate, setViewDate] = useState<Date>(value ? new Date(value) : new Date());
   const [view, setView] = useState<"date" | "time">("date");
   const containerRef = useRef<HTMLDivElement>(null);
 
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (value) {
       const date = new Date(value);
@@ -25,6 +25,7 @@ export function DateTimePicker({ value, onChange, minDate, className }: DateTime
       }
     }
   }, [value]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

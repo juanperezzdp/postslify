@@ -157,7 +157,7 @@ export default function PerfilesPage() {
                     </div>
                     {profile.style_tag && (
                       <span className="rounded-xl bg-blue-50 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 ring-1 ring-blue-100">
-                        {tTags(profile.style_tag as any)}
+                        {tTags(profile.style_tag)}
                       </span>
                     )}
                   </div>

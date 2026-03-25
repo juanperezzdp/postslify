@@ -6,7 +6,7 @@ export interface MetricCardProps {
   value: string;
   change: string;
   isPositive: boolean;
-  icon?: IconDefinition | React.ComponentType<any>;
+  icon?: IconDefinition | React.ComponentType<Record<string, unknown>>;
 }
 
 export interface StatCardProps {

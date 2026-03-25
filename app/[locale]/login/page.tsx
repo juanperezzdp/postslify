@@ -27,9 +27,11 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<LoginInputs>();
 
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setMounted(true);
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const onSubmit = async (data: LoginInputs) => {
     setIsPending(true);

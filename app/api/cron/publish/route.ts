@@ -11,7 +11,7 @@ import dbConnect from "@/lib/mongodb";
 import ScheduledPost, { IScheduledPost } from "@/models/ScheduledPost";
 import User, { IUser } from "@/models/User";
 import { auth } from "@/auth";
-import mongoose, { HydratedDocument } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
 
 export const dynamic = "force-dynamic";
@@ -331,9 +331,10 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({ results });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in cron job:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Error desconocido";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
