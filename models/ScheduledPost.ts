@@ -12,6 +12,7 @@ export interface IScheduledPost {
   voice_profile_emoji?: string;
   voice_profile_style?: string;
   linkedin_target: string;
+  linkedin_profile_urn?: string;
   linkedin_page_urn?: string;
   linkedin_target_name?: string | null;
   linkedin_target_image?: string | null;
@@ -53,6 +54,7 @@ const ScheduledPostSchema = new Schema<IScheduledPost>(
       type: String,
       required: true,
     },
+    linkedin_profile_urn: String,
     linkedin_page_urn: String,
     linkedin_target_name: String,
     linkedin_target_image: String,

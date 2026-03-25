@@ -689,7 +689,9 @@ export default function CrearPostPage() {
     });
   };
 
-  const handleSaveEdit = (index: number) => {
+  const handleSaveEdit = async (index: number) => {
+    const targetMessage = messages[index];
+    if (!targetMessage) return;
     setMessages((prev) => {
       const next = [...prev];
       next[index] = { ...next[index], content: editingContent };
@@ -697,6 +699,9 @@ export default function CrearPostPage() {
     });
     setEditingMessageIndex(null);
     setEditingContent("");
+    if (targetMessage.historyId) {
+      await persistHistoryContent(targetMessage.historyId, editingContent);
+    }
   };
 
   const handleCancelEdit = () => {
@@ -736,6 +741,19 @@ export default function CrearPostPage() {
       });
     } catch (error) {
       console.error("Error updating chat history media:", error);
+    }
+  };
+
+  const persistHistoryContent = async (historyId: string, content: string) => {
+    try {
+      const payload: ChatHistoryUpdateRequest = { id: historyId, ai_response: content };
+      await fetch("/api/chat/history", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.error("Error updating chat history content:", error);
     }
   };
 
@@ -2371,7 +2389,7 @@ export default function CrearPostPage() {
 
                   {/* Utility Toolbar */}
                   <div className="flex flex-col gap-3 border-t border-slate-100 bg-slate-50/50 px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap justify-center gap-1 sm:justify-start">
                       <button
                         onClick={() => handleFileSelect(index, 'image')}
                         disabled={streamingAssistantIndex === index}

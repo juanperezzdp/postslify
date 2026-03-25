@@ -14,8 +14,13 @@ import { useForm } from "react-hook-form";
 import type { TestimonialCreateResponse, TestimonialModalFormValues } from "@/types/testimonial";
 import type { UserProfileResponse } from "@/types/user-profile";
 
-function SidebarContainer() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+function SidebarContainer({
+  isSidebarOpen,
+  setIsSidebarOpen,
+}: {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: (value: boolean) => void;
+}) {
   const t = useTranslations("Sidebar");
   return (
     <>
@@ -28,7 +33,7 @@ function SidebarContainer() {
           className="rounded-lg p-1 text-white hover:bg-blue-700"
           aria-label={t("openMenu")}
         >
-          <FontAwesomeIcon icon={faBars} className="h-6 w-6" />
+          <FontAwesomeIcon icon={faBars} className="h-6 w-6 text-2xl" />
         </button>
       </div>
 
@@ -40,10 +45,21 @@ function SidebarContainer() {
 export function ClientLayout({ children, session }: { children: React.ReactNode; session?: Session | null }) {
   const pathname = usePathname();
   const t = useTranslations("TestimonialsModal");
+  const tOnboarding = useTranslations("Onboarding");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoadingProfile, setIsLoadingProfile] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
+  const [onboardingStep, setOnboardingStep] = useState(0);
+  const [targetRect, setTargetRect] = useState<{
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  } | null>(null);
+  const [isMobileTour, setIsMobileTour] = useState(false);
 
   
   
@@ -91,6 +107,53 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
   });
   const contentValue = watch("content") ?? "";
   const contentLength = contentValue.length;
+  const onboardingKey = "postslify_onboarding_v1";
+  const forceOnboardingPreview = false;
+  const onboardingSteps = useMemo(
+    () => [
+      {
+        id: "nav-voice-profile",
+        title: tOnboarding("steps.voice.title"),
+        description: tOnboarding("steps.voice.description"),
+      },
+      {
+        id: "nav-create-post",
+        title: tOnboarding("steps.post.title"),
+        description: tOnboarding("steps.post.description"),
+      },
+      {
+        id: "nav-calendar",
+        title: tOnboarding("steps.calendar.title"),
+        description: tOnboarding("steps.calendar.description"),
+      },
+      {
+        id: "nav-archived",
+        title: tOnboarding("steps.archived.title"),
+        description: tOnboarding("steps.archived.description"),
+      },
+      {
+        id: "nav-voice-profiles",
+        title: tOnboarding("steps.voiceProfiles.title"),
+        description: tOnboarding("steps.voiceProfiles.description"),
+      },
+      {
+        id: "nav-business",
+        title: tOnboarding("steps.business.title"),
+        description: tOnboarding("steps.business.description"),
+      },
+      {
+        id: "nav-billing",
+        title: tOnboarding("steps.billing.title"),
+        description: tOnboarding("steps.billing.description"),
+      },
+      {
+        id: "nav-user-details",
+        title: tOnboarding("steps.userDetails.title"),
+        description: tOnboarding("steps.userDetails.description"),
+      },
+    ],
+    [tOnboarding],
+  );
 
   useEffect(() => {
     if (!canCheckUser) return;
@@ -123,6 +186,110 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
     };
   }, [canCheckUser, session?.user?.id]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobileTour(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (!shouldShowSidebar || !session?.user?.id) return;
+    if (typeof window === "undefined") return;
+    const isDone = window.localStorage.getItem(onboardingKey) === "1";
+    if (isDone && !forceOnboardingPreview) return;
+    setIsOnboardingOpen(true);
+    setOnboardingStep(0);
+    setIsSidebarOpen(true);
+  }, [shouldShowSidebar, session?.user?.id]);
+
+  useEffect(() => {
+    if (!isOnboardingOpen) return;
+    const step = onboardingSteps[onboardingStep];
+    if (!step) return;
+    const update = () => {
+      const element = document.querySelector(
+        `[data-onboarding-id="${step.id}"]`,
+      ) as HTMLElement | null;
+      if (!element) {
+        setTargetRect(null);
+        return;
+      }
+      const rect = element.getBoundingClientRect();
+      setTargetRect({
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      });
+    };
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update, true);
+    };
+  }, [isOnboardingOpen, onboardingStep, onboardingSteps]);
+
+  const totalSteps = onboardingSteps.length;
+  const currentStep = onboardingSteps[onboardingStep];
+  const closeOnboarding = () => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(onboardingKey, "1");
+    }
+    setIsOnboardingOpen(false);
+    if (isMobileTour) {
+      setIsSidebarOpen(false);
+    }
+  };
+  const goNext = () => {
+    if (onboardingStep >= totalSteps - 1) {
+      closeOnboarding();
+      return;
+    }
+    setOnboardingStep((prev) => prev + 1);
+  };
+  const tooltipStyle = useMemo(() => {
+    if (!targetRect) return undefined;
+    if (typeof window === "undefined") return undefined;
+    const tooltipWidth = 280;
+    const tooltipHeight = 200;
+    if (isMobileTour) {
+      const spaceBelow = window.innerHeight - (targetRect.top + targetRect.height);
+      const spaceAbove = targetRect.top;
+      const placeBelow = spaceBelow >= tooltipHeight + 24 || spaceBelow >= spaceAbove;
+      const top = placeBelow
+        ? Math.min(
+            window.innerHeight - tooltipHeight - 16,
+            targetRect.top + targetRect.height + 12,
+          )
+        : Math.max(16, targetRect.top - tooltipHeight - 12);
+      return {
+        top,
+        left: 16,
+        right: 16,
+        width: "auto",
+      } as React.CSSProperties;
+    }
+    const spaceBelow = window.innerHeight - (targetRect.top + targetRect.height);
+    const spaceAbove = targetRect.top;
+    const placeBelow = spaceBelow >= tooltipHeight + 24 || spaceBelow >= spaceAbove;
+    const top = placeBelow
+      ? Math.min(
+          window.innerHeight - tooltipHeight - 16,
+          targetRect.top + targetRect.height + 12,
+        )
+      : Math.max(16, targetRect.top - tooltipHeight - 12);
+    const left = Math.min(
+      window.innerWidth - tooltipWidth - 16,
+      Math.max(16, targetRect.left),
+    );
+    return { top, left };
+  }, [targetRect, isMobileTour]);
+
   const onSubmit = async (values: TestimonialModalFormValues) => {
     setSubmitError(null);
     setSubmitSuccess(null);
@@ -153,7 +320,11 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
     <SessionProvider session={session} refetchOnWindowFocus={false} refetchInterval={0}>
       {shouldShowSidebar && (
         <>
-          <SidebarContainer key={pathname ?? "root"} />
+          <SidebarContainer
+            key={pathname ?? "root"}
+            isSidebarOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
+          />
           <LinkedInFloatingButton />
         </>
       )}
@@ -244,6 +415,53 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
                   {isSubmitting ? t("submitting") : t("submit")}
                 </button>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+      {shouldShowSidebar && isOnboardingOpen && currentStep && (
+        <div className="fixed inset-0 z-[85]">
+          {targetRect && (
+            <div
+              className="fixed rounded-2xl ring-2 ring-white/80 shadow-[0_0_0_9999px_rgba(2,6,23,0.6)]"
+              style={{
+                top: targetRect.top - 6,
+                left: targetRect.left - 6,
+                width: targetRect.width + 12,
+                height: targetRect.height + 12,
+              }}
+            />
+          )}
+          <div
+            className="fixed z-[86] w-[280px] rounded-2xl bg-white p-4 text-slate-900 shadow-2xl ring-1 ring-slate-200"
+            style={tooltipStyle}
+          >
+            <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-500">
+              {tOnboarding("kicker", { current: onboardingStep + 1, total: totalSteps })}
+            </div>
+            <div className="mt-2 text-base font-semibold text-slate-900">
+              {currentStep.title}
+            </div>
+            <p className="mt-1 text-sm text-slate-600">
+              {currentStep.description}
+            </p>
+            <div className="mt-4 flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={closeOnboarding}
+                className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-500 transition hover:border-slate-300 hover:text-slate-700"
+              >
+                {tOnboarding("skip")}
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                className="rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500"
+              >
+                {onboardingStep >= totalSteps - 1
+                  ? tOnboarding("done")
+                  : tOnboarding("next")}
+              </button>
             </div>
           </div>
         </div>

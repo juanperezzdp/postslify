@@ -182,6 +182,7 @@ export async function POST(request: NextRequest) {
       voice_profile_emoji: voiceProfile?.emoji,
       voice_profile_style: voiceProfile?.style,
       linkedin_target: linkedinTarget,
+      linkedin_profile_urn: linkedinTarget === "profile" ? user.linkedin_member_urn : undefined,
       linkedin_page_urn: target === "page" ? pageUrn : undefined,
       linkedin_target_name: resolvedTargetName,
       linkedin_target_image: resolvedTargetImage,

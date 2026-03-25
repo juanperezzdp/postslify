@@ -385,6 +385,46 @@
     "userDetails": "User Details",
     "openMenu": "Open menu"
   },
+  "Onboarding": {
+    "kicker": "Step {current} of {total}",
+    "skip": "Skip",
+    "next": "Next",
+    "done": "Done",
+    "steps": {
+      "voice": {
+        "title": "Create a voice profile",
+        "description": "Define your tone and style so posts match your brand voice."
+      },
+      "post": {
+        "title": "Create your first post",
+        "description": "Draft a post and optionally generate an image before scheduling."
+      },
+      "calendar": {
+        "title": "Review your calendar",
+        "description": "Check scheduled posts and keep a consistent cadence."
+      },
+      "archived": {
+        "title": "Manage archived posts",
+        "description": "Recover or review content you’ve archived."
+      },
+      "voiceProfiles": {
+        "title": "Manage voice profiles",
+        "description": "Save multiple styles for different audiences."
+      },
+      "business": {
+        "title": "Connect a business page",
+        "description": "Link your LinkedIn Page to publish on behalf of your company."
+      },
+      "billing": {
+        "title": "Buy credits",
+        "description": "Add credits to unlock content generation and publishing."
+      },
+      "userDetails": {
+        "title": "Update your profile",
+        "description": "Keep your account details and avatar up to date."
+      }
+    }
+  },
   "ArchivedPosts": {
     "title": "Archived posts",
     "description": "Manage and recover archived posts with a clean, focused overview.",

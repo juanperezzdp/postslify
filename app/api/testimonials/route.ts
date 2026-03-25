@@ -3,6 +3,7 @@ import dbConnect from "@/lib/mongodb";
 import Testimonial from "@/models/Testimonial";
 import User from "@/models/User";
 import { auth } from "@/auth";
+import { readLinkedInPages } from "@/lib/linkedin";
 import type {
   TestimonialCreateRequest,
   TestimonialCreateResponse,
@@ -40,6 +41,88 @@ export async function GET() {
     );
   }
 }
+
+const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
+
+const isDataUrl = (value: string) => value.startsWith("data:");
+
+const downloadImageAsDataUrl = async (url: string) => {
+  if (!url) return null;
+  try {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) return null;
+    const contentType =
+      response.headers.get("content-type")?.split(";")[0] || "image/jpeg";
+    const buffer = await response.arrayBuffer();
+    if (buffer.byteLength > MAX_IMAGE_BYTES) return null;
+    const base64 = Buffer.from(buffer).toString("base64");
+    return `data:${contentType};base64,${base64}`;
+  } catch {
+    return null;
+  }
+};
+
+const resolveProfileSnapshot = async (
+  user: {
+    name?: string | null;
+    image?: string | null;
+    linkedin_name?: string | null;
+    linkedin_picture?: string | null;
+    linkedin_access_token?: string | null;
+    linkedin_member_urn?: string | null;
+    linkedin_page_access_token_encrypted?: string | null;
+  },
+  sessionName?: string | null,
+  sessionImage?: string | null,
+) => {
+  const hasLinkedInProfile =
+    typeof user.linkedin_access_token === "string" &&
+    user.linkedin_access_token.trim().length > 0 &&
+    typeof user.linkedin_member_urn === "string" &&
+    user.linkedin_member_urn.trim().length > 0;
+
+  const linkedInName =
+    typeof user.linkedin_name === "string" ? user.linkedin_name.trim() : "";
+  const linkedInPicture =
+    typeof user.linkedin_picture === "string"
+      ? user.linkedin_picture.trim()
+      : "";
+
+  const pages = readLinkedInPages(
+    user.linkedin_page_access_token_encrypted,
+    null,
+  );
+  const pageEntry = [...pages].reverse().find((entry) => entry.name || entry.logoUrl) || null;
+  const pageName = pageEntry?.name?.trim() ?? "";
+  const pageLogo = pageEntry?.logoUrl?.trim() ?? "";
+
+  const fallbackName =
+    (typeof user.name === "string" ? user.name.trim() : "") ||
+    (typeof sessionName === "string" ? sessionName.trim() : "");
+  const fallbackImage =
+    (typeof user.image === "string" ? user.image.trim() : "") ||
+    (typeof sessionImage === "string" ? sessionImage.trim() : "");
+
+  const name = hasLinkedInProfile && linkedInName
+    ? linkedInName
+    : pageName || fallbackName;
+
+  const imageSource = hasLinkedInProfile && linkedInPicture
+    ? linkedInPicture
+    : pageLogo || fallbackImage;
+
+  let imageSnapshot: string | null = null;
+  if (imageSource) {
+    imageSnapshot = isDataUrl(imageSource)
+      ? imageSource
+      : await downloadImageAsDataUrl(imageSource);
+  }
+
+  return {
+    name,
+    image: imageSnapshot,
+  };
+};
 
 export async function POST(request: NextRequest) {
   const session = await auth();
@@ -82,7 +165,9 @@ export async function POST(request: NextRequest) {
     await dbConnect();
 
     const user = await User.findById(session.user.id)
-      .select("name image linkedin_picture createdAt testimonial_done")
+      .select(
+        "name image linkedin_name linkedin_picture linkedin_access_token linkedin_member_urn linkedin_page_access_token_encrypted createdAt testimonial_done",
+      )
       .lean();
 
     if (!user) {
@@ -92,22 +177,60 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (user.testimonial_done === true) {
-      return NextResponse.json(
-        { error: "Testimonio ya registrado" },
-        { status: 409 }
-      );
-    }
-
     const existing = await Testimonial.findOne({ user_id: session.user.id })
       .select("_id")
       .lean();
 
     if (existing) {
+      const profileSnapshot = await resolveProfileSnapshot(
+        user,
+        session.user.name ?? null,
+        session.user.image ?? null,
+      );
+
+      if (!profileSnapshot.name) {
+        return NextResponse.json(
+          { error: "Nombre inválido" },
+          { status: 400 }
+        );
+      }
+
+      const updated = await Testimonial.findByIdAndUpdate(
+        existing._id,
+        {
+          $set: {
+            name: profileSnapshot.name,
+            image: profileSnapshot.image || undefined,
+            content,
+            rating: rating ?? undefined,
+          },
+        },
+        { new: true }
+      ).lean();
+
       await User.updateOne(
         { _id: session.user.id },
         { $set: { testimonial_done: true } }
       );
+      const response: TestimonialCreateResponse = {
+        item: {
+          id: updated?._id.toString() || existing._id.toString(),
+          userId: typeof session.user.id === "string" ? session.user.id : undefined,
+          name: updated?.name || profileSnapshot.name,
+          image: updated?.image ?? profileSnapshot.image ?? undefined,
+          role: updated?.role ?? undefined,
+          company: updated?.company ?? undefined,
+          content: updated?.content ?? content,
+          rating: updated?.rating ?? rating ?? undefined,
+          createdAt: updated?.createdAt
+            ? updated.createdAt.toISOString()
+            : new Date().toISOString(),
+        },
+      };
+      return NextResponse.json(response, { status: 200 });
+    }
+
+    if (user.testimonial_done === true) {
       return NextResponse.json(
         { error: "Testimonio ya registrado" },
         { status: 409 }
@@ -125,17 +248,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const name =
-      (typeof user.name === "string" ? user.name.trim() : "") ||
-      (typeof session.user.name === "string" ? session.user.name.trim() : "");
-    const linkedInPicture =
-      typeof user.linkedin_picture === "string" ? user.linkedin_picture : "";
-    const image =
-      (typeof user.image === "string" && user.image.trim()) ||
-      linkedInPicture.trim() ||
-      (typeof session.user.image === "string" ? session.user.image.trim() : "");
+    const profileSnapshot = await resolveProfileSnapshot(
+      user,
+      session.user.name ?? null,
+      session.user.image ?? null,
+    );
 
-    if (!name) {
+    if (!profileSnapshot.name) {
       return NextResponse.json(
         { error: "Nombre inválido" },
         { status: 400 }
@@ -144,8 +263,8 @@ export async function POST(request: NextRequest) {
 
     const created = await Testimonial.create({
       user_id: session.user.id,
-      name,
-      image: image || undefined,
+      name: profileSnapshot.name,
+      image: profileSnapshot.image || undefined,
       content,
       rating: rating ?? undefined,
     });

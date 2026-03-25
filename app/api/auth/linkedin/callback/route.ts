@@ -3,8 +3,9 @@ import { auth } from "@/auth";
 import type { LinkedInSession } from "@/types/linkedin";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
-import { encryptToken } from "@/lib/linkedin";
+import { encryptToken, ensureValidLinkedInPageToken } from "@/lib/linkedin";
 import { routing } from "@/i18n/routing";
+import ScheduledPost from "@/models/ScheduledPost";
 
 export async function GET(request: NextRequest) {
   const clientId = process.env.LINKEDIN_CLIENT_ID;
@@ -237,6 +238,7 @@ export async function GET(request: NextRequest) {
       linkedin_headline: headline,
       linkedin_picture: pictureUrl,
     });
+    await refreshPendingLinkedInTokens(authSession.user.id);
     targetPath = `/${defaultLocale}/${authSession.user.id}/create-post`;
   }
 
@@ -266,4 +268,37 @@ export async function GET(request: NextRequest) {
   }
 
   return response;
+}
+
+async function refreshPendingLinkedInTokens(userId: string) {
+  await dbConnect();
+  const pendingPosts = (await ScheduledPost.find({
+    user_id: userId,
+    status: "pending",
+  })
+    .select("linkedin_target linkedin_page_urn")
+    .lean()) as Array<{
+    linkedin_target?: string;
+    linkedin_page_urn?: string | null;
+  }>;
+
+  const pageUrns = new Set<string>();
+  pendingPosts.forEach((post) => {
+    if (post.linkedin_target === "page" && post.linkedin_page_urn) {
+      pageUrns.add(post.linkedin_page_urn);
+    }
+  });
+
+  for (const pageUrn of pageUrns) {
+    try {
+      await ensureValidLinkedInPageToken({
+        userId,
+        pageUrn,
+        forceRefresh: true,
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error("Error refreshing LinkedIn page token:", message);
+    }
+  }
 }

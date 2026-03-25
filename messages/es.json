@@ -386,8 +386,48 @@
     "account": "Cuenta",
     "businessPages": "Páginas de Negocio",
     "billing": "Facturación",
-    "userDetails": "Detalles del Usuario",
+    "userDetails": "Detalles de usuario",
     "openMenu": "Abrir menú"
+  },
+  "Onboarding": {
+    "kicker": "Paso {current} de {total}",
+    "skip": "Saltar",
+    "next": "Siguiente",
+    "done": "Listo",
+    "steps": {
+      "voice": {
+        "title": "Crea un perfil de voz",
+        "description": "Define tu tono y estilo para que los posts tengan tu identidad."
+      },
+      "post": {
+        "title": "Crea tu primer post",
+        "description": "Redacta el post y, si quieres, genera una imagen."
+      },
+      "calendar": {
+        "title": "Revisa tu calendario",
+        "description": "Verifica tus publicaciones programadas y su constancia."
+      },
+      "archived": {
+        "title": "Gestiona posts archivados",
+        "description": "Recupera o revisa contenido archivado."
+      },
+      "voiceProfiles": {
+        "title": "Administra perfiles de voz",
+        "description": "Guarda estilos distintos para públicos diferentes."
+      },
+      "business": {
+        "title": "Conecta tu página de negocio",
+        "description": "Publica en nombre de tu empresa desde LinkedIn."
+      },
+      "billing": {
+        "title": "Compra créditos",
+        "description": "Agrega créditos para generación y publicación."
+      },
+      "userDetails": {
+        "title": "Actualiza tu perfil",
+        "description": "Mantén tu información y foto al día."
+      }
+    }
   },
   "ArchivedPosts": {
     "title": "Posts archivados",

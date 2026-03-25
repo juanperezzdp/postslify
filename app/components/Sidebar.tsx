@@ -20,13 +20,15 @@ import type { ActionItemProps, NavItemProps, SidebarProps } from "@/types/sideba
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const NavItem = ({ href, icon, label, isActive }: NavItemProps) => {
+const NavItem = ({ href, icon, label, isActive, onboardingId, onClick }: NavItemProps) => {
     
     
     
     return (
   <Link
     href={href}
+    data-onboarding-id={onboardingId}
+    onClick={onClick}
     className={`group relative flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-medium transition-all duration-300 overflow-hidden
       ${isActive 
         ? "bg-white text-blue-600 shadow-lg shadow-blue-900/20" 
@@ -49,10 +51,11 @@ const NavItem = ({ href, icon, label, isActive }: NavItemProps) => {
   </Link>
 )};
 
-const ActionItem = ({ icon, label, onClick }: ActionItemProps) => (
+const ActionItem = ({ icon, label, onClick, onboardingId }: ActionItemProps) => (
   <button
     type="button"
     onClick={onClick}
+    data-onboarding-id={onboardingId}
     className="group relative flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-medium transition-all duration-300 overflow-hidden text-blue-100 hover:bg-white/10 hover:text-white"
   >
     <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
@@ -72,7 +75,6 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const userId = urlUserId || session?.user?.id;
   const router = useRouter();
   const pathname = usePathname();
-  
   const isRouteActive = (path: string) => {
     if (!pathname || !userId) return false;
     const currentPath = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
@@ -130,18 +132,24 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               icon={faPenToSquare}
               label={t('createPost')}
               isActive={isRouteActive(userId ? `/${userId}/create-post` : "/")}
+              onboardingId="nav-create-post"
+              onClick={onClose}
             />
             <NavItem
               href={userId ? `/${userId}/calendar` : "/"}
               icon={faCalendarDays}
               label={t('calendar')}
               isActive={isRouteActive(userId ? `/${userId}/calendar` : "/")}
+              onboardingId="nav-calendar"
+              onClick={onClose}
             />
             <NavItem
               href={userId ? `/${userId}/archived-posts` : "/"}
               icon={faBoxArchive}
               label={t('archivedPosts')}
               isActive={isRouteActive(userId ? `/${userId}/archived-posts` : "/")}
+              onboardingId="nav-archived"
+              onClick={onClose}
             />
             
             <div className="mt-6 mb-2 px-4 text-[10px] font-bold uppercase tracking-widest text-blue-200/80">
@@ -152,12 +160,16 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               icon={faMicrophone}
               label={t('newVoiceProfile')}
               isActive={isRouteActive(userId ? `/${userId}/voice-profile` : "/")}
+              onboardingId="nav-voice-profile"
+              onClick={onClose}
             />
             <NavItem
               href={userId ? `/${userId}/voice-profiles` : "/"}
               icon={faGrip}
               label={t('myProfiles')}
               isActive={isRouteActive(userId ? `/${userId}/voice-profiles` : "/")}
+              onboardingId="nav-voice-profiles"
+              onClick={onClose}
             />
 
             <div className="mt-6 mb-2 px-4 text-[10px] font-bold uppercase tracking-widest text-blue-200/80">
@@ -168,12 +180,16 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               icon={faBriefcase}
               label={t('businessPages')}
               isActive={isRouteActive(userId ? `/${userId}/business-page` : "/")}
+              onboardingId="nav-business"
+              onClick={onClose}
             />
             <NavItem
               href={userId ? `/${userId}/billing` : "/"}
               icon={faCreditCard}
               label={t('billing')}
               isActive={isRouteActive(userId ? `/${userId}/billing` : "/")}
+              onboardingId="nav-billing"
+              onClick={onClose}
             />
             {userId && (
               <ActionItem
@@ -185,6 +201,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                     router.push(`/${userId}/settings`);
                   }
                 }}
+                onboardingId="nav-user-details"
               />
             )}
 

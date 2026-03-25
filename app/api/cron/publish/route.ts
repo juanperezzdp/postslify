@@ -92,6 +92,16 @@ export async function GET(request: NextRequest) {
           results.push({ id: post._id, status: "failed", reason: "No LinkedIn token" });
           continue;
         }
+        const postProfileUrn = (post.linkedin_profile_urn as string | undefined) || undefined;
+        if (postProfileUrn && user.linkedin_member_urn !== postProfileUrn) {
+          await markFailed(post, "El perfil de LinkedIn cambió desde la programación");
+          results.push({
+            id: post._id,
+            status: "failed",
+            reason: "Profile mismatch",
+          });
+          continue;
+        }
 
         if (user.linkedin_expires_at && Date.now() > user.linkedin_expires_at) {
           // Token expired, try to refresh
