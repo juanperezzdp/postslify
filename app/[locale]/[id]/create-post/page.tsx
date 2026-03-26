@@ -2673,36 +2673,41 @@ export default function CrearPostPage() {
                     </div>
                   )}
                   
-                  <div className="mt-4 flex items-center justify-between border-b border-slate-100 pb-3 text-xs text-slate-500">
-                    <div className="flex items-center gap-1.5">
-                      <div className="flex -space-x-1.5">
-                        <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-white ring-2 ring-white">
-                          <div className="flex h-full w-full items-center justify-center rounded-full bg-[#378fe9]">
-                            <FontAwesomeIcon icon={faThumbsUp} className="h-2.5 w-2.5 text-white" />
+                  {(() => {
+                    const likes = messageToPublish.stats?.likes || Math.floor(Math.random() * (800 - 130 + 1)) + 130;
+                    const comments = messageToPublish.stats?.comments || Math.floor(likes * (Math.random() * 0.5 + 0.05));
+                    const shares = messageToPublish.stats?.shares || Math.floor(comments * 0.4);
+
+                    return (
+                      <div className="mt-4 flex items-center justify-between border-b border-slate-100 pb-3 text-xs text-slate-500">
+                        <div className="flex items-center gap-1.5">
+                          <div className="flex -space-x-1.5">
+                            <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-white ring-2 ring-white">
+                              <div className="flex h-full w-full items-center justify-center rounded-full bg-[#378fe9]">
+                                <FontAwesomeIcon icon={faThumbsUp} className="h-2.5 w-2.5 text-white" />
+                              </div>
+                            </div>
+                            <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-white ring-2 ring-white">
+                              <div className="flex h-full w-full items-center justify-center rounded-full bg-green-500">
+                                <FontAwesomeIcon icon={faHandsClapping} className="h-2.5 w-2.5 text-white" />
+                              </div>
+                            </div>
+                            <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-white ring-2 ring-white">
+                              <div className="flex h-full w-full items-center justify-center rounded-full bg-red-500">
+                                <FontAwesomeIcon icon={faHeart} className="h-2.5 w-2.5 text-white" />
+                              </div>
+                            </div>
                           </div>
+                          <span className="ml-1 font-medium hover:text-blue-600 hover:underline cursor-pointer">
+                            {likes}
+                          </span>
                         </div>
-                        <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-white ring-2 ring-white">
-                          <div className="flex h-full w-full items-center justify-center rounded-full bg-green-500">
-                            <FontAwesomeIcon icon={faHandsClapping} className="h-2.5 w-2.5 text-white" />
-                          </div>
-                        </div>
-                        <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-white ring-2 ring-white">
-                          <div className="flex h-full w-full items-center justify-center rounded-full bg-red-500">
-                            <FontAwesomeIcon icon={faHeart} className="h-2.5 w-2.5 text-white" />
-                          </div>
+                        <div className="hover:text-blue-600 hover:underline cursor-pointer">
+                          {comments} comentarios · {shares} veces compartido
                         </div>
                       </div>
-                      <span className="ml-1 font-medium hover:text-blue-600 hover:underline cursor-pointer">
-                        {messageToPublish.stats?.likes || 0}
-                      </span>
-                    </div>
-                    <div className="hover:text-blue-600 hover:underline cursor-pointer">
-                      {(messageToPublish.stats?.comments ?? 0) +
-                        " comentarios · " +
-                        (messageToPublish.stats?.shares ?? 0) +
-                        " veces compartido"}
-                    </div>
-                  </div>
+                    );
+                  })()}
                   
                   <div className="mt-1 flex items-center justify-between px-1 pt-1 text-xs text-slate-600">
                     <button className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-2 py-3 hover:bg-slate-100 transition-colors">

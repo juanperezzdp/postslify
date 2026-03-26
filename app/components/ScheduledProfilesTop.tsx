@@ -18,9 +18,9 @@ export function ScheduledProfilesTop({ targets }: ScheduledProfilesTopProps) {
         {t("scheduledTopTitle")}
       </h3>
       <div className="flex flex-wrap gap-4">
-        {targets.map((profile) => (
+        {targets.map((profile, index) => (
           <div 
-            key={profile.id}
+            key={`${profile.id}-${index}`}
             className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3 pr-5 transition-all hover:border-blue-200 hover:bg-blue-50/50 hover:shadow-md hover:shadow-blue-100/50"
           >
             <div className="relative h-12 w-12 flex-shrink-0">

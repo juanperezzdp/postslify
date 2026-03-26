@@ -34,6 +34,18 @@ const isTokenCreatedToday = (createdAt?: string) => {
   );
 };
 
+const isTokenExpired = (createdAt?: string | null) => {
+  if (!createdAt) return true;
+  const createdDate = new Date(createdAt);
+  const today = new Date();
+  
+  // Check if the token is 60 days old (approx 2 months)
+  const timeDiff = today.getTime() - createdDate.getTime();
+  const daysDiff = timeDiff / (1000 * 3600 * 24);
+  
+  return daysDiff >= 60;
+};
+
 export default function BusinessPage() {
   const t = useTranslations("BusinessPage");
   const locale = useLocale();
@@ -598,10 +610,10 @@ export default function BusinessPage() {
                       </div>
 
                       <div className="mt-6 flex flex-wrap items-center gap-2">
-                        {page.canRefresh && (
+                        {page.canRefresh && isTokenExpired(page.createdAt) && (
                           <button
                             type="button"
-                            disabled={refreshingUrn === page.urn || isTokenCreatedToday(page.createdAt)}
+                            disabled={refreshingUrn === page.urn}
                             onClick={() => handleRefreshToken(page.urn)}
                             className="cursor-pointer flex-1 rounded-xl bg-emerald-50 px-4 py-2.5 text-xs font-bold text-emerald-700 hover:bg-emerald-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
                           >

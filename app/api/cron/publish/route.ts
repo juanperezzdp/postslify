@@ -35,10 +35,14 @@ export async function GET(request: NextRequest) {
   try {
     await dbConnect();
 
-    // 1. Fetch pending posts that are due
+    // 1. Fetch pending posts that are due (scheduled_at <= current date + a 1 minute buffer to catch edge cases)
+    const now = new Date();
+    // Add 2 minutes to now to ensure we pick up posts scheduled for exactly "now" or slightly in the future due to clock drift
+    const cutoffDate = new Date(now.getTime() + 2 * 60000);
+    
     const posts = await ScheduledPost.find({
       status: "pending",
-      scheduled_at: { $lte: new Date() },
+      scheduled_at: { $lte: cutoffDate },
     })
       .sort({ scheduled_at: 1 })
       .limit(5)

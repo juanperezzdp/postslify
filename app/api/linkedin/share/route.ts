@@ -157,26 +157,34 @@ export async function POST(request: NextRequest) {
     } catch (error: unknown) {
       if (
         error instanceof LinkedInApiError &&
-        (error.status === 401 || error.status === 403) &&
-        target === "page" &&
-        userId
+        (error.status === 401 || error.status === 403)
       ) {
-        try {
-          const { accessToken: newToken } = await ensureValidLinkedInPageToken({
-            userId,
-            pageUrn: requestedPageUrn,
-            forceRefresh: true,
-          });
-          publishResult = await publishToLinkedIn(
-            newToken,
-            authorUrn,
-            content,
-            visibility,
-            media
+        if (target === "page" && userId) {
+          try {
+            const { accessToken: newToken } = await ensureValidLinkedInPageToken({
+              userId,
+              pageUrn: requestedPageUrn,
+              forceRefresh: true,
+            });
+            publishResult = await publishToLinkedIn(
+              newToken,
+              authorUrn,
+              content,
+              visibility,
+              media
+            );
+          } catch (retryError) {
+            console.error("Retry with force refresh failed:", retryError);
+            return NextResponse.json(
+              { error: "La sesión de la página de LinkedIn ha expirado o ha sido revocada. Por favor, vuelve a conectar la página en la configuración." },
+              { status: 401 }
+            );
+          }
+        } else {
+          return NextResponse.json(
+            { error: "La sesión de LinkedIn ha expirado o el acceso ha sido revocado. Por favor, vuelve a conectar tu cuenta en la configuración." },
+            { status: 401 }
           );
-        } catch (retryError) {
-          console.error("Retry with force refresh failed:", retryError);
-          throw error; 
         }
       } else {
         throw error;

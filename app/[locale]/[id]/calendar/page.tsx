@@ -107,7 +107,7 @@ export default function CalendarPage() {
       const name = resolveTargetName(match);
       const image = resolveTargetImage(match);
       const type = match.linkedin_target ?? "profile";
-      const id = `${type}|${name}|${image ?? ""}`;
+      const id = `${type}|${name}`;
       if (!unique.has(id)) {
         unique.set(id, {
           name,
@@ -115,6 +115,11 @@ export default function CalendarPage() {
           initial: name.charAt(0).toUpperCase(),
           type,
         });
+      } else {
+        const existing = unique.get(id);
+        if (existing && !existing.image && image) {
+          existing.image = image;
+        }
       }
     });
     return Array.from(unique.values());
@@ -126,10 +131,15 @@ export default function CalendarPage() {
       const name = resolveTargetName(post);
       const image = resolveTargetImage(post);
       const type = post.linkedin_target ?? "profile";
-      const id = `${type}|${name}|${image ?? ""}`;
+      // Using just name and type for ID to group duplicate pages/profiles correctly even if image URLs differ slightly
+      const id = `${type}|${name}`;
       const existing = statsMap.get(id);
       if (existing) {
         existing.count += 1;
+        // Keep the latest image if the existing one was null or empty
+        if (!existing.image && image) {
+          existing.image = image;
+        }
       } else {
         statsMap.set(id, {
           id,
@@ -731,7 +741,7 @@ export default function CalendarPage() {
                    </div>
 
                   {/* Media Display */}
-                  {selectedPost.media_base64 && (
+                  {selectedPost.media_base64 && selectedPost.media_type && (
                     <div className="border-t rounded-b-[2rem] border-slate-100 bg-slate-50/50 p-6">
                       {(() => {
                         const mediaType = selectedPost.media_type;

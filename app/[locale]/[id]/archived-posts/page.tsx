@@ -25,6 +25,14 @@ import {
   faExclamationTriangle,
   faCheck,
   faTrash,
+  faGlobe,
+  faEllipsis,
+  faThumbsUp,
+  faHandsClapping,
+  faHeart,
+  faComment,
+  faRetweet,
+  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { useTranslations } from "next-intl";
@@ -1332,6 +1340,30 @@ export default function ArchivedPostsPage() {
         }
       }
       setPublishSuccess(t("success.published", { targets: targetList.join(", ") }));
+      
+      // Delete the post after successful publication
+      if (messageToPublish?.id) {
+        try {
+          const deleteResponse = await fetch(`/api/chat/history/${messageToPublish.id}`, {
+            method: "DELETE",
+          });
+          
+          if (deleteResponse.ok) {
+            // Remove from local state
+            setArchivedPosts((prev) => prev.filter((post) => post.id !== messageToPublish.id));
+            
+            // Close the modal after a short delay so the user can see the success message
+            setTimeout(() => {
+              setIsPublishPreviewOpen(false);
+              setMessageToPublish(null);
+            }, 2000);
+          } else {
+            console.error("Failed to delete published post from history");
+          }
+        } catch (deleteError) {
+          console.error("Error deleting published post:", deleteError);
+        }
+      }
     } catch (error: unknown) {
       console.error("Error publishing:", error);
       setPublishError(t("errors.publishError", { error: getErrorMessage(error) }));
@@ -1683,93 +1715,343 @@ export default function ArchivedPostsPage() {
             </div>
 
             <div className="max-h-[70vh] overflow-y-auto bg-slate-50/30 p-6">
-              <div className="mb-6 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+              <div className="mb-6 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
                 <div className="p-4 sm:p-5">
                   <div className="flex items-start justify-between">
                     <div className="flex gap-3">
-                      <div className="h-12 w-12 rounded-full bg-slate-200" />
-                      <div>
-                        <div className="font-bold text-slate-900">Usuario</div>
-                        <div className="text-xs text-slate-500">Headline</div>
+                      <div className="relative h-12 w-12 overflow-hidden rounded-full bg-slate-100 ring-2 ring-white shadow-sm">
+                        {user?.picture ? (
+                          <Image
+                            src={getProxiedImageUrl(user.picture) || user.picture}
+                            alt={user.name || "User"}
+                            width={48}
+                            height={48}
+                            className="h-full w-full object-cover"
+                            unoptimized={!!getProxiedImageUrl(user.picture)?.startsWith('/api/proxy-image')}
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center text-base font-bold text-slate-500">
+                            {(user?.name || "P").charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex flex-col pt-0.5">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-sm font-bold text-slate-900">
+                            {user?.name || "Nombre de usuario"}
+                          </span>
+                         
+                          <span className="flex items-center gap-0.5 rounded-[2px] bg-[#0a66c2] px-[4px] py-[1px] text-[10px] font-bold text-white shadow-sm">
+                            in
+                          </span>
+                        </div>
+                        {user?.headline && (
+                          <p className="text-xs text-slate-500 line-clamp-1">
+                            {user.headline}
+                          </p>
+                        )}
+
+                        <div className="mt-0.5 flex items-center gap-1 text-[11px] text-slate-400">
+                          <span>1 sem</span>
+                          <span>·</span>
+                          <FontAwesomeIcon icon={faGlobe} className="h-3 w-3" />
+                        </div>
                       </div>
                     </div>
+                    <button className="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 transition-colors">
+                      <FontAwesomeIcon icon={faEllipsis} className="h-5 w-5" />
+                    </button>
                   </div>
+                  
                   <div className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-slate-900">
                     {messageToPublish.content}
+                  </div>
+                  
+                  {messageToPublish.media && (
+                    <div className="mt-4 w-full">
+                      {messageToPublish.media.type === "image" ? (() => {
+                        const mediaItems =
+                          messageToPublish.media.items && messageToPublish.media.items.length > 0
+                            ? messageToPublish.media.items
+                            : [{ url: messageToPublish.media.url, name: messageToPublish.media.name }];
+
+                        const displayedItems = mediaItems.slice(0, 4);
+                        const extraCount = Math.max(0, mediaItems.length - displayedItems.length);
+                        const primaryItem = mediaItems[0];
+
+                        return (
+                          <div className="overflow-hidden rounded-xl border border-slate-100 shadow-sm">
+                            {mediaItems.length > 1 ? (
+                              <div className="grid grid-cols-2 gap-0.5 bg-slate-100">
+                                {displayedItems.map((item, itemIndex) => (
+                                  <button
+                                    key={`${item.url}-${itemIndex}`}
+                                    type="button"
+                                    className="group relative aspect-square bg-slate-100"
+                                  >
+                                    <Image
+                                      src={getProxiedImageUrl(item.url) || item.url}
+                                      alt={item.name || "Imagen adjunta"}
+                                      fill
+                                      unoptimized
+                                      sizes="(max-width: 768px) 100vw, 400px"
+                                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                    {extraCount > 0 && itemIndex === displayedItems.length - 1 && (
+                                      <div className="absolute inset-0 flex items-center justify-center bg-slate-900/60 text-xl font-bold text-white backdrop-blur-sm">
+                                        +{extraCount}
+                                      </div>
+                                    )}
+                                  </button>
+                                ))}
+                              </div>
+                            ) : (
+                              <button
+                                type="button"
+                                className="group relative aspect-video w-full bg-slate-100"
+                              >
+                                <Image
+                                  src={getProxiedImageUrl(primaryItem?.url || messageToPublish.media.url) || primaryItem?.url || messageToPublish.media.url}
+                                  alt={primaryItem?.name || messageToPublish.media.name || "Imagen adjunta"}
+                                  fill
+                                  unoptimized
+                                  sizes="(max-width: 768px) 100vw, 600px"
+                                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+                              </button>
+                            )}
+                          </div>
+                        );
+                      })() : null}
+                    
+                      {messageToPublish.media.type === "video" && (
+                        <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-slate-900 shadow-sm">
+                          <video
+                            src={messageToPublish.media.items?.[0]?.url || messageToPublish.media.url}
+                            controls
+                            className="h-full w-full"
+                          />
+                        </div>
+                      )}
+                      {messageToPublish.media.type === "document" && (
+                        <div className="mt-2 flex items-center gap-4 rounded-xl border border-slate-200 bg-slate-50 p-4 transition-colors hover:bg-slate-100">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white text-red-500 shadow-sm ring-1 ring-slate-200">
+                            <FontAwesomeIcon icon={faFile} className="h-6 w-6" />
+                          </div>
+                          <div className="flex-1 overflow-hidden">
+                            <p className="truncate text-sm font-semibold text-slate-900">
+                              {messageToPublish.media.items?.[0]?.name || messageToPublish.media.name}
+                            </p>
+                            <p className="text-xs font-medium text-slate-500">
+                              Documento PDF • 2.4 MB
+                            </p>
+                          </div>
+                          <FontAwesomeIcon icon={faArrowRight} className="h-4 w-4 -rotate-45 text-slate-400" />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {(() => {
+                    const likes = Math.floor(Math.random() * (800 - 130 + 1)) + 130;
+                    const comments = Math.floor(likes * (Math.random() * 0.5 + 0.05));
+                    const shares = Math.floor(comments * 0.4);
+
+                    return (
+                      <div className="mt-4 flex items-center justify-between border-b border-slate-100 pb-3 text-xs text-slate-500">
+                        <div className="flex items-center gap-1.5">
+                          <div className="flex -space-x-1.5">
+                            <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-white ring-2 ring-white">
+                              <div className="flex h-full w-full items-center justify-center rounded-full bg-[#378fe9]">
+                                <FontAwesomeIcon icon={faThumbsUp} className="h-2.5 w-2.5 text-white" />
+                              </div>
+                            </div>
+                            <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-white ring-2 ring-white">
+                              <div className="flex h-full w-full items-center justify-center rounded-full bg-green-500">
+                                <FontAwesomeIcon icon={faHandsClapping} className="h-2.5 w-2.5 text-white" />
+                              </div>
+                            </div>
+                            <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-white ring-2 ring-white">
+                              <div className="flex h-full w-full items-center justify-center rounded-full bg-red-500">
+                                <FontAwesomeIcon icon={faHeart} className="h-2.5 w-2.5 text-white" />
+                              </div>
+                            </div>
+                          </div>
+                          <span className="ml-1 font-medium hover:text-blue-600 hover:underline cursor-pointer">
+                            {likes}
+                          </span>
+                        </div>
+                        <div className="hover:text-blue-600 hover:underline cursor-pointer">
+                          {comments} comentarios · {shares} veces compartido
+                        </div>
+                      </div>
+                    );
+                  })()}
+                  
+                  <div className="mt-1 flex items-center justify-between px-1 pt-1 text-xs text-slate-600">
+                    <button className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-2 py-3 hover:bg-slate-100 transition-colors">
+                      <FontAwesomeIcon icon={faThumbsUp} className="h-[18px] w-[18px] text-slate-500" />
+                      <span className="font-semibold text-slate-500">Recomendar</span>
+                    </button>
+                    <button className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-2 py-3 hover:bg-slate-100 transition-colors">
+                      <FontAwesomeIcon icon={faComment} className="h-[18px] w-[18px] text-slate-500" />
+                      <span className="font-semibold text-slate-500">Comentar</span>
+                    </button>
+                    <button className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-2 py-3 hover:bg-slate-100 transition-colors">
+                      <FontAwesomeIcon icon={faRetweet} className="h-[18px] w-[18px] text-slate-500" />
+                      <span className="font-semibold text-slate-500">Compartir</span>
+                    </button>
+                    <button className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-2 py-3 hover:bg-slate-100 transition-colors">
+                      <FontAwesomeIcon icon={faPaperPlane} className="h-[18px] w-[18px] text-slate-500" />
+                      <span className="font-semibold text-slate-500">Enviar</span>
+                    </button>
                   </div>
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-slate-200 bg-white p-4">
-                <div className="text-sm font-semibold text-slate-900">{t("labels.target")}</div>
-                <div className="mt-3 flex flex-col gap-2">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setPublishTargets((prev) => ({
-                        ...prev,
-                        linkedinProfile: !prev.linkedinProfile,
-                      }))
-                    }
-                    className={`flex items-center justify-between rounded-xl border px-4 py-3 text-sm font-semibold transition ${
-                      publishTargets.linkedinProfile
-                        ? "border-blue-600 bg-blue-50 text-blue-600"
-                        : "border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-600"
-                    }`}
-                  >
-                    <span>{t("labels.linkedinProfile")}</span>
-                    {publishTargets.linkedinProfile && <FontAwesomeIcon icon={faCheck} className="h-3 w-3" />}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setPublishTargets((prev) => ({
-                        ...prev,
-                        linkedinPage: !prev.linkedinPage,
-                      }))
-                    }
-                    className={`flex items-center justify-between rounded-xl border px-4 py-3 text-sm font-semibold transition ${
-                      publishTargets.linkedinPage
-                        ? "border-blue-600 bg-blue-50 text-blue-600"
-                        : "border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-600"
-                    }`}
-                    disabled={pages.length === 0}
-                  >
-                    <span>{t("labels.linkedinPage")}</span>
-                    {publishTargets.linkedinPage && <FontAwesomeIcon icon={faCheck} className="h-3 w-3" />}
-                  </button>
+              <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                    <FontAwesomeIcon icon={faGlobe} className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900">Destinos de publicación</h3>
+                    <p className="text-xs text-slate-500">Selecciona dónde quieres publicar este contenido</p>
+                  </div>
                 </div>
+                
+                <div className="flex flex-col gap-3">
+                  {isLinkedinProfileConnected ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPublishTargets((prev) => ({
+                          ...prev,
+                          linkedinProfile: !prev.linkedinProfile,
+                        }));
+                      }}
+                      className={`flex items-center gap-4 rounded-xl border p-3 text-left transition-all ${
+                        publishTargets.linkedinProfile
+                          ? "border-blue-500 bg-blue-50/50 text-blue-700 shadow-sm ring-1 ring-blue-500/20"
+                          : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                      }`}
+                    >
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-100 text-xs font-bold text-blue-600 ring-2 ring-white shadow-sm">
+                        {user?.picture ? (
+                          <Image
+                            src={user.picture}
+                            alt={user.name || "Perfil"}
+                            width={40}
+                            height={40}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          (user?.name || "P").charAt(0).toUpperCase()
+                        )}
+                      </div>
+                      <div className="flex flex-1 flex-col overflow-hidden">
+                        <span className="truncate text-sm font-semibold text-slate-900">
+                          {user?.name || "Perfil personal"}
+                        </span>
+                        <span className="truncate text-xs text-slate-500">
+                          {user?.headline || "LinkedIn personal"}
+                        </span>
+                      </div>
+                      <div className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all ${
+                        publishTargets.linkedinProfile
+                          ? "border-blue-500 bg-blue-500 text-white scale-110"
+                          : "border-slate-300 bg-white"
+                      }`}>
+                        {publishTargets.linkedinProfile && <FontAwesomeIcon icon={faCheck} className="h-3 w-3" />}
+                      </div>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => router.push("/api/auth/linkedin")}
+                      className="flex items-center justify-center gap-2 rounded-xl bg-[#0077b5] px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-[#006097] hover:shadow-blue-900/30 active:scale-[0.98]"
+                    >
+                      <FontAwesomeIcon icon={faLinkedin} className="h-5 w-5" />
+                      {t('buttons.connectPersonalProfile')}
+                    </button>
+                  )}
 
-                {pages.length > 0 && publishTargets.linkedinPage && (
-                  <div className="mt-4 space-y-2">
-                    {pages.map((page) => {
-                      const isSelected = selectedPageUrns.includes(page.urn);
-                      return (
-                        <button
-                          key={page.urn}
-                          type="button"
-                          onClick={() =>
-                            setSelectedPageUrns((current) =>
-                              current.includes(page.urn)
-                                ? current.filter((urn) => urn !== page.urn)
-                                : [...current, page.urn],
-                            )
-                          }
-                          className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-sm font-semibold transition ${
-                            isSelected
-                              ? "border-blue-600 bg-blue-50 text-blue-600"
-                              : "border-slate-200 text-slate-600 hover:border-blue-200 hover:text-blue-600"
-                          }`}
-                        >
-                          <span>{page.name ?? page.urn}</span>
-                          {isSelected && <FontAwesomeIcon icon={faCheck} className="h-3 w-3" />}
-                        </button>
-                      );
-                    })}
+                  {(pageSettings?.pages?.length
+                    ? pageSettings.pages
+                    : pageSettings?.page
+                      ? [pageSettings.page]
+                      : []
+                  ).map((page) => {
+                    const pageIsActive = isPageActive(page);
+                    return (
+                      <button
+                        key={page.urn}
+                        type="button"
+                        disabled={!pageIsActive}
+                        onClick={() => {
+                          if (!pageIsActive) return;
+                          setSelectedPageUrns((current) =>
+                            current.includes(page.urn)
+                              ? current.filter((urn) => urn !== page.urn)
+                              : [...current, page.urn],
+                          );
+                        }}
+                        className={`flex items-center gap-4 rounded-xl border p-3 text-left transition-all ${
+                          !pageIsActive
+                            ? "border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed"
+                            : selectedPageUrns.includes(page.urn)
+                              ? "border-blue-500 bg-blue-50/50 text-blue-700 shadow-sm ring-1 ring-blue-500/20"
+                              : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                        }`}
+                      >
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-slate-100 text-xs font-bold text-slate-600 ring-2 ring-white shadow-sm">
+                          {page.logoUrl ? (
+                            <Image
+                              src={page.logoUrl}
+                              alt={page.name || "Página"}
+                              width={40}
+                              height={40}
+                              className={`h-full w-full object-cover ${
+                                !pageIsActive ? "grayscale opacity-80" : ""
+                              }`}
+                            />
+                          ) : (
+                            (page.name || "P").charAt(0).toUpperCase()
+                          )}
+                        </div>
+                        <div className="flex flex-1 flex-col overflow-hidden">
+                          <span className="truncate text-sm font-semibold text-slate-900">
+                            {page.name || page.urn}
+                          </span>
+                        <span className="truncate text-xs text-slate-500">
+                          {page.description || "Página corporativa"}
+                        </span>
+                        </div>
+                        {pageIsActive ? (
+                          <div className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all ${
+                            selectedPageUrns.includes(page.urn)
+                              ? "border-blue-500 bg-blue-500 text-white scale-110"
+                              : "border-slate-300 bg-white"
+                          }`}>
+                            {selectedPageUrns.includes(page.urn) && (
+                              <FontAwesomeIcon icon={faCheck} className="h-3 w-3" />
+                            )}
+                          </div>
+                        ) : (
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full border border-rose-300 bg-rose-50 text-rose-500">
+                            <FontAwesomeIcon icon={faTimes} className="h-3 w-3" />
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+                {publishError && (
+                  <div className="mt-4 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs font-medium text-red-700 animate-in slide-in-from-top-2">
+                    <FontAwesomeIcon icon={faExclamationTriangle} className="h-4 w-4" />
+                    {publishError}
                   </div>
                 )}
-
-                {publishError && <div className="mt-3 text-xs font-semibold text-rose-500">{publishError}</div>}
                 {publishSuccess && <div className="mt-3 text-xs font-semibold text-emerald-600">{publishSuccess}</div>}
               </div>
 

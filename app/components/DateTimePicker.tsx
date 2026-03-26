@@ -170,17 +170,30 @@ export function DateTimePicker({ value, onChange, className }: DateTimePickerPro
               month === new Date().getMonth() &&
               year === new Date().getFullYear();
 
+            // Set time to 00:00:00 to only compare dates
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const isPast = date < today;
+
             return (
               <button
                 key={day}
-                onClick={(e) => { e.stopPropagation(); handleDateSelect(day); }}
+                onClick={(e) => { 
+                  if (!isPast) {
+                    e.stopPropagation(); 
+                    handleDateSelect(day); 
+                  }
+                }}
+                disabled={isPast}
                 className={`
                   h-9 w-9 rounded-full text-sm font-medium transition-all flex items-center justify-center
-                  ${isSelected 
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-200" 
-                    : isToday 
-                      ? "bg-blue-50 text-blue-600 font-bold border border-blue-100" 
-                      : "text-slate-700 hover:bg-slate-100"}
+                  ${isPast 
+                    ? "text-slate-300 cursor-not-allowed" 
+                    : isSelected 
+                      ? "bg-blue-600 text-white shadow-md shadow-blue-200" 
+                      : isToday 
+                        ? "bg-blue-50 text-blue-600 font-bold border border-blue-100" 
+                        : "text-slate-700 hover:bg-slate-100"}
                 `}
               >
                 {day}
@@ -218,15 +231,39 @@ export function DateTimePicker({ value, onChange, className }: DateTimePickerPro
               selectedDate.getHours() === hour && 
               selectedDate.getMinutes() === minute;
 
+            // Check if the selected date is today, and if so, disable past times
+            let isPastTime = false;
+            if (selectedDate) {
+              const now = new Date();
+              const isToday = 
+                selectedDate.getDate() === now.getDate() &&
+                selectedDate.getMonth() === now.getMonth() &&
+                selectedDate.getFullYear() === now.getFullYear();
+                
+              if (isToday) {
+                // Si es hoy, bloqueamos las horas pasadas
+                // O si es la misma hora pero minutos pasados
+                isPastTime = hour < now.getHours() || (hour === now.getHours() && minute <= now.getMinutes());
+              }
+            }
+
             return (
               <button
                 key={`${hour}-${minute}`}
-                onClick={(e) => { e.stopPropagation(); handleTimeSelect(hour, minute); }}
+                onClick={(e) => { 
+                  if (!isPastTime) {
+                    e.stopPropagation(); 
+                    handleTimeSelect(hour, minute); 
+                  }
+                }}
+                disabled={isPastTime}
                 className={`
                   py-2 px-1 rounded-lg text-sm font-medium transition-all border
-                  ${isSelected 
-                    ? "bg-blue-600 text-white border-blue-600 shadow-sm" 
-                    : "bg-white text-slate-700 border-slate-200 hover:border-blue-300 hover:bg-blue-50"}
+                  ${isPastTime 
+                    ? "bg-slate-50 text-slate-300 border-slate-100 cursor-not-allowed" 
+                    : isSelected 
+                      ? "bg-blue-600 text-white border-blue-600 shadow-sm" 
+                      : "bg-white text-slate-700 border-slate-200 hover:border-blue-300 hover:bg-blue-50"}
                 `}
               >
                 {timeString}
