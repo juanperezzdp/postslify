@@ -1342,15 +1342,15 @@ export default function ArchivedPostsPage() {
       setPublishSuccess(t("success.published", { targets: targetList.join(", ") }));
       
       // Delete the post after successful publication
-      if (messageToPublish?.id) {
+      if (messageToPublish?.historyId) {
         try {
-          const deleteResponse = await fetch(`/api/chat/history/${messageToPublish.id}`, {
+          const deleteResponse = await fetch(`/api/chat/history/${messageToPublish.historyId}`, {
             method: "DELETE",
           });
           
           if (deleteResponse.ok) {
             // Remove from local state
-            setArchivedPosts((prev) => prev.filter((post) => post.id !== messageToPublish.id));
+            setArchivedPosts((prev) => prev.filter((post) => post.id !== messageToPublish.historyId));
             
             // Close the modal after a short delay so the user can see the success message
             setTimeout(() => {
