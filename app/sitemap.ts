@@ -94,6 +94,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.3,
+    },
+    // Rutas dinámicas del blog
+    {
+      url: `${baseUrl}/en/blog/guia-tokens-acceso-linkedin`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/es/blog/guia-tokens-acceso-linkedin`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
     }
   ];
 }
