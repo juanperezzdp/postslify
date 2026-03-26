@@ -17,6 +17,20 @@ const nextConfig: NextConfig = {
     ],
   },
   output: "standalone",
+  async redirects() {
+    return [
+      {
+        source: "/:locale/:id/perfiles",
+        destination: "/:locale/:id/voice-profiles",
+        permanent: true,
+      },
+      {
+        source: "/:locale/:id/perfil",
+        destination: "/:locale/:id/voice-profile",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
