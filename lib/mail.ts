@@ -5,6 +5,10 @@ import type { WelcomeEmailContent, WelcomeEmailLocale } from "@/types/mail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const fallbackPublicBaseUrl = "https://www.postslify.com";
+const resetEmailFrom =
+  process.env.RESET_EMAIL_FROM || "Postslify <resetpassword@postslify.com>";
+const welcomeEmailFrom =
+  process.env.WELCOME_EMAIL_FROM || "Postslify <info@postslify.com>";
 
 const resolvePublicBaseUrl = () => {
   const configuredUrl =
@@ -110,7 +114,7 @@ export async function sendPasswordResetEmail(
 
   try {
     const data = await resend.emails.send({
-      from: process.env.EMAIL_FROM || "onboarding@resend.dev",
+      from: resetEmailFrom,
       to: email,
       subject: content.subject,
       html: `
@@ -178,7 +182,7 @@ export async function sendWelcomeEmail(
 
   try {
     const data = await resend.emails.send({
-      from: process.env.EMAIL_FROM || "onboarding@resend.dev",
+      from: welcomeEmailFrom,
       to: email,
       subject: content.subject,
       attachments,
