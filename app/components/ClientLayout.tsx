@@ -183,7 +183,8 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
         if (data.welcomeBonusSeen !== false && !data.hasTestimonial && Date.now() - createdAtTime >= twoDaysMs) {
           setIsModalOpen(true);
         }
-      } catch {
+      } catch (error) {
+        console.error("Error loading profile data in layout:", error);
         if (!isActive) return;
       } finally {
         if (isActive) setIsLoadingProfile(false);
@@ -207,12 +208,15 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
   useEffect(() => {
     if (!shouldShowSidebar || !session?.user?.id) return;
     if (typeof window === "undefined") return;
+    // Si el modal de bienvenida está visible, pausamos la inicialización del onboarding
+    if (showWelcomeBonus) return;
+    
     const isDone = window.localStorage.getItem(onboardingKey) === "1";
     if (isDone && !forceOnboardingPreview) return;
     setIsOnboardingOpen(true);
     setOnboardingStep(0);
     setIsSidebarOpen(true);
-  }, [shouldShowSidebar, session?.user?.id]);
+  }, [shouldShowSidebar, session?.user?.id, showWelcomeBonus]);
 
   useEffect(() => {
     if (!isOnboardingOpen) return;
@@ -307,6 +311,16 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ welcome_bonus_seen: true }),
       });
+      
+      // Iniciar el onboarding justo después de cerrar el modal de bienvenida si no se ha hecho
+      if (typeof window !== "undefined") {
+        const isDone = window.localStorage.getItem(onboardingKey) === "1";
+        if (!isDone || forceOnboardingPreview) {
+          setIsOnboardingOpen(true);
+          setOnboardingStep(0);
+          setIsSidebarOpen(true);
+        }
+      }
     } catch (error) {
       console.error("Failed to update welcome bonus flag:", error);
     }
