@@ -4,4 +4,5 @@ export type UserProfileResponse = {
   image: string;
   createdAt: string;
   hasTestimonial: boolean;
+  welcomeBonusSeen?: boolean;
 };

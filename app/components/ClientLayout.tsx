@@ -46,6 +46,7 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
   const pathname = usePathname();
   const t = useTranslations("TestimonialsModal");
   const tOnboarding = useTranslations("Onboarding");
+  const tWelcome = useTranslations("WelcomeBonus");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoadingProfile, setIsLoadingProfile] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -60,6 +61,7 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
     height: number;
   } | null>(null);
   const [isMobileTour, setIsMobileTour] = useState(false);
+  const [showWelcomeBonus, setShowWelcomeBonus] = useState(false);
 
   
   
@@ -167,11 +169,18 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
         if (!response.ok) {
           throw new Error("Profile error");
         }
-        const data = (await response.json()) as UserProfileResponse;
+        const data = (await response.json()) as UserProfileResponse & { welcomeBonusSeen?: boolean };
         if (!isActive) return;
+        
+        // Manejar el modal de bienvenida
+        if (data.welcomeBonusSeen === false) {
+          setShowWelcomeBonus(true);
+        }
+
         const createdAtTime = new Date(data.createdAt).getTime();
         const twoDaysMs = 2 * 24 * 60 * 60 * 1000;
-        if (!data.hasTestimonial && Date.now() - createdAtTime >= twoDaysMs) {
+        // Solo mostramos el modal de testimonial si no estamos mostrando el de bienvenida
+        if (data.welcomeBonusSeen !== false && !data.hasTestimonial && Date.now() - createdAtTime >= twoDaysMs) {
           setIsModalOpen(true);
         }
       } catch {
@@ -289,6 +298,19 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
     );
     return { top, left };
   }, [targetRect, isMobileTour]);
+
+  const closeWelcomeBonus = async () => {
+    setShowWelcomeBonus(false);
+    try {
+      await fetch("/api/user/settings", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ welcome_bonus_seen: true }),
+      });
+    } catch (error) {
+      console.error("Failed to update welcome bonus flag:", error);
+    }
+  };
 
   const onSubmit = async (values: TestimonialModalFormValues) => {
     setSubmitError(null);
@@ -419,7 +441,45 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
           </div>
         </div>
       )}
-      {shouldShowSidebar && isOnboardingOpen && currentStep && (
+      {showWelcomeBonus && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl">
+            <button
+              onClick={closeWelcomeBonus}
+              className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-700"
+            >
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 px-6 py-8 text-center text-white">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/20 text-3xl shadow-inner backdrop-blur-md">
+                🎁
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight">{tWelcome("title")}</h2>
+              <p className="mt-2 text-blue-100">
+                {tWelcome("subtitle")}
+              </p>
+            </div>
+            <div className="px-6 py-8 text-center">
+              <p className="text-base text-slate-600">
+                {tWelcome.rich("gift", {
+                  highlight: (chunks) => <strong className="text-slate-900">{chunks}</strong>,
+                })}
+              </p>
+              <p className="mt-3 text-sm text-slate-500">
+                {tWelcome("description")}
+              </p>
+              <button
+                onClick={closeWelcomeBonus}
+                className="mt-8 w-full rounded-2xl bg-blue-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500 hover:shadow-blue-600/30"
+              >
+                {tWelcome("button")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {shouldShowSidebar && isOnboardingOpen && currentStep && !showWelcomeBonus && (
         <div className="fixed inset-0 z-[85]">
           {targetRect && (
             <div

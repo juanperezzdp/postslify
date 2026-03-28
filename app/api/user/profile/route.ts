@@ -15,7 +15,7 @@ export async function GET() {
   await dbConnect();
 
   const user = await User.findById(session.user.id)
-    .select("name image createdAt testimonial_done")
+    .select("name image createdAt testimonial_done welcome_bonus_seen")
     .lean();
 
   if (!user) {
@@ -41,7 +41,7 @@ export async function GET() {
     );
   }
 
-  const response: UserProfileResponse = {
+  const response: UserProfileResponse & { welcomeBonusSeen?: boolean } = {
     id: session.user.id,
     name:
       (typeof user.name === "string" ? user.name.trim() : "") ||
@@ -51,6 +51,7 @@ export async function GET() {
       (typeof session.user.image === "string" ? session.user.image.trim() : ""),
     createdAt: user.createdAt ? user.createdAt.toISOString() : new Date().toISOString(),
     hasTestimonial: finalFlag,
+    welcomeBonusSeen: user.welcome_bonus_seen ?? false,
   };
 
   return NextResponse.json(response, { status: 200 });

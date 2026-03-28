@@ -4,7 +4,7 @@ import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import type { UserSettingsFormValues } from "@/types/user-settings";
 
-type UserSettingsUpdate = Partial<UserSettingsFormValues>;
+type UserSettingsUpdate = Partial<UserSettingsFormValues> & { welcome_bonus_seen?: boolean };
 
 export async function PATCH(request: NextRequest) {
   const session = await auth();
@@ -16,8 +16,9 @@ export async function PATCH(request: NextRequest) {
   const body = (await request.json()) as UserSettingsUpdate;
   const name = typeof body.name === "string" ? body.name.trim() : "";
   const image = typeof body.image === "string" ? body.image.trim() : "";
+  const welcome_bonus_seen = typeof body.welcome_bonus_seen === "boolean" ? body.welcome_bonus_seen : undefined;
 
-  if (!name && !image) {
+  if (!name && !image && welcome_bonus_seen === undefined) {
     return NextResponse.json(
       { error: "Datos inválidos" },
       { status: 400 }
@@ -29,6 +30,7 @@ export async function PATCH(request: NextRequest) {
   const update: UserSettingsUpdate = {};
   if (name) update.name = name;
   if (image) update.image = image;
+  if (welcome_bonus_seen !== undefined) update.welcome_bonus_seen = welcome_bonus_seen;
 
   const updatedUser = await User.findByIdAndUpdate(
     session.user.id,

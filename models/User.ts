@@ -19,6 +19,7 @@ export interface IUser extends mongoose.Document {
   linkedin_page_image?: string;
   reset_token?: string;
   reset_token_expires?: Date;
+  welcome_bonus_seen?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -82,6 +83,10 @@ const UserSchema = new Schema<IUser>(
     },
     reset_token_expires: {
       type: Date,
+    },
+    welcome_bonus_seen: {
+      type: Boolean,
+      default: false,
     },
   },
   {

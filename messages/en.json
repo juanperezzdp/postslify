@@ -12,6 +12,13 @@
     "billing": "Billing",
     "userDetails": "User Details"
   },
+  "WelcomeBonus": {
+    "title": "Welcome to Postslify!",
+    "subtitle": "Your journey to LinkedIn leadership starts here.",
+    "gift": "We are gifting you <highlight>2 structured and AI-optimized posts</highlight>.",
+    "description": "Take advantage of this boost to build your community, interact with your audience, and take your profile (or business page) to the next level.",
+    "button": "Create my first post now! 🚀"
+  },
   "LinkedInFloating": {
     "userFallback": "User",
     "connected": "LinkedIn connected",
