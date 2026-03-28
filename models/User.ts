@@ -48,7 +48,7 @@ const UserSchema = new Schema<IUser>(
     },
     credits_balance_cents: {
       type: Number,
-      default: 0,
+      default: 6, // 6 centavos (0.06 dólares) para que puedan generar 2 posts de prueba
     },
     linkedin_name: {
       type: String,
