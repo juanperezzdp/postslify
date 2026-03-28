@@ -69,6 +69,7 @@ export async function POST(request: NextRequest) {
       name,
       password_hash: passwordHash,
       testimonial_done: false,
+      credits_balance_cents: 6, // 6 centavos (0.06 dólares) para 2 posts de prueba
     });
 
     return NextResponse.json({ ok: true }, { status: 201 });
