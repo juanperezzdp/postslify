@@ -62,6 +62,8 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
   } | null>(null);
   const [isMobileTour, setIsMobileTour] = useState(false);
   const [showWelcomeBonus, setShowWelcomeBonus] = useState(false);
+  const [pendingWelcomeBonus, setPendingWelcomeBonus] = useState(false);
+  const [profileLoaded, setProfileLoaded] = useState(false);
 
   
   
@@ -172,14 +174,12 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
         const data = (await response.json()) as UserProfileResponse & { welcomeBonusSeen?: boolean };
         if (!isActive) return;
         
-        // Manejar el modal de bienvenida
         if (data.welcomeBonusSeen === false) {
-          setShowWelcomeBonus(true);
+          setPendingWelcomeBonus(true);
         }
 
         const createdAtTime = new Date(data.createdAt).getTime();
         const twoDaysMs = 2 * 24 * 60 * 60 * 1000;
-        // Solo mostramos el modal de testimonial si no estamos mostrando el de bienvenida
         if (data.welcomeBonusSeen !== false && !data.hasTestimonial && Date.now() - createdAtTime >= twoDaysMs) {
           setIsModalOpen(true);
         }
@@ -187,7 +187,10 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
         console.error("Error loading profile data in layout:", error);
         if (!isActive) return;
       } finally {
-        if (isActive) setIsLoadingProfile(false);
+        if (isActive) {
+          setIsLoadingProfile(false);
+          setProfileLoaded(true);
+        }
       }
     };
     loadProfile();
@@ -206,17 +209,16 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
   }, []);
 
   useEffect(() => {
-    if (!shouldShowSidebar || !session?.user?.id) return;
+    if (!shouldShowSidebar || !session?.user?.id || !profileLoaded) return;
     if (typeof window === "undefined") return;
-    // Si el modal de bienvenida está visible, pausamos la inicialización del onboarding
     if (showWelcomeBonus) return;
-    
     const isDone = window.localStorage.getItem(onboardingKey) === "1";
-    if (isDone && !forceOnboardingPreview) return;
+    if (!pendingWelcomeBonus && isDone && !forceOnboardingPreview) return;
+    if (!pendingWelcomeBonus && !forceOnboardingPreview) return;
     setIsOnboardingOpen(true);
     setOnboardingStep(0);
     setIsSidebarOpen(true);
-  }, [shouldShowSidebar, session?.user?.id, showWelcomeBonus]);
+  }, [shouldShowSidebar, session?.user?.id, showWelcomeBonus, profileLoaded, pendingWelcomeBonus, forceOnboardingPreview]);
 
   useEffect(() => {
     if (!isOnboardingOpen) return;
@@ -254,6 +256,10 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
       window.localStorage.setItem(onboardingKey, "1");
     }
     setIsOnboardingOpen(false);
+    if (pendingWelcomeBonus) {
+      setPendingWelcomeBonus(false);
+      setShowWelcomeBonus(true);
+    }
     if (isMobileTour) {
       setIsSidebarOpen(false);
     }
@@ -311,16 +317,6 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ welcome_bonus_seen: true }),
       });
-      
-      // Iniciar el onboarding justo después de cerrar el modal de bienvenida si no se ha hecho
-      if (typeof window !== "undefined") {
-        const isDone = window.localStorage.getItem(onboardingKey) === "1";
-        if (!isDone || forceOnboardingPreview) {
-          setIsOnboardingOpen(true);
-          setOnboardingStep(0);
-          setIsSidebarOpen(true);
-        }
-      }
     } catch (error) {
       console.error("Failed to update welcome bonus flag:", error);
     }
