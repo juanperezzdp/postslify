@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faArrowLeft, faCheckCircle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
+import type { WelcomeEmailLocale } from "@/types/mail";
+import { useLocale, useTranslations } from "next-intl";
 import { ForgotPasswordInputs } from "@/types/auth";
 
 export default function ForgotPasswordPage() {
@@ -14,6 +15,7 @@ export default function ForgotPasswordPage() {
   const [message, setMessage] = useState("");
   const [mounted, setMounted] = useState(false);
   const t = useTranslations('ForgotPassword');
+  const currentLocale = useLocale();
 
   const {
     register,
@@ -28,12 +30,13 @@ export default function ForgotPasswordPage() {
   const onSubmit = async (data: ForgotPasswordInputs) => {
     setStatus("loading");
     setMessage("");
+    const locale: WelcomeEmailLocale = currentLocale === "es" ? "es" : "en";
 
     try {
       const response = await fetch("/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, locale }),
       });
 
       const responseData = await response.json();

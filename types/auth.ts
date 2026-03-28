@@ -15,6 +15,7 @@ export interface RegisterInputs {
 
 export interface ForgotPasswordInputs {
   email: string;
+  locale?: WelcomeEmailLocale;
 }
 
 export interface ResetPasswordInputs {

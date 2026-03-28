@@ -1,4 +1,6 @@
 import { Resend } from "resend";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import type { WelcomeEmailContent, WelcomeEmailLocale } from "@/types/mail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -48,6 +50,41 @@ const welcomeEmailContentByLocale: Record<WelcomeEmailLocale, WelcomeEmailConten
   },
 };
 
+const resetEmailContentByLocale: Record<
+  WelcomeEmailLocale,
+  {
+    subject: string;
+    title: string;
+    greeting: string;
+    message: string;
+    cta: string;
+    ignore: string;
+    expires: string;
+    regards: string;
+  }
+> = {
+  en: {
+    subject: "Reset your Postslify password",
+    title: "Reset Password Request",
+    greeting: "Hello,",
+    message: "We received a request to reset your password for your Postslify account.",
+    cta: "Reset Password",
+    ignore: "If you didn't request this, you can safely ignore this email.",
+    expires: "This link will expire in 1 hour.",
+    regards: "Best regards,<br>The Postslify Team",
+  },
+  es: {
+    subject: "Restablece tu contraseña de Postslify",
+    title: "Solicitud para restablecer contraseña",
+    greeting: "Hola,",
+    message: "Recibimos una solicitud para restablecer la contraseña de tu cuenta de Postslify.",
+    cta: "Restablecer contraseña",
+    ignore: "Si no solicitaste este cambio, puedes ignorar este correo con seguridad.",
+    expires: "Este enlace expirará en 1 hora.",
+    regards: "Saludos,<br>El equipo de Postslify",
+  },
+};
+
 const escapeHtml = (value: string) =>
   value
     .replaceAll("&", "&amp;")
@@ -56,25 +93,36 @@ const escapeHtml = (value: string) =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 
-export async function sendPasswordResetEmail(email: string, token: string) {
+const readPublicAssetAsBase64 = async (filename: string) => {
+  const filePath = path.join(process.cwd(), "public", filename);
+  return fs.readFile(filePath, { encoding: "base64" });
+};
+
+export async function sendPasswordResetEmail(
+  email: string,
+  token: string,
+  locale: WelcomeEmailLocale = "en",
+) {
   const publicBaseUrl = resolvePublicBaseUrl();
-  const resetLink = `${publicBaseUrl}/reset-password?token=${token}`;
+  const safeLocale: WelcomeEmailLocale = locale === "es" ? "es" : "en";
+  const content = resetEmailContentByLocale[safeLocale];
+  const resetLink = `${publicBaseUrl}/${safeLocale}/reset-password?token=${token}`;
 
   try {
     const data = await resend.emails.send({
       from: process.env.EMAIL_FROM || "onboarding@resend.dev",
       to: email,
-      subject: "Reset your Postslify password",
+      subject: content.subject,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2>Reset Password Request</h2>
-          <p>Hello,</p>
-          <p>We received a request to reset your password for your Postslify account.</p>
-          <p>Click the button below to set a new password:</p>
-          <a href="${resetLink}" style="display: inline-block; background-color: #2563EB; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">Reset Password</a>
-          <p>If you didn't request this, you can safely ignore this email.</p>
-          <p>This link will expire in 1 hour.</p>
-          <p>Best regards,<br>The Postslify Team</p>
+          <h2>${content.title}</h2>
+          <p>${content.greeting}</p>
+          <p>${content.message}</p>
+          <p>${safeLocale === "es" ? "Haz clic en el botón para crear una nueva contraseña:" : "Click the button below to set a new password:"}</p>
+          <a href="${resetLink}" style="display: inline-block; background-color: #2563EB; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 16px 0;">${content.cta}</a>
+          <p>${content.ignore}</p>
+          <p>${content.expires}</p>
+          <p>${content.regards}</p>
         </div>
       `,
     });
@@ -102,6 +150,30 @@ export async function sendWelcomeEmail(
   const appUrl = `${publicBaseUrl}/${locale}`;
   const logoUrl = `${publicBaseUrl}/logo-ico.png`;
   const heroImageUrl = `${publicBaseUrl}/emailwelcome.png`;
+  const [logoContent, heroContent] = await Promise.all([
+    readPublicAssetAsBase64("logo-ico.png").catch(() => null),
+    readPublicAssetAsBase64("emailwelcome.png").catch(() => null),
+  ]);
+  const attachments = [
+    logoContent
+      ? {
+          content: logoContent,
+          filename: "logo-ico.png",
+          contentType: "image/png",
+          contentId: "welcome-logo",
+        }
+      : null,
+    heroContent
+      ? {
+          content: heroContent,
+          filename: "emailwelcome.png",
+          contentType: "image/png",
+          contentId: "welcome-hero",
+        }
+      : null,
+  ].filter((attachment) => attachment !== null);
+  const logoSrc = logoContent ? "cid:welcome-logo" : logoUrl;
+  const heroSrc = heroContent ? "cid:welcome-hero" : heroImageUrl;
   const heading = content.heading.replace("{name}", displayName);
 
   try {
@@ -109,16 +181,23 @@ export async function sendWelcomeEmail(
       from: process.env.EMAIL_FROM || "onboarding@resend.dev",
       to: email,
       subject: content.subject,
+      attachments,
       html: `
+        <style>
+          :root { color-scheme: light only; supported-color-schemes: light; }
+          .postslify-card, .postslify-card td { background-color: #ffffff !important; }
+          [data-ogsc] .postslify-card, [data-ogsc] .postslify-card td { background-color: #ffffff !important; }
+          [data-ogsb] .postslify-card, [data-ogsb] .postslify-card td { background-color: #ffffff !important; }
+        </style>
         <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${content.preheader}</div>
         <div style="background:#f9fcff;margin:0;padding:0;width:100%;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
             <tr>
-              <td align="center" style="padding:24px 12px;">
-                <table role="presentation" width="640" cellpadding="0" cellspacing="0" style="width:100%;max-width:640px;border-collapse:collapse;background:#ffff;border-radius:16px;overflow:hidden;border:1px solid #bfdbfe;">
+              <td align="center" bgcolor="#ffffff" style="padding:24px 12px;background:#ffffff !important;background-color:#ffffff !important;">
+                <table role="presentation" width="640" cellpadding="0" cellspacing="0" bgcolor="#ffffff" class="postslify-card" style="width:100%;max-width:640px;border-collapse:collapse;background:#ffffff !important;background-color:#ffffff !important;border-radius:16px;overflow:hidden;border:1px solid #d1d5db;box-shadow:0 20px 35px 10px rgba(155, 157, 161, 0.3);">
                   <tr>
                     <td style="padding:32px 34px 8px 34px;">
-                      <img src="${logoUrl}" alt="Postslify logo" width="72" style="display:block;border:0;outline:none;text-decoration:none;height:auto;max-width:72px;">
+                      <img src="${logoSrc}" alt="Postslify logo" width="72" style="display:block;border:0;outline:none;text-decoration:none;height:auto;max-width:72px;">
                     </td>
                   </tr>
                   <tr>
@@ -129,7 +208,7 @@ export async function sendWelcomeEmail(
                   </tr>
                   <tr>
                     <td align="center" style="padding:28px 34px 0 34px;">
-                      <img src="${heroImageUrl}" alt="Postslify creators" width="520" style="display:block;border:0;outline:none;text-decoration:none;width:100%;max-width:520px;height:auto;">
+                      <img src="${heroSrc}" alt="Postslify welcome" width="520" style="display:block;border:0;outline:none;text-decoration:none;width:100%;max-width:520px;height:auto;">
                     </td>
                   </tr>
                   <tr>

@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import crypto from "crypto";
+import type { ForgotPasswordInputs } from "@/types/auth";
+import type { WelcomeEmailLocale } from "@/types/mail";
 import { sendPasswordResetEmail } from "@/lib/mail";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const body = (await request.json().catch(() => null)) as ForgotPasswordInputs | null;
+    const email = body?.email;
+    const locale: WelcomeEmailLocale = body?.locale === "es" ? "es" : "en";
 
     if (!email) {
       return NextResponse.json(
@@ -37,7 +41,7 @@ export async function POST(request: NextRequest) {
     await user.save();
 
     
-    const emailResult = await sendPasswordResetEmail(user.email, token);
+    const emailResult = await sendPasswordResetEmail(user.email, token, locale);
 
     if (!emailResult.success) {
       return NextResponse.json(
