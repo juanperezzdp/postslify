@@ -85,7 +85,7 @@ export default function RegisterPage() {
 
         {}
         <div className={`relative z-10 transition-all duration-1000 ease-out ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="flex items-center gap-3 text-blue-600 justify-end">
+          <div className="flex items-center gap-3 text-blue-600 justify-start md:justify-end">
             <span className="font-[family-name:var(--font-tan)] text-lg tracking-tight text-slate-900">Postslify</span>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 backdrop-blur-md ring-1 ring-slate-200">
                <FontAwesomeIcon icon={faLinkedin} className="h-5 w-5" />
@@ -94,13 +94,13 @@ export default function RegisterPage() {
         </div>
 
         <div className={`relative z-10 my-12 md:my-0 transition-all duration-1000 delay-300 ease-out ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h1 className="font-tan text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 text-transparent bg-clip-text bg-gradient-to-l from-slate-900 via-blue-900 to-slate-600 drop-shadow-sm text-right">
+          <h1 className="font-tan text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 text-transparent bg-clip-text bg-gradient-to-l from-slate-900 via-blue-900 to-slate-600 drop-shadow-sm text-left md:text-right">
             {t.rich('heroTitle', {
               br: () => <br />,
               span: (chunks) => <span className="italic text-blue-600">{chunks}</span>
             })}
           </h1>
-          <p className="ml-auto max-w-md text-lg text-slate-600 leading-relaxed font-light text-right">
+          <p className="max-w-md text-lg text-slate-600 leading-relaxed font-light text-left md:ml-auto md:text-right">
             {t('heroSubtitle')}
           </p>
         </div>
