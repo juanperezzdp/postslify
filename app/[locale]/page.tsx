@@ -27,25 +27,75 @@ import { Footer } from "../components/Footer";
 import TestimonialsSection from "../components/TestimonialsSection";
 import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Postslify - Transforma tu presencia en LinkedIn con IA",
-  description:
-    "Postslify te ayuda a crear, programar y optimizar tu contenido en LinkedIn. Con perfiles de voz personalizados y herramientas de IA, tu presencia profesional nunca ha sido tan impactante.",
-  keywords: [
-    "LinkedIn",
-    "IA",
-    "Generador de posts",
-    "Optimización de perfil",
-    "Growth hacking",
-    "Marketing B2B",
-  ],
-  openGraph: {
-    title: "Postslify - Transforma tu presencia en LinkedIn",
+const homeSeoByLocale = {
+  en: {
+    title: "Postslify - Create and Schedule LinkedIn Content with AI",
     description:
-      "Herramientas de IA para destacar en LinkedIn y conseguir más oportunidades.",
-    type: "website",
+      "Generate LinkedIn posts in seconds, schedule content with precision and scale your personal brand with custom AI voice profiles.",
+    keywords: [
+      "LinkedIn content AI",
+      "schedule LinkedIn posts",
+      "AI writing assistant",
+      "LinkedIn personal branding",
+      "social media growth",
+      "B2B lead generation",
+    ],
+    locale: "en_US",
+    alternateLocale: "es_ES",
   },
-};
+  es: {
+    title: "Postslify - Crea y programa contenido en LinkedIn con IA",
+    description:
+      "Genera publicaciones para LinkedIn en segundos, programa contenido con precisión y escala tu marca personal con perfiles de voz de IA.",
+    keywords: [
+      "contenido LinkedIn con IA",
+      "programar publicaciones en LinkedIn",
+      "asistente de escritura IA",
+      "marca personal en LinkedIn",
+      "crecimiento en redes sociales",
+      "generación de leads B2B",
+    ],
+    locale: "es_ES",
+    alternateLocale: "en_US",
+  },
+} as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const safeLocale = locale === "es" ? "es" : "en";
+  const seo = homeSeoByLocale[safeLocale];
+
+  return {
+    title: seo.title,
+    description: seo.description,
+    keywords: [...seo.keywords],
+    alternates: {
+      canonical: `/${safeLocale}`,
+      languages: {
+        en: "/en",
+        es: "/es",
+        "x-default": "/en",
+      },
+    },
+    openGraph: {
+      title: seo.title,
+      description: seo.description,
+      type: "website",
+      locale: seo.locale,
+      alternateLocale: [seo.alternateLocale],
+      url: `/${safeLocale}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.title,
+      description: seo.description,
+    },
+  };
+}
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const session = await auth();

@@ -30,10 +30,79 @@ const tanNimbus = localFont({
   weight: "400",
 });
 
-export const metadata: Metadata = {
-  title: "Postslify",
-  description: "Publica en LinkedIn fácilmente",
-};
+const siteUrl = "https://www.postslify.com";
+
+const seoContentByLocale = {
+  en: {
+    title: "Postslify - Transform your LinkedIn presence with AI",
+    description:
+      "Create, schedule and optimize LinkedIn content with AI. Maintain a consistent presence, scale your personal brand and attract better opportunities.",
+    keywords: [
+      "LinkedIn AI",
+      "LinkedIn content scheduler",
+      "AI post generator",
+      "personal branding",
+      "B2B marketing",
+      "social media automation",
+    ],
+    locale: "en_US",
+    alternateLocale: "es_ES",
+  },
+  es: {
+    title: "Postslify - Transforma tu presencia en LinkedIn con IA",
+    description:
+      "Crea, programa y optimiza contenido para LinkedIn con IA. Mantén presencia constante, escala tu marca personal y atrae mejores oportunidades.",
+    keywords: [
+      "IA para LinkedIn",
+      "programador de contenido LinkedIn",
+      "generador de posts con IA",
+      "marca personal",
+      "marketing B2B",
+      "automatización de redes sociales",
+    ],
+    locale: "es_ES",
+    alternateLocale: "en_US",
+  },
+} as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const safeLocale = locale === "es" ? "es" : "en";
+  const seo = seoContentByLocale[safeLocale];
+
+  return {
+    metadataBase: new URL(siteUrl),
+    title: seo.title,
+    description: seo.description,
+    keywords: [...seo.keywords],
+    alternates: {
+      canonical: `/${safeLocale}`,
+      languages: {
+        en: "/en",
+        es: "/es",
+        "x-default": "/en",
+      },
+    },
+    openGraph: {
+      type: "website",
+      url: `/${safeLocale}`,
+      siteName: "Postslify",
+      title: seo.title,
+      description: seo.description,
+      locale: seo.locale,
+      alternateLocale: [seo.alternateLocale],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.title,
+      description: seo.description,
+    },
+  };
+}
 
 export default async function LocaleLayout({
   children,
