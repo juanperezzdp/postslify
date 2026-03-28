@@ -1,11 +1,64 @@
 import { Resend } from "resend";
+import type { WelcomeEmailContent, WelcomeEmailLocale } from "@/types/mail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const fallbackPublicBaseUrl = "https://www.postslify.com";
 
-export const sendPasswordResetEmail = async (email: string, token: string) => {
-  
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
-  const resetLink = `${baseUrl}/reset-password?token=${token}`;
+const resolvePublicBaseUrl = () => {
+  const configuredUrl =
+    process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || fallbackPublicBaseUrl;
+
+  try {
+    return new URL(configuredUrl).origin;
+  } catch {
+    return fallbackPublicBaseUrl;
+  }
+};
+const welcomeEmailContentByLocale: Record<WelcomeEmailLocale, WelcomeEmailContent> = {
+  en: {
+    preheader: "Welcome to Postslify. Create and schedule LinkedIn content faster.",
+    subject: "Welcome to Postslify!",
+    heading: "Welcome to the Postslify community, {name}!",
+    intro:
+      "Unleash your LinkedIn growth with your all-in-one AI content platform. Build posts in minutes, keep your voice, and publish with consistency.",
+    ctaText: "Create something amazing",
+    appreciation:
+      "We really appreciate your support and can’t wait to help you scale your personal brand with less effort.",
+    supportLine: "Need help? Check our FAQ or message us directly.",
+    contactLabel: "Contact",
+    contactEmail: "support@postslify.com",
+    legal:
+      "You are receiving this email because you signed up for a Postslify account.",
+  },
+  es: {
+    preheader:
+      "Bienvenido a Postslify. Crea y programa contenido para LinkedIn más rápido.",
+    subject: "¡Bienvenido a Postslify!",
+    heading: "¡Bienvenido a la comunidad de Postslify, {name}!",
+    intro:
+      "Impulsa tu crecimiento en LinkedIn con tu plataforma todo en uno con IA. Crea publicaciones en minutos, mantiene tu estilo y publica con constancia.",
+    ctaText: "Crea algo increíble",
+    appreciation:
+      "Apreciamos mucho tu confianza y queremos ayudarte a escalar tu marca personal con menos esfuerzo.",
+    supportLine: "¿Necesitas ayuda? Revisa nuestras FAQ o escríbenos directamente.",
+    contactLabel: "Contacto",
+    contactEmail: "support@postslify.com",
+    legal:
+      "Recibes este correo porque creaste una cuenta en Postslify.",
+  },
+};
+
+const escapeHtml = (value: string) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+export async function sendPasswordResetEmail(email: string, token: string) {
+  const publicBaseUrl = resolvePublicBaseUrl();
+  const resetLink = `${publicBaseUrl}/reset-password?token=${token}`;
 
   try {
     const data = await resend.emails.send({
@@ -36,4 +89,97 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
     console.error("Error sending email:", error);
     return { success: false, error };
   }
-};
+}
+
+export async function sendWelcomeEmail(
+  email: string,
+  name?: string,
+  locale: WelcomeEmailLocale = "en",
+) {
+  const content = welcomeEmailContentByLocale[locale];
+  const displayName = escapeHtml(name?.trim() || (locale === "es" ? "creador/a" : "creator"));
+  const publicBaseUrl = resolvePublicBaseUrl();
+  const appUrl = `${publicBaseUrl}/${locale}`;
+  const logoUrl = `${publicBaseUrl}/logo-ico.png`;
+  const heroImageUrl = `${publicBaseUrl}/emailwelcome.png`;
+  const heading = content.heading.replace("{name}", displayName);
+
+  try {
+    const data = await resend.emails.send({
+      from: process.env.EMAIL_FROM || "onboarding@resend.dev",
+      to: email,
+      subject: content.subject,
+      html: `
+        <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${content.preheader}</div>
+        <div style="background:#f9fcff;margin:0;padding:0;width:100%;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+            <tr>
+              <td align="center" style="padding:24px 12px;">
+                <table role="presentation" width="640" cellpadding="0" cellspacing="0" style="width:100%;max-width:640px;border-collapse:collapse;background:#ffff;border-radius:16px;overflow:hidden;border:1px solid #bfdbfe;">
+                  <tr>
+                    <td style="padding:32px 34px 8px 34px;">
+                      <img src="${logoUrl}" alt="Postslify logo" width="72" style="display:block;border:0;outline:none;text-decoration:none;height:auto;max-width:72px;">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:8px 34px 0 34px;font-family:Helvetica, Arial, sans-serif;color:#1e3a8a;">
+                      <h1 style="margin:0 0 18px 0;font-size:46px;line-height:1.14;font-weight:800;letter-spacing:-0.03em;">${heading}</h1>
+                      <p style="margin:0;font-size:22px;line-height:1.5;color:#1d4ed8;">${content.intro}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding:28px 34px 0 34px;">
+                      <img src="${heroImageUrl}" alt="Postslify creators" width="520" style="display:block;border:0;outline:none;text-decoration:none;width:100%;max-width:520px;height:auto;">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding:28px 34px 26px 34px;">
+                      <a href="${appUrl}" style="display:inline-block;background:#3b82f6;color:#ffffff;text-decoration:none;font-family:Helvetica, Arial, sans-serif;font-size:30px;font-weight:700;line-height:1;padding:22px 44px;border-radius:999px;letter-spacing:-0.02em;">
+                        ${content.ctaText}
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:0 34px;">
+                      <hr style="border:0;border-top:1px solid #e5e7eb;margin:0;">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:26px 34px 18px 34px;font-family:Helvetica, Arial, sans-serif;color:#1e3a8a;">
+                      <p style="margin:0 0 14px 0;font-size:18px;line-height:1.55;font-weight:600;">${content.appreciation}</p>
+                      <p style="margin:0 0 8px 0;font-size:18px;line-height:1.55;">${content.supportLine}</p>
+                      <p style="margin:0;font-size:18px;line-height:1.55;font-weight:700;">
+                        ${content.contactLabel}: <a href="mailto:${content.contactEmail}" style="color:#1d4ed8;text-decoration:none;">${content.contactEmail}</a>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding:10px 34px 22px 34px;">
+                      <a href="https://www.linkedin.com/company/postslify-saas/" style="display:inline-block;margin:0 6px;width:36px;height:36px;border-radius:999px;background:#2563eb;color:#ffffff;font-family:Arial,sans-serif;font-size:16px;font-weight:700;line-height:36px;text-align:center;text-decoration:none;">in</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:18px 24px 20px 24px;background:#dbeafe;font-family:Helvetica, Arial, sans-serif;color:#1e3a8a;text-align:center;">
+                      <p style="margin:0 0 8px 0;font-size:14px;line-height:1.5;">© ${new Date().getFullYear()} Postslify. ${content.legal}</p>
+                      <p style="margin:0;font-size:14px;line-height:1.5;">Postslify · ${locale === "es" ? "Todos los derechos reservados" : "All rights reserved"}</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      `,
+    });
+
+    if (data.error) {
+      console.error("Resend API Error:", data.error);
+      return { success: false, error: data.error };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error sending email:", error);
+    return { success: false, error };
+  }
+}

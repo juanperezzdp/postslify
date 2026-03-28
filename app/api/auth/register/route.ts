@@ -3,6 +3,7 @@ import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import type { RegisterInputs } from "@/types/auth";
+import type { WelcomeEmailLocale } from "@/types/mail";
 
 export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => null)) as
@@ -25,6 +26,7 @@ export async function POST(request: NextRequest) {
   const email = body.email.trim().toLowerCase();
   const password = body.password;
   const name = body.name?.trim() || undefined;
+  const locale: WelcomeEmailLocale = body.locale === "es" ? "es" : "en";
 
   if (!email || !password) {
     return NextResponse.json(
@@ -64,7 +66,7 @@ export async function POST(request: NextRequest) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    await User.create({
+    const createdUser = await User.create({
       email,
       name,
       password_hash: passwordHash,
@@ -72,6 +74,16 @@ export async function POST(request: NextRequest) {
       credits_balance_cents: 6, 
       welcome_bonus_seen: false,
     });
+
+    const { sendWelcomeEmail } = await import("@/lib/mail");
+    const welcomeEmailResult = await sendWelcomeEmail(
+      createdUser.email,
+      createdUser.name,
+      locale,
+    );
+    if (!welcomeEmailResult.success) {
+      console.error("No se pudo enviar correo de bienvenida", welcomeEmailResult.error);
+    }
 
     return NextResponse.json({ ok: true }, { status: 201 });
   } catch (error: unknown) {

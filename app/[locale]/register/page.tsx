@@ -8,10 +8,12 @@ import { faEye, faEyeSlash, faArrowRight, faUser, faEnvelope, faLock } from "@fo
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
 import { RegisterInputs } from "@/types/auth";
-import { useTranslations } from "next-intl";
+import type { WelcomeEmailLocale } from "@/types/mail";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function RegisterPage() {
   const t = useTranslations('Register');
+  const currentLocale = useLocale();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -33,6 +35,7 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterInputs) => {
     setLoading(true);
     setError(null);
+    const locale: WelcomeEmailLocale = currentLocale === "es" ? "es" : "en";
 
     try {
       const res = await fetch("/api/auth/register", {
@@ -40,7 +43,7 @@ export default function RegisterPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, locale }),
       });
 
       const responseData = (await res.json().catch(() => null)) as
