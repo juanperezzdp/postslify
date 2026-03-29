@@ -934,7 +934,8 @@
       "customize": "Personalizar",
       "saveDraft": "Solo guardar",
       "viewPost": "Ver Post",
-      "improve": "Mejorar"
+      "improve": "Mejorar",
+      "buyCredits": "Comprar créditos"
     },
     "errors": {
       "maxFiles": "Solo puedes seleccionar hasta 9 imágenes",
@@ -950,6 +951,7 @@
       "noAIResponse": "No se recibió respuesta de la IA.",
       "missingApiKey": "Falta DEEPSEEK_API_KEY en .env.local. Reinicia el servidor.",
       "imageGeneration": "No se pudo generar la imagen",
+      "insufficientImageCredits": "No tienes créditos suficientes para generar imágenes. Compra más créditos para continuar.",
       "imageProcessing": "No se pudo procesar la imagen",
       "contextRequired": "El contexto adicional es obligatorio.",
       "unknown": "Error desconocido",

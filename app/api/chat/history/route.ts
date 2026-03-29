@@ -100,7 +100,11 @@ export async function PATCH(request: Request) {
 
   const body = (await request.json().catch(() => null)) as ChatHistoryUpdateRequest | null;
   const id = body?.id?.trim();
-  const media = body?.media ?? undefined;
+  const hasMediaField =
+    body !== null && Object.prototype.hasOwnProperty.call(body, "media");
+  const media: MediaPayload | null | undefined = hasMediaField
+    ? (body?.media ?? null)
+    : undefined;
   const aiResponse = typeof body?.ai_response === "string" ? body.ai_response : undefined;
 
   if (!id || (media === undefined && aiResponse === undefined)) {

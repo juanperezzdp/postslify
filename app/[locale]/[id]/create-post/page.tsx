@@ -151,6 +151,33 @@ export default function CrearPostPage() {
   const [selectedPageUrns, setSelectedPageUrns] = useState<string[]>([]);
   const [scheduleProfile, setScheduleProfile] = useState(true);
   const [schedulePageUrns, setSchedulePageUrns] = useState<string[]>([]);
+
+  const sanitizePersistedMedia = (
+    media: Message["media"] | undefined,
+  ): Message["media"] | undefined => {
+    if (!media) return undefined;
+
+    if (media.type === "image") {
+      const sourceItems =
+        media.items && media.items.length > 0
+          ? media.items
+          : [{ url: media.url, name: media.name }];
+      const validItems = sourceItems.filter(
+        (item) => item.url && !item.url.startsWith("blob:"),
+      );
+      if (validItems.length === 0) return undefined;
+      const [primaryItem] = validItems;
+      return {
+        type: "image",
+        url: primaryItem.url,
+        name: primaryItem.name,
+        items: validItems,
+      };
+    }
+
+    if (!media.url || media.url.startsWith("blob:")) return undefined;
+    return media;
+  };
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [messageForImage, setMessageForImage] = useState<Message | null>(null);
   const [messageForImageIndex, setMessageForImageIndex] = useState<number | null>(null);
@@ -159,6 +186,7 @@ export default function CrearPostPage() {
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [imageGenerationError, setImageGenerationError] = useState<string | null>(null);
+  const [imageCreditWarningIndex, setImageCreditWarningIndex] = useState<number | null>(null);
   const [streamingAssistantIndex, setStreamingAssistantIndex] = useState<number | null>(null);
 
   const {
@@ -357,13 +385,18 @@ export default function CrearPostPage() {
         if (!active) return;
         if (!data?.items?.length) return;
 
+        const invalidMediaHistoryIds = data.items
+          .filter((item) => item.media && !sanitizePersistedMedia(item.media))
+          .map((item) => item.id);
+
         const historyMessages = data.items.flatMap((item) => {
+          const sanitizedMedia = sanitizePersistedMedia(item.media);
           const batch: Message[] = [
             { role: "user", content: item.user_message },
             {
               role: "assistant",
               content: item.ai_response,
-              media: item.media,
+              media: sanitizedMedia,
               historyId: item.id,
               voiceProfileName: item.voice_profile?.name,
               voiceProfileStyleTag: item.voice_profile?.style_tag,
@@ -375,6 +408,17 @@ export default function CrearPostPage() {
         });
 
         setMessages((prev) => (prev.length > 0 ? prev : historyMessages));
+        if (invalidMediaHistoryIds.length > 0) {
+          await Promise.allSettled(
+            invalidMediaHistoryIds.map((id) =>
+              fetch("/api/chat/history", {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id, media: null }),
+              }),
+            ),
+          );
+        }
         setHistoryCursor(data.nextCursor ?? null);
         setHasMoreHistory(Boolean(data.hasMore));
       } catch (error) {
@@ -417,13 +461,18 @@ export default function CrearPostPage() {
         return;
       }
 
+      const invalidMediaHistoryIds = data.items
+        .filter((item) => item.media && !sanitizePersistedMedia(item.media))
+        .map((item) => item.id);
+
       const historyMessages = data.items.flatMap((item) => {
+        const sanitizedMedia = sanitizePersistedMedia(item.media);
         const batch: Message[] = [
           { role: "user", content: item.user_message },
           {
             role: "assistant",
             content: item.ai_response,
-            media: item.media,
+            media: sanitizedMedia,
             historyId: item.id,
             voiceProfileName: item.voice_profile?.name,
             voiceProfileStyleTag: item.voice_profile?.style_tag,
@@ -435,6 +484,17 @@ export default function CrearPostPage() {
       });
 
       setMessages((prev) => [...historyMessages, ...prev]);
+      if (invalidMediaHistoryIds.length > 0) {
+        await Promise.allSettled(
+          invalidMediaHistoryIds.map((id) =>
+            fetch("/api/chat/history", {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id, media: null }),
+            }),
+          ),
+        );
+      }
       setHistoryCursor(data.nextCursor ?? null);
       setHasMoreHistory(Boolean(data.hasMore));
     } catch (error) {
@@ -641,6 +701,11 @@ export default function CrearPostPage() {
   };
 
   const handleSchedule = (message: Message, index: number) => {
+    if (!canScheduleWithLinkedinConnection) {
+      setLinkedinModalMode("schedule");
+      setShowLinkedinModal(true);
+      return;
+    }
     setMessageToSchedule(message);
     setScheduleMessageIndex(index);
     setScheduleError(null);
@@ -717,6 +782,7 @@ export default function CrearPostPage() {
     setImagePromptPreviewValue("");
     setGeneratedImageUrl(null);
     setImageGenerationError(null);
+    setImageCreditWarningIndex(null);
     resetImagePrompt({ extraContext: "", characterInput: "", characters: [], includePostTitle: "" });
   };
 
@@ -728,6 +794,7 @@ export default function CrearPostPage() {
     setImagePromptPreviewValue("");
     setGeneratedImageUrl(null);
     setImageGenerationError(null);
+    setImageCreditWarningIndex(null);
     resetImagePrompt({ extraContext: "", characterInput: "", characters: [], includePostTitle: "" });
   };
 
@@ -1195,7 +1262,9 @@ export default function CrearPostPage() {
     setIsGeneratingImage(true);
     setIsImageModalOpen(false);
     setImageGenerationError(null);
+    setImageCreditWarningIndex(null);
     setGeneratedImageUrl(null);
+    let hasInsufficientCredits = false;
     try {
       const payload: ImageGenerationRequest = {
         prompt: finalPrompt,
@@ -1209,10 +1278,15 @@ export default function CrearPostPage() {
       });
       const data = (await response.json()) as ImageGenerationResponse & { error?: string };
       if (!response.ok) {
-        throw new Error(data.error || t('errors.imageGeneration'));
+        hasInsufficientCredits = response.status === 402;
+        const fallbackError = hasInsufficientCredits
+          ? t("errors.insufficientImageCredits")
+          : t("errors.imageGeneration");
+        throw new Error(data.error || fallbackError);
       }
       const resizedImage = await resizeImageDataUrl(data.imageUrl, 512);
       setGeneratedImageUrl(resizedImage);
+      setImageCreditWarningIndex(null);
       if (messageForImageIndex !== null) {
         const aiName = t('aiImageName');
         const aiItem = { url: resizedImage, name: aiName };
@@ -1229,7 +1303,16 @@ export default function CrearPostPage() {
       }
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : t('errors.imageGeneration');
-      setImageGenerationError(message);
+      const isInsufficientByText = /insufficient|insuficientes|crédito|credit/i.test(message);
+      const shouldShowBuyCredits = hasInsufficientCredits || isInsufficientByText;
+      if (shouldShowBuyCredits) {
+        setImageCreditWarningIndex(messageForImageIndex);
+        setImageGenerationError(null);
+      } else {
+        setImageCreditWarningIndex(null);
+        setImageGenerationError(message);
+        setIsImageModalOpen(true);
+      }
     } finally {
       setIsGeneratingImage(false);
     }
@@ -1821,6 +1904,11 @@ export default function CrearPostPage() {
   const now = Date.now();
   const isPageActive = (page: PageData) =>
     page.isValid !== false && (!page.expiresAt || page.expiresAt > now);
+  const hasConnectedPageForScheduling = availablePages.some((page) =>
+    isPageActive(page),
+  );
+  const canScheduleWithLinkedinConnection =
+    isLinkedinProfileConnected || hasConnectedPageForScheduling;
 
   return (
     <div className="flex h-screen flex-col bg-slate-50 font-sans">
@@ -1902,7 +1990,7 @@ export default function CrearPostPage() {
             </div>
             
             <div className="p-8 pt-2">
-              <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-1">
+              <div className="mb-6 rounded-2xl  bg-white p-1">
                 <div className="flex flex-col gap-1">
                   {isLinkedinProfileConnected ? (
                     <button
@@ -1956,16 +2044,7 @@ export default function CrearPostPage() {
                         {publishTargets.linkedinProfile && <FontAwesomeIcon icon={faCheck} className="h-3 w-3" />}
                       </div>
                     </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => router.push("/api/auth/linkedin")}
-                      className="flex items-center justify-center gap-2 rounded-xl bg-[#0077b5] px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition-all hover:bg-[#006097] hover:shadow-blue-900/30 active:scale-[0.98]"
-                    >
-                      <FontAwesomeIcon icon={faLinkedin} className="h-5 w-5" />
-                      {t('buttons.connectPersonalProfile')}
-                    </button>
-                  )}
+                  ) : null}
 
                   {availablePages.map((page) => {
                     const pageIsActive = isPageActive(page);
@@ -2047,7 +2126,7 @@ export default function CrearPostPage() {
                     setShowLinkedinModal(false);
                     setLinkedinModalMode(null);
                   }}
-                  className="flex-1 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-800 transition-colors"
+                  className="flex-1 rounded-xl bg-slate-200 px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-300 hover:text-slate-900 transition-colors"
                 >
                   {t('buttons.cancel')}
                 </button>
@@ -2119,6 +2198,20 @@ export default function CrearPostPage() {
               const isInsufficientCredits =
                 normalizedContent.includes("créditos insuficientes") ||
                 normalizedContent.includes("insufficient credits");
+              const aiImageName = t("aiImageName");
+              const imageItemsForCreditWarning =
+                message.media?.type === "image"
+                  ? message.media.items && message.media.items.length > 0
+                    ? message.media.items
+                    : [{ url: message.media.url, name: message.media.name }]
+                  : [];
+              const hasManualAttachment = Boolean(
+                message.media &&
+                  (message.media.type !== "image" ||
+                    imageItemsForCreditWarning.some((item) => item.name !== aiImageName)),
+              );
+              const shouldShowImageCreditWarning =
+                imageCreditWarningIndex === index && !hasManualAttachment;
 
               const resolvedProfile: VoiceProfileSnapshot | null =
                 message.voiceProfileName
@@ -2236,9 +2329,17 @@ export default function CrearPostPage() {
                   </div>
 
                   {/* Media and Loading Display */}
-                  {(message.media || (isGeneratingImage && messageForImageIndex === index)) && (
+                  {(message.media || (isGeneratingImage && messageForImageIndex === index) || shouldShowImageCreditWarning) && (
                     <div className="w-full px-5 pb-5 sm:px-6 sm:pb-6">
                       <div className="relative w-full">
+                        {shouldShowImageCreditWarning && (
+                          <div className="mb-3 flex flex-wrap items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                            <div className="flex items-center gap-2">
+                              <FontAwesomeIcon icon={faExclamationTriangle} className="h-4 w-4 text-amber-600" />
+                              <span>{t("errors.insufficientImageCredits")}</span>
+                            </div>
+                          </div>
+                        )}
                         {/* Media Display */}
                         {message.media && (
                           <div className="w-full">
@@ -2438,7 +2539,7 @@ export default function CrearPostPage() {
                       </button>
                       <button
                         onClick={() => {
-                          if (!user && !pageSettings?.configured) {
+                          if (!canScheduleWithLinkedinConnection) {
                             setLinkedinModalMode("schedule");
                             setShowLinkedinModal(true);
                             return;

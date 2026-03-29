@@ -927,7 +927,8 @@
       "generateImage": "Generate Image",
       "connectLinkedIn": "Connect LinkedIn",
       "previous": "Previous",
-      "improve": "Improve"
+      "improve": "Improve",
+      "buyCredits": "Buy credits"
     },
     "errors": {
       "maxFiles": "You can only select up to 9 images",
@@ -944,6 +945,7 @@
       "noAIResponse": "No response received from AI.",
       "missingApiKey": "DEEPSEEK_API_KEY is missing in .env.local. Restart the server.",
       "imageGeneration": "Failed to generate image",
+      "insufficientImageCredits": "You do not have enough credits to generate images. Buy more credits to continue.",
       "imageProcessing": "Failed to process image",
       "contextRequired": "Additional context is required.",
       "unknown": "Unknown error",

@@ -125,6 +125,7 @@ export default function ArchivedPostsPage() {
   const [isDeleteImageConfirmOpen, setIsDeleteImageConfirmOpen] = useState(false);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [imageGenerationError, setImageGenerationError] = useState<string | null>(null);
+  const [isImageInsufficientCredits, setIsImageInsufficientCredits] = useState(false);
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [scheduledDate, setScheduledDate] = useState("");
   const [messageToSchedule, setMessageToSchedule] = useState<Message | null>(null);
@@ -191,7 +192,39 @@ export default function ArchivedPostsPage() {
   const now = Date.now();
   const isPageActive = (page: PageData) =>
     page.isValid !== false && (!page.expiresAt || page.expiresAt > now);
+  const hasConnectedPageForScheduling = availablePages.some((page) =>
+    isPageActive(page),
+  );
+  const canScheduleWithLinkedinConnection =
+    isLinkedinProfileConnected || hasConnectedPageForScheduling;
   const canAddCharacter = characterInputValue.trim().length > 0 && characterFields.length < CHARACTER_LIMIT;
+
+  const sanitizePersistedMedia = (
+    media: Message["media"] | undefined,
+  ): Message["media"] | undefined => {
+    if (!media) return undefined;
+
+    if (media.type === "image") {
+      const sourceItems =
+        media.items && media.items.length > 0
+          ? media.items
+          : [{ url: media.url, name: media.name }];
+      const validItems = sourceItems.filter(
+        (item) => item.url && !item.url.startsWith("blob:"),
+      );
+      if (validItems.length === 0) return undefined;
+      const [primaryItem] = validItems;
+      return {
+        type: "image",
+        url: primaryItem.url,
+        name: primaryItem.name,
+        items: validItems,
+      };
+    }
+
+    if (!media.url || media.url.startsWith("blob:")) return undefined;
+    return media;
+  };
 
   useEffect(() => {
     setSelectedTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone);
@@ -278,7 +311,26 @@ export default function ArchivedPostsPage() {
       const response = await fetch("/api/chat/history?archived=true");
       if (response.ok) {
         const data = (await response.json()) as ChatHistoryListResponse;
-        setArchivedPosts(data.items);
+        const invalidMediaHistoryIds = data.items
+          .filter((item) => item.media && !sanitizePersistedMedia(item.media))
+          .map((item) => item.id);
+        setArchivedPosts(
+          data.items.map((item) => ({
+            ...item,
+            media: sanitizePersistedMedia(item.media),
+          })),
+        );
+        if (invalidMediaHistoryIds.length > 0) {
+          await Promise.allSettled(
+            invalidMediaHistoryIds.map((id) =>
+              fetch("/api/chat/history", {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id, media: null }),
+              }),
+            ),
+          );
+        }
       }
     } catch (error) {
       console.error("Error fetching archived posts:", error);
@@ -350,7 +402,7 @@ export default function ArchivedPostsPage() {
   const buildMessageFromArchived = (item: ArchivedPostItem): Message => ({
     role: "assistant",
     content: item.ai_response,
-    media: item.media,
+    media: sanitizePersistedMedia(item.media),
     voiceProfileName: item.voice_profile?.name,
     voiceProfileStyleTag: item.voice_profile?.style_tag,
     voiceProfileEmoji: item.voice_profile?.style_emoji,
@@ -483,6 +535,7 @@ export default function ArchivedPostsPage() {
     setImagePromptPreviewValue("");
     setGeneratedImageUrl(null);
     setImageGenerationError(null);
+    setIsImageInsufficientCredits(false);
     resetImagePrompt({ extraContext: "", characterInput: "", characters: [], includePostTitle: "" });
   };
 
@@ -494,6 +547,7 @@ export default function ArchivedPostsPage() {
     setImagePromptPreviewValue("");
     setGeneratedImageUrl(null);
     setImageGenerationError(null);
+    setIsImageInsufficientCredits(false);
     resetImagePrompt({ extraContext: "", characterInput: "", characters: [], includePostTitle: "" });
   };
 
@@ -952,7 +1006,9 @@ export default function ArchivedPostsPage() {
     setIsGeneratingImage(true);
     setIsImageModalOpen(false);
     setImageGenerationError(null);
+    setIsImageInsufficientCredits(false);
     setGeneratedImageUrl(null);
+    let hasInsufficientCredits = false;
     try {
       const payload: ImageGenerationRequest = {
         prompt: finalPrompt,
@@ -966,7 +1022,11 @@ export default function ArchivedPostsPage() {
       });
       const data = (await response.json()) as ImageGenerationResponse & { error?: string };
       if (!response.ok) {
-        throw new Error(data.error || t("errors.imageGeneration"));
+        hasInsufficientCredits = response.status === 402;
+        const fallbackError = hasInsufficientCredits
+          ? t("errors.insufficientImageCredits")
+          : t("errors.imageGeneration");
+        throw new Error(data.error || fallbackError);
       }
       const resizedImage = await resizeImageDataUrl(data.imageUrl, 512);
       setGeneratedImageUrl(resizedImage);
@@ -987,7 +1047,13 @@ export default function ArchivedPostsPage() {
       }
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : t("errors.imageGeneration");
-      setImageGenerationError(message);
+      const isInsufficientByText = /insufficient|insuficientes|crédito|credit/i.test(message);
+      const shouldShowBuyCredits = hasInsufficientCredits || isInsufficientByText;
+      setIsImageInsufficientCredits(shouldShowBuyCredits);
+      setImageGenerationError(
+        shouldShowBuyCredits ? t("errors.insufficientImageCredits") : message,
+      );
+      setIsImageModalOpen(true);
     } finally {
       setIsGeneratingImage(false);
     }
@@ -1287,7 +1353,7 @@ export default function ArchivedPostsPage() {
       setPublishError(t("errors.selectDestination"));
       return;
     }
-    if (targets.linkedinProfile && !user && !pageSettings?.configured) {
+    if (targets.linkedinProfile && !canScheduleWithLinkedinConnection) {
       setLinkedinModalMode("publish");
       setShowLinkedinModal(true);
       return;
@@ -1642,7 +1708,7 @@ export default function ArchivedPostsPage() {
 
                       <button
                         onClick={() => {
-                          if (!user && !pageSettings?.configured) {
+      if (!canScheduleWithLinkedinConnection) {
                             setLinkedinModalMode("schedule");
                             setShowLinkedinModal(true);
                             return;
@@ -2297,6 +2363,21 @@ export default function ArchivedPostsPage() {
                   <p className="text-xs font-semibold text-rose-500">
                     {imageGenerationError}
                   </p>
+                )}
+                {isImageInsufficientCredits && (
+                  <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                    <div className="flex items-center gap-2">
+                      <FontAwesomeIcon icon={faExclamationTriangle} className="h-4 w-4 text-amber-600" />
+                      <span>{t("errors.insufficientImageCredits")}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => router.push(`/${params?.id ?? ""}/billing`)}
+                      className="rounded-lg bg-amber-200 px-3 py-1.5 text-xs font-bold text-amber-900 transition-colors hover:bg-amber-300"
+                    >
+                      {t("buttons.buyCredits")}
+                    </button>
+                  </div>
                 )}
                 <div className="flex items-center justify-end gap-3">
                 <button
