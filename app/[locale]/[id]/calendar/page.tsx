@@ -549,7 +549,7 @@ export default function CalendarPage() {
       {isEditModalOpen && selectedPost && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-md transition-all animate-in fade-in duration-200">
           <div className="w-full max-w-6xl overflow-hidden rounded-[2rem] bg-white shadow-2xl ring-1 ring-slate-900/5 flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/50 px-8 py-6 backdrop-blur-sm">
+            <div className="flex items-center justify-between border-b border-slate-300 bg-slate-50/50 px-8 py-6 backdrop-blur-sm">
               <div>
                 <h3 className="text-xl font-bold text-slate-900">{t("modals.dayPosts.title")}</h3>
                 <p className="text-sm font-medium text-slate-500">
@@ -566,7 +566,7 @@ export default function CalendarPage() {
 
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
               {/* Sidebar List */}
-              <div className="min-h-0 w-full overflow-y-auto border-r border-slate-100 bg-white p-6 md:w-1/3">
+              <div className="min-h-0 w-full overflow-y-auto overflow-x-hidden border-b border-slate-300 bg-slate-50 p-6 md:w-1/3 md:border-b-0 md:border-r md:border-slate-300">
                 <h4 className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-200 text-[10px] text-slate-600">
                     {groupedDayPosts.length}
@@ -592,7 +592,7 @@ export default function CalendarPage() {
                       }`}
                     >
                       <div
-                        className={`mb-3 flex gap-3 border-b pb-3 ${
+                        className={`mb-3 flex flex-wrap gap-3 border-b pb-3 ${
                           selectedPost.id === group.post.id ? "border-blue-200" : "border-slate-100 hover:border-blue-200"
                         }`}
                       >
@@ -629,7 +629,7 @@ export default function CalendarPage() {
                         </div>
 
   {/* Right block */}
-  <div className="ml-auto flex flex-col items-end justify-center gap-1">
+  <div className="w-full flex flex-col items-start justify-center gap-1 sm:ml-auto sm:w-auto sm:items-end">
     <span
       className={`w-fit rounded-md px-1.5 py-0.5 text-[10px] font-medium ${
         group.post.status === "published"
@@ -679,7 +679,7 @@ export default function CalendarPage() {
               </div>
 
               {/* Edit Form */}
-              <div className="min-h-0 w-full flex flex-col overflow-y-auto bg-white p-8 md:w-2/3">
+              <div className="min-h-0 w-full flex flex-col overflow-y-auto overflow-x-hidden bg-white p-8 md:w-2/3">
                 <div className="mb-8  rounded-[2rem] border border-slate-100 bg-white shadow-lg shadow-slate-400/50">
                   <div className="relative rounded-t-[2rem] overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-600 px-6 py-6 text-white">
                     <div className="absolute right-0 top-0 -mt-4 -mr-4 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
@@ -868,7 +868,7 @@ export default function CalendarPage() {
 
                 {!isEditingSchedule ? (
                   <div className="mb-8 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 shadow-lg">
-                    <div className="flex items-center justify-between gap-6">
+                    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
                       <div className="flex items-center gap-2">
                         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600  ">
                           <FontAwesomeIcon icon={faClock} className="h-5 w-5" />
@@ -889,7 +889,7 @@ export default function CalendarPage() {
                       {selectedPost.status !== "published" && (
                         <button
                           onClick={() => setIsEditingSchedule(true)}
-                          className="shrink-0 cursor-pointer rounded-xl bg-blue-500 px-4 py-2.5 text-xs font-bold text-white shadow-sm ring-1 ring-blue-400 transition-all hover:bg-blue-600 hover:shadow-md active:scale-95"
+                          className="w-full cursor-pointer rounded-xl bg-blue-500 px-4 py-2.5 text-xs font-bold text-white shadow-sm ring-1 ring-blue-400 transition-all hover:bg-blue-600 hover:shadow-md active:scale-95 sm:w-auto"
                         >
                           {t("schedule.reschedule")}
                         </button>
@@ -949,7 +949,7 @@ export default function CalendarPage() {
                 )}
 
                 <div className="mt-auto border-t border-slate-100 pt-6 ">
-                  <div className="flex items-center justify-between rounded-xl bg-red-50 p-4 border border-red-100 shadow-lg">
+                  <div className="flex flex-col items-start gap-4 rounded-xl border border-red-100 bg-red-50 p-4 shadow-lg sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-3">
                       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100 text-red-600">
                         <FontAwesomeIcon icon={faTrash} className="h-4 w-4" />
@@ -962,7 +962,7 @@ export default function CalendarPage() {
                     <button
                       onClick={() => setIsDeleteConfirmOpen(true)}
                       disabled={isDeleting}
-                      className="cursor-pointer rounded-lg bg-red-500 px-4 py-2 text-sm font-bold text-white shadow-sm ring-1 ring-red-400 transition-all hover:bg-red-600 hover:shadow-md active:scale-95 disabled:opacity-50"
+                      className="w-full cursor-pointer rounded-lg bg-red-500 px-4 py-2 text-sm font-bold text-white shadow-sm ring-1 ring-red-400 transition-all hover:bg-red-600 hover:shadow-md active:scale-95 disabled:opacity-50 sm:w-auto"
                     >
                       {isDeleting ? t("actions.deleting") : t("actions.delete")}
                     </button>

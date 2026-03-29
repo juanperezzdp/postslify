@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import type { VoiceTag, VoiceProfileFormValues } from "@/types/voice-profile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useTranslations } from "next-intl";
+import { useParams, useRouter } from "next/navigation";
 import { Select } from "@/app/components/Select";
 import { PREDEFINED_TIMEZONES } from "@/lib/timezone";
 
@@ -121,6 +122,9 @@ const MAX_PROFILES = 30;
 export default function PerfilPage() {
   const t = useTranslations('VoiceProfileForm');
   const tTags = useTranslations('VoiceProfileTags');
+  const router = useRouter();
+  const params = useParams<{ locale: string; id: string }>();
+  const redirectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
   const {
     register,
@@ -174,6 +178,14 @@ export default function PerfilPage() {
     };
 
     loadProfileCount();
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+      }
+    };
   }, []);
 
   const tags: VoiceTag[] = [
@@ -276,6 +288,14 @@ export default function PerfilPage() {
         return nextCount;
       });
       setStatusMessage(t('success'));
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+      }
+      const localeSegment = params?.locale === "es" ? "es" : "en";
+      const userId = params?.id ?? "";
+      redirectTimeoutRef.current = setTimeout(() => {
+        router.push(`/${localeSegment}/${userId}/create-post`);
+      }, 2000);
     } catch {
       setStatusMessage(t('errors.genericError'));
     }
@@ -469,7 +489,7 @@ export default function PerfilPage() {
                 "inline-flex cursor-pointer h-12 w-full items-center justify-center gap-2 rounded-2xl px-8 text-base font-bold text-white shadow-lg transition-all active:scale-95 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none",
                 isLimitReached
                   ? "bg-slate-300 shadow-none"
-                  : "bg-blue-600 shadow-blue-200 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-300",
+                  : "bg-blue-600 shadow-blue-200 hover:bg-blue-700 ",
               ].join(" ")}
             >
               <span>{t('submit')}</span>

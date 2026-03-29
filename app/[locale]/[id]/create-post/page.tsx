@@ -246,14 +246,6 @@ export default function CrearPostPage() {
 
  
 
-  useEffect(() => {
-    if (!scheduleSuccess) return;
-    const timer = setTimeout(() => {
-      setScheduleSuccess(null);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [scheduleSuccess]);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -1557,6 +1549,15 @@ export default function CrearPostPage() {
       setScheduleMessageIndex(null);
       setScheduleError(null);
       setScheduleSuccess({ scheduledAt, timezone });
+      if (typeof window !== "undefined" && params?.id) {
+        const hintKey = `postslify_mobile_calendar_hint_${params.id}`;
+        window.localStorage.setItem(hintKey, "1");
+        window.dispatchEvent(
+          new CustomEvent("postslify:mobile-calendar-hint", {
+            detail: { key: hintKey },
+          }),
+        );
+      }
     } catch (error: unknown) {
       console.error("Schedule error:", error);
       alert(getErrorMessage(error) || t('errors.scheduleError'));
@@ -1951,10 +1952,13 @@ export default function CrearPostPage() {
             <div className="mt-6 flex justify-center">
               <button
                 type="button"
-                onClick={() => setScheduleSuccess(null)}
+                onClick={() => {
+                  setScheduleSuccess(null);
+                  router.push(`/${params?.id ?? ""}/calendar`);
+                }}
                 className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800 transition-all active:scale-[0.98]"
               >
-                {t('modals.understood')}
+                {t("buttons.goToCalendar")}
               </button>
             </div>
           </div>
@@ -3411,18 +3415,30 @@ export default function CrearPostPage() {
                 ref={profileMenuRef}
                 className="relative inline-flex items-center"
               >
+                {(() => {
+                  const isProfileLoading = isLoadingProfiles;
+                  const hasVoiceProfiles = voiceProfiles.length > 0;
+                  const shouldRedirectToCreateProfile =
+                    !isProfileLoading && !hasVoiceProfiles;
+
+                  return (
                 <button
                   type="button"
-                  disabled={isLoadingProfiles || voiceProfiles.length === 0}
-                  onClick={() =>
-                    !isLoadingProfiles &&
-                    voiceProfiles.length > 0 &&
-                    setIsProfileMenuOpen((open) => !open)
-                  }
+                  disabled={isProfileLoading}
+                  onClick={() => {
+                    if (isProfileLoading) return;
+                    if (shouldRedirectToCreateProfile) {
+                      router.push(`/${params?.id ?? ""}/voice-profile`);
+                      return;
+                    }
+                    setIsProfileMenuOpen((open) => !open);
+                  }}
                   className={[
                     "group flex max-w-[240px] items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-medium transition-all duration-200",
-                    isLoadingProfiles || voiceProfiles.length === 0
+                    isProfileLoading
                       ? "cursor-not-allowed bg-blue-400 text-white"
+                      : shouldRedirectToCreateProfile
+                        ? "bg-blue-500 text-white hover:bg-blue-600 hover:shadow-md"
                       : "bg-blue-500 text-white hover:bg-blue-600 hover:shadow-md"
                   ].join(" ")}
                   title={t('labels.selectVoiceProfileTitle')}
@@ -3442,7 +3458,9 @@ export default function CrearPostPage() {
                   
                   <div className="flex flex-col items-start overflow-hidden text-left">
                     <span className="truncate text-xs font-bold leading-tight text-white transition-colors">
-                      {selectedProfileId
+                      {shouldRedirectToCreateProfile
+                        ? t('labels.addVoiceProfile')
+                        : selectedProfileId
                         ? voiceProfiles.find((p) => p.id === selectedProfileId)?.voice_name ?? t('labels.selectedProfile')
                         : t('labels.chooseVoiceProfile')}
                     </span>
@@ -3461,8 +3479,14 @@ export default function CrearPostPage() {
                     )}
                   </div>
 
-                  <FontAwesomeIcon icon={faChevronDown} className={`h-3 w-3 text-blue-200 ml-1 transition-transform duration-200 ${isProfileMenuOpen ? "rotate-180" : ""}`} />
+                  {shouldRedirectToCreateProfile ? (
+                    <FontAwesomeIcon icon={faArrowRight} className="h-3 w-3 text-blue-100 ml-1" />
+                  ) : (
+                    <FontAwesomeIcon icon={faChevronDown} className={`h-3 w-3 text-blue-200 ml-1 transition-transform duration-200 ${isProfileMenuOpen ? "rotate-180" : ""}`} />
+                  )}
                 </button>
+                  );
+                })()}
 
                 {isProfileMenuOpen && !isLoadingProfiles && voiceProfiles.length > 0 && (
                   <div className="absolute left-0 bottom-full z-20 mb-3 w-80 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white p-2 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-900/5 animate-in fade-in zoom-in-95 duration-200 slide-in-from-bottom-2">
@@ -3587,8 +3611,8 @@ export default function CrearPostPage() {
             </div>
             
             <div className="p-6 space-y-6 flex-1 overflow-y-auto">
-              <div className="grid gap-6">
-                <div className="group">
+              <div className="grid w-full min-w-0 gap-6">
+                <div className="group min-w-0">
                   <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500 group-focus-within:text-blue-600 transition-colors">
                     {t('labels.dateAndTime')}
                   </label>
@@ -3604,7 +3628,7 @@ export default function CrearPostPage() {
                   </div>
                 </div>
 
-                <div className="group">
+                <div className="group min-w-0">
                   <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500 group-focus-within:text-blue-600 transition-colors">
                       {t('labels.timezone')}
                     </label>
@@ -3624,7 +3648,7 @@ export default function CrearPostPage() {
                   )}
                 </div>
 
-                <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                   <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-500">{t('labels.scheduleDestinations')}</h4>
                   
                   <div className="flex max-h-64 flex-col gap-3 overflow-y-auto pr-1">
@@ -3634,7 +3658,7 @@ export default function CrearPostPage() {
                         onClick={() => {
                           setScheduleProfile((current) => !current);
                         }}
-                        className={`group flex items-center gap-4 rounded-xl border p-3 text-left transition-all duration-200 ${
+                        className={`group flex w-full min-w-0 items-center gap-4 rounded-xl border p-3 text-left transition-all duration-200 ${
                           scheduleProfile
                             ? "border-blue-500 bg-blue-50/50 text-blue-700 shadow-md ring-1 ring-blue-500/20"
                             : "border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:bg-slate-50 hover:shadow-sm"
@@ -3693,7 +3717,7 @@ export default function CrearPostPage() {
                               : [...current, page.urn],
                           );
                         }}
-                        className={`group flex items-center gap-4 rounded-xl border p-3 text-left transition-all duration-200 ${
+                        className={`group flex w-full min-w-0 items-center gap-4 rounded-xl border p-3 text-left transition-all duration-200 ${
                           !pageIsActive
                             ? "border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed"
                             : schedulePageUrns.includes(page.urn)

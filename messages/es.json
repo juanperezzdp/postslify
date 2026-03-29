@@ -870,6 +870,7 @@
       "selectVoiceProfile": "Seleccionar perfil de voz",
       "selectVoiceProfileTitle": "Seleccionar perfil de voz",
       "selectedProfile": "Perfil seleccionado",
+      "addVoiceProfile": "Agregar un perfil de voz",
       "chooseVoiceProfile": "Elige un perfil de voz",
       "availableProfiles": "Perfiles disponibles",
       "dateAndTime": "Fecha y hora",
@@ -935,7 +936,8 @@
       "saveDraft": "Solo guardar",
       "viewPost": "Ver Post",
       "improve": "Mejorar",
-      "buyCredits": "Comprar créditos"
+      "buyCredits": "Comprar créditos",
+      "goToCalendar": "Ir al calendario"
     },
     "errors": {
       "maxFiles": "Solo puedes seleccionar hasta 9 imágenes",

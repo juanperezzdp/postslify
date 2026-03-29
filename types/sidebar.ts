@@ -5,6 +5,7 @@ export type NavItemProps = {
   icon: IconDefinition;
   label: string;
   isActive?: boolean;
+  isHighlighted?: boolean;
   onboardingId?: string;
   onClick?: () => void;
 };
@@ -18,5 +19,6 @@ export type ActionItemProps = {
 
 export type SidebarProps = {
   isOpen?: boolean;
+  highlightCalendar?: boolean;
   onClose?: () => void;
 };

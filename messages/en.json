@@ -866,6 +866,7 @@
       "selectVoiceProfile": "Select Voice Profile",
       "selectVoiceProfileTitle": "Select voice profile",
       "selectedProfile": "Selected profile",
+      "addVoiceProfile": "Add a voice profile",
       "chooseVoiceProfile": "Choose a voice profile",
       "availableProfiles": "Available profiles",
       "dateAndTime": "Date and time",
@@ -928,7 +929,8 @@
       "connectLinkedIn": "Connect LinkedIn",
       "previous": "Previous",
       "improve": "Improve",
-      "buyCredits": "Buy credits"
+      "buyCredits": "Buy credits",
+      "goToCalendar": "Go to calendar"
     },
     "errors": {
       "maxFiles": "You can only select up to 9 images",

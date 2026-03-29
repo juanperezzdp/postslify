@@ -20,7 +20,7 @@ import type { ActionItemProps, NavItemProps, SidebarProps } from "@/types/sideba
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const NavItem = ({ href, icon, label, isActive, onboardingId, onClick }: NavItemProps) => {
+const NavItem = ({ href, icon, label, isActive, isHighlighted, onboardingId, onClick }: NavItemProps) => {
     
     
     
@@ -30,22 +30,39 @@ const NavItem = ({ href, icon, label, isActive, onboardingId, onClick }: NavItem
     data-onboarding-id={onboardingId}
     onClick={onClick}
     className={`group relative flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-medium transition-all duration-300 overflow-hidden
-      ${isActive 
-        ? "bg-white text-blue-600 shadow-lg shadow-blue-900/20" 
-        : "text-blue-100 hover:bg-white/10 hover:text-white"
+      ${isHighlighted
+        ? "text-white shadow-lg shadow-emerald-700/30"
+        : isActive
+          ? "bg-white text-blue-600 shadow-lg shadow-blue-900/20"
+          : "text-white hover:bg-white/10 hover:text-white"
       }`}
   >
-    <div className={`absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ${isActive ? "hidden" : "block"}`} />
+    {isHighlighted && (
+      <div className="pointer-events-none absolute inset-0 rounded-xl bg-emerald-500 md:motion-safe:animate-pulse" />
+    )}
+    <div className={`absolute inset-0 bg-gradient-to-r text-white from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ${isActive || isHighlighted ? "hidden" : "block"}`} />
     
     <FontAwesomeIcon 
       icon={icon} 
-      className={`h-4 w-4 transition-transform duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"}`} 
+      className={`relative z-10 h-4 w-4 transition-transform duration-300 ${
+        isHighlighted
+          ? "scale-110 text-white "
+          : ""
+      }`} 
     />
-    <span className="relative z-10">{label}</span>
-    {isActive && (
+    <span
+      className={`relative z-10 ${
+        isHighlighted ? "text-white " : ""
+      }`}
+    >
+      {label}
+    </span>
+    {(isActive || isHighlighted) && (
       <FontAwesomeIcon 
         icon={faChevronRight} 
-        className="ml-auto h-2.5 w-2.5 text-blue-500" 
+        className={`relative z-10 ml-auto h-2.5 w-2.5 ${
+          isHighlighted ? "text-white " : "text-blue-500"
+        }`} 
       />
     )}
   </Link>
@@ -67,7 +84,7 @@ const ActionItem = ({ icon, label, onClick, onboardingId }: ActionItemProps) => 
   </button>
 );
 
-export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
+export function Sidebar({ isOpen = false, highlightCalendar = false, onClose }: SidebarProps) {
   const t = useTranslations('Sidebar');
   const { data: session } = useSession();
   const params = useParams();
@@ -140,6 +157,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               icon={faCalendarDays}
               label={t('calendar')}
               isActive={isRouteActive(userId ? `/${userId}/calendar` : "/")}
+              isHighlighted={highlightCalendar}
               onboardingId="nav-calendar"
               onClick={onClose}
             />

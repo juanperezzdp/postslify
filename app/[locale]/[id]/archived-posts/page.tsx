@@ -1285,6 +1285,15 @@ export default function ArchivedPostsPage() {
       setScheduleMessageIndex(null);
       setScheduleError(null);
       setScheduleSuccess({ scheduledAt, timezone });
+      if (typeof window !== "undefined" && params?.id) {
+        const hintKey = `postslify_mobile_calendar_hint_${params.id}`;
+        window.localStorage.setItem(hintKey, "1");
+        window.dispatchEvent(
+          new CustomEvent("postslify:mobile-calendar-hint", {
+            detail: { key: hintKey },
+          }),
+        );
+      }
     } catch (error: unknown) {
       console.error("Schedule error:", error);
       alert(getErrorMessage(error) || t("errors.scheduleError"));
@@ -2531,13 +2540,18 @@ export default function ArchivedPostsPage() {
                 {scheduleSuccess.scheduledAt.replace("T", " ")} ({scheduleSuccess.timezone})
               </span>
             </p>
-            <button
-              type="button"
-              onClick={() => setScheduleSuccess(null)}
-              className="mt-5 rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800 transition-all"
-            >
-              {t("buttons.close")}
-            </button>
+            <div className="mt-6 flex justify-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setScheduleSuccess(null);
+                  router.push(`/${params?.id ?? ""}/calendar`);
+                }}
+                className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800 transition-all active:scale-[0.98]"
+              >
+                {t("buttons.goToCalendar")}
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -2568,8 +2582,8 @@ export default function ArchivedPostsPage() {
             </div>
 
             <div className="p-6 space-y-6 flex-1 overflow-y-auto">
-              <div className="grid gap-6">
-                <div className="group">
+              <div className="grid w-full min-w-0 gap-6">
+                <div className="group min-w-0">
                   <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500 group-focus-within:text-blue-600 transition-colors">
                     {t("labels.dateAndTime")}
                   </label>
@@ -2585,7 +2599,7 @@ export default function ArchivedPostsPage() {
                   </div>
                 </div>
 
-                <div className="group">
+                <div className="group min-w-0">
                   <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500 group-focus-within:text-blue-600 transition-colors">
                     {t("labels.timezone")}
                   </label>
@@ -2599,7 +2613,7 @@ export default function ArchivedPostsPage() {
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div className="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                   <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-500">
                     {t("labels.scheduleDestinations")}
                   </h4>
@@ -2611,7 +2625,7 @@ export default function ArchivedPostsPage() {
                         onClick={() => {
                           setScheduleProfile((current) => !current);
                         }}
-                        className={`group flex items-center gap-4 rounded-xl border p-3 text-left transition-all duration-200 ${
+                        className={`group flex w-full min-w-0 items-center gap-4 rounded-xl border p-3 text-left transition-all duration-200 ${
                           scheduleProfile
                             ? "border-blue-500 bg-blue-50/50 text-blue-700 shadow-md ring-1 ring-blue-500/20"
                             : "border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:bg-slate-50 hover:shadow-sm"
@@ -2682,7 +2696,7 @@ export default function ArchivedPostsPage() {
                                 : [...current, page.urn],
                             );
                           }}
-                          className={`group flex items-center gap-4 rounded-xl border p-3 text-left transition-all duration-200 ${
+                          className={`group flex w-full min-w-0 items-center gap-4 rounded-xl border p-3 text-left transition-all duration-200 ${
                             !pageIsActive
                               ? "border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed"
                               : schedulePageUrns.includes(page.urn)

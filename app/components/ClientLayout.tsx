@@ -17,9 +17,13 @@ import type { UserProfileResponse } from "@/types/user-profile";
 function SidebarContainer({
   isSidebarOpen,
   setIsSidebarOpen,
+  hasMobileCalendarHint,
+  onOpenMenu,
 }: {
   isSidebarOpen: boolean;
   setIsSidebarOpen: (value: boolean) => void;
+  hasMobileCalendarHint: boolean;
+  onOpenMenu: () => void;
 }) {
   const t = useTranslations("Sidebar");
   return (
@@ -29,15 +33,33 @@ function SidebarContainer({
           Postslify
         </Link>
         <button
-          onClick={() => setIsSidebarOpen(true)}
-          className="rounded-lg p-1 text-white hover:bg-blue-700"
+          onClick={() => {
+            onOpenMenu();
+            setIsSidebarOpen(true);
+          }}
+          className={[
+            "relative rounded-lg bg-white p-1 text-blue-600 transition-colors hover:bg-blue-50",
+            hasMobileCalendarHint
+              ? "ring-2 ring-emerald-300 motion-safe:animate-bounce"
+              : "",
+          ].join(" ")}
           aria-label={t("openMenu")}
         >
-          <FontAwesomeIcon icon={faBars} className="h-6 w-6 text-2xl" />
+          <FontAwesomeIcon
+            icon={faBars}
+            className="h-6 w-6 text-2xl text-blue-600"
+          />
+          {hasMobileCalendarHint && (
+            <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full border border-white bg-emerald-500" />
+          )}
         </button>
       </div>
 
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        highlightCalendar={hasMobileCalendarHint}
+        onClose={() => setIsSidebarOpen(false)}
+      />
     </>
   );
 }
@@ -61,6 +83,7 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
     height: number;
   } | null>(null);
   const [isMobileTour, setIsMobileTour] = useState(false);
+  const [hasMobileCalendarHint, setHasMobileCalendarHint] = useState(false);
   const [showWelcomeBonus, setShowWelcomeBonus] = useState(false);
   const [pendingWelcomeBonus, setPendingWelcomeBonus] = useState(false);
   const [profileLoaded, setProfileLoaded] = useState(false);
@@ -207,6 +230,39 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !routeUserId) return;
+    const key = `postslify_mobile_calendar_hint_${routeUserId}`;
+    const syncHintState = () => {
+      const isCalendarRoute = effectiveSegments[1] === "calendar";
+      if (isCalendarRoute) {
+        window.localStorage.removeItem(key);
+        setHasMobileCalendarHint(false);
+        return;
+      }
+      setHasMobileCalendarHint(window.localStorage.getItem(key) === "1");
+    };
+
+    const handleHintEvent = () => {
+      syncHintState();
+    };
+
+    syncHintState();
+    window.addEventListener("postslify:mobile-calendar-hint", handleHintEvent);
+    window.addEventListener("storage", handleHintEvent);
+    return () => {
+      window.removeEventListener("postslify:mobile-calendar-hint", handleHintEvent);
+      window.removeEventListener("storage", handleHintEvent);
+    };
+  }, [effectiveSegments, routeUserId]);
+
+  const handleOpenMobileMenu = () => {
+    if (!routeUserId || typeof window === "undefined") return;
+    const key = `postslify_mobile_calendar_hint_${routeUserId}`;
+    window.localStorage.removeItem(key);
+    setHasMobileCalendarHint(false);
+  };
 
   useEffect(() => {
     if (!shouldShowSidebar || !session?.user?.id || !profileLoaded) return;
@@ -356,6 +412,8 @@ export function ClientLayout({ children, session }: { children: React.ReactNode;
             key={pathname ?? "root"}
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
+            hasMobileCalendarHint={hasMobileCalendarHint}
+            onOpenMenu={handleOpenMobileMenu}
           />
           <LinkedInFloatingButton />
         </>
