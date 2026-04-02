@@ -147,22 +147,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   const pricingPlans = [
     {
-      id: "start",
-      credits: 166,
-      price: "$5.00",
-      featuresCount: 5,
-      icon: faBolt,
-      color: "blue",
-      popular: false,
-    },
-    {
       id: "basic",
       credits: 333,
       price: "$10.00",
       featuresCount: 5,
       icon: faStar,
       color: "indigo",
-      popular: true,
+      popular: false,
     },
     {
       id: "advanced",
@@ -171,7 +162,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       featuresCount: 5,
       icon: faRocket,
       color: "purple",
-      popular: false,
+      popular: true,
     },
     {
       id: "expert",
@@ -613,7 +604,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </p>
           </div>
 
-          <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 xl:grid-cols-4 lg:gap-x-8 xl:gap-x-6">
+          <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:max-w-5xl lg:grid-cols-2 lg:gap-x-8 xl:max-w-6xl xl:grid-cols-3 xl:gap-x-6">
             {pricingPlans.map((plan) => (
               <div
                 key={plan.id}

@@ -15,7 +15,6 @@ type BillingFormValues = {
 };
 
 const PLANS: BillingPlan[] = [
-  { id: "5", amountCents: 500, label: "$5 USD" },
   { id: "10", amountCents: 1000, label: "$10 USD" },
   { id: "25", amountCents: 2500, label: "$25 USD" },
   { id: "50", amountCents: 5000, label: "$50 USD" },
@@ -32,7 +31,7 @@ export default function BillingPage() {
     watch,
     formState: { isSubmitting },
   } = useForm<BillingFormValues>({
-    defaultValues: { planId: "5" },
+    defaultValues: { planId: "10" },
   });
 
   const [balance, setBalance] = useState<CreditsBalance | null>(null);

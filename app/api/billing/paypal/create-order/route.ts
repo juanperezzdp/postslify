@@ -6,7 +6,6 @@ import dbConnect from "@/lib/mongodb";
 import Transaction from "@/models/Transaction";
 
 const PLAN_AMOUNT_CENTS: Record<BillingPlanId, number> = {
-  "5": 500,
   "10": 1000,
   "25": 2500,
   "50": 5000,
