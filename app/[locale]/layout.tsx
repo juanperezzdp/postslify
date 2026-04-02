@@ -30,7 +30,7 @@ const tanNimbus = localFont({
   weight: "400",
 });
 
-const siteUrl = "https://www.postslify.com";
+const siteUrl = "https://postslify.com";
 
 const seoContentByLocale = {
   en: {

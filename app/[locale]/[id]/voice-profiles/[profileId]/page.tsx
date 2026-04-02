@@ -53,6 +53,12 @@ export default function PerfilDetallePage() {
   
   
   const { profileId } = params;
+  const routeUserId =
+    typeof params.id === "string"
+      ? params.id
+      : Array.isArray(params.id)
+        ? params.id[0]
+        : "";
   const [profile, setProfile] = useState<VoiceProfileDetail | null>(null);
   
   
@@ -82,6 +88,10 @@ export default function PerfilDetallePage() {
         return res.json();
       })
       .then((data) => {
+        if (data?.user_id && routeUserId && data.user_id !== routeUserId) {
+          router.replace(`/${locale}/${data.user_id}/voice-profiles/${data.id}`);
+          return;
+        }
         setProfile(data);
         setEditContext(data.context || "");
         setEditExamples(data.examples || []);
@@ -93,7 +103,7 @@ export default function PerfilDetallePage() {
       .finally(() => {
         setLoading(false);
       });
-  }, [profileId, t]);
+  }, [locale, profileId, routeUserId, router, t]);
 
   const getProfileEmoji = (styleTag?: string) => {
     if (!styleTag) return "🎤";

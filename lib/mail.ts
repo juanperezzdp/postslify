@@ -4,7 +4,7 @@ import path from "node:path";
 import type { WelcomeEmailContent, WelcomeEmailLocale } from "@/types/mail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const fallbackPublicBaseUrl = "https://www.postslify.com";
+const fallbackPublicBaseUrl = "https://postslify.com";
 const resetEmailFrom =
   process.env.RESET_EMAIL_FROM || "Postslify <resetpassword@postslify.com>";
 const welcomeEmailFrom =
