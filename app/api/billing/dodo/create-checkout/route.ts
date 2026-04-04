@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-    const origin = request.nextUrl.origin;
+  const origin = process.env.NEXT_PUBLIC_APP_URL || request.nextUrl.origin;
   const returnUrl = `${origin}/${locale}/${session.user.id}/billing`;
   const cancelUrl = `${origin}/${locale}/${session.user.id}/billing?dodo=cancel`;
   const amountCents = PLAN_AMOUNT_CENTS[planId];
