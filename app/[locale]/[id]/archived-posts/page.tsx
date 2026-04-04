@@ -1454,8 +1454,19 @@ export default function ArchivedPostsPage() {
     setIsPublishPreviewOpen(true);
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-50/50 font-sans">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600"></div>
+          <p className="text-sm font-medium text-slate-500 animate-pulse">Cargando...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-20 pt-24 ">
+    <div className="min-h-screen bg-slate-50/50 pb-20 pt-24">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="border border-slate-200 rounded-2xl p-4 shadow-md shadow-slate-300 w-full">
@@ -1469,11 +1480,7 @@ export default function ArchivedPostsPage() {
           </div>
         </div>
 
-        {isLoading ? (
-          <div className="flex h-64 items-center justify-center">
-            <FontAwesomeIcon icon={faSpinner} className="h-8 w-8 animate-spin text-blue-600" />
-          </div>
-        ) : archivedPosts.length === 0 ? (
+        {archivedPosts.length === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white px-4 py-16 text-center shadow-sm">
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 ring-1 ring-slate-100">
               <FontAwesomeIcon icon={faBoxOpen} className="h-8 w-8" />

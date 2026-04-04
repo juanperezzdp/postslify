@@ -16,7 +16,7 @@ export async function GET() {
     const transactions = await Transaction.find({
       user_id: session.user.id,
       type: "purchase",
-      provider: "paypal",
+      provider: "dodo",
     })
       .sort({ createdAt: -1 })
       .limit(20);
@@ -26,7 +26,7 @@ export async function GET() {
       amountCents: row.amount_cents,
       currency: (row.currency || "USD") as "USD",
       type: "purchase",
-      provider: "paypal",
+      provider: row.provider as "dodo" | "stripe" | "system",
       providerOrderId: row.provider_order_id ?? null,
       status: row.status as "pending" | "completed" | "failed" | "canceled",
       createdAt: row.createdAt.toISOString(),

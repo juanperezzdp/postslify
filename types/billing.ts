@@ -23,7 +23,7 @@ export type CreditTransactionSummary = {
   amountCents: number;
   currency: "USD";
   type: "purchase";
-  provider: "paypal";
+  provider: "dodo" | "stripe" | "system";
   providerOrderId: string | null;
   status: CreditTransactionStatus;
   createdAt?: string;

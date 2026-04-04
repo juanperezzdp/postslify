@@ -337,12 +337,13 @@
       "selected": "Plan seleccionado: <strong>{label}</strong> — <highlight>{requests} solicitudes</highlight>"
     },
     "payment": {
-      "title": "Métodos de pago",
-      "paypalTitle": "Pagos procesados por PayPal",
-      "paypalSubtitle": "Todos los pagos se procesan de forma segura y encriptada a través de la plataforma de PayPal.",
+      "title": "Pago seguro con Dodo Payments",
+      "dodoTitle": "Pagos procesados por Dodo Payments",
+      "dodoSubtitle": "Todos los pagos se procesan de forma segura y encriptada a través de Dodo Payments.",
       "loading": "Cargando pasarela de pago...",
       "starting": "Iniciando...",
-      "paypalCta": "Pagar con PayPal"
+      "dodoCta": "Pagar con Dodo Payments",
+      "secureNote": "🔒 <strong>Pago 100% seguro</strong> a través de <highlight>Dodo Payments</highlight>. Obtén tus créditos al instante y comienza a potenciar tu contenido."
     },
     "history": {
       "title": "Historial de transacciones",
@@ -362,11 +363,8 @@
       "historyError": "No se pudo obtener el historial de pagos.",
       "captureError": "No se pudo completar el pago.",
       "captureSuccess": "Pago confirmado. Créditos añadidos a tu cuenta.",
-      "missingClientId": "Falta NEXT_PUBLIC_PAYPAL_CLIENT_ID en las variables de entorno.",
-      "paypalLoadError": "No se pudo cargar PayPal.",
       "paymentCanceled": "Pago cancelado.",
-      "orderError": "No se pudo crear la orden.",
-      "orderMissingId": "No se recibió el ID de la orden.",
+      "orderError": "No se pudo crear la sesión de pago.",
       "paymentError": "No se pudo procesar el pago."
     }
   },

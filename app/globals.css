@@ -159,3 +159,31 @@ html {
 .slide-in-from-bottom-5 {
   --tw-enter-translate-y: 1.25rem;
 }
+
+@keyframes payment-methods-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.payment-methods-marquee {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.payment-methods-marquee-content {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+  padding-right: 0.5rem;
+  will-change: transform;
+  animation: payment-methods-marquee 15s linear infinite;
+  width: max-content;
+}

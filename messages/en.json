@@ -333,12 +333,13 @@
       "selected": "Selected plan: <strong>{label}</strong> — <highlight>{requests} requests</highlight>"
     },
     "payment": {
-      "title": "Payment methods",
-      "paypalTitle": "Payments processed by PayPal",
-      "paypalSubtitle": "All payments are processed securely and encrypted through the PayPal platform.",
+      "title": "Secure payment with Dodo Payments",
+      "dodoTitle": "Payments processed by Dodo Payments",
+      "dodoSubtitle": "All payments are processed securely and encrypted via Dodo Payments.",
       "loading": "Loading payment gateway...",
       "starting": "Starting...",
-      "paypalCta": "Pay with PayPal"
+      "dodoCta": "Pay with Dodo Payments",
+      "secureNote": "🔒 <strong>100% secure payment</strong> via <highlight>Dodo Payments</highlight>. Get your credits instantly and start boosting your content."
     },
     "history": {
       "title": "Transaction history",
@@ -358,11 +359,8 @@
       "historyError": "Could not fetch payment history.",
       "captureError": "Could not complete the payment.",
       "captureSuccess": "Payment confirmed. Credits added to your account.",
-      "missingClientId": "Missing NEXT_PUBLIC_PAYPAL_CLIENT_ID in environment variables.",
-      "paypalLoadError": "Could not load PayPal.",
       "paymentCanceled": "Payment canceled.",
-      "orderError": "Could not create the order.",
-      "orderMissingId": "Order ID not received.",
+      "orderError": "Could not create the checkout session.",
       "paymentError": "Could not process the payment."
     }
   },

@@ -5,7 +5,7 @@ export interface ITransaction {
   amount_cents: number;
   currency: string;
   type: "purchase" | "usage" | "refund";
-  provider: "paypal" | "stripe" | "system";
+  provider: "dodo" | "stripe" | "system";
   provider_order_id?: string;
   status: "pending" | "completed" | "failed" | "canceled";
   expiresAt?: Date;
@@ -35,7 +35,7 @@ const TransactionSchema = new Schema<ITransaction>(
     },
     provider: {
       type: String,
-      enum: ["paypal", "stripe", "system"],
+      enum: ["dodo", "stripe", "system"],
       required: true,
     },
     provider_order_id: {
