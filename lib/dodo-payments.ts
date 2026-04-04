@@ -11,17 +11,21 @@ const getDodoApiKey = () => {
 
 const getDodoEnvironment = () => {
   const configuredBaseUrl = process.env.DODO_PAYMENTS_BASE_URL || "";
-  if (configuredBaseUrl.includes("test.dodopayments.com")) {
+  const isTestKey = process.env.DODO_PAYMENTS_API_KEY?.includes("test_");
+  
+  if (configuredBaseUrl.includes("test.dodopayments.com") || isTestKey) {
     return "test_mode" as const;
   }
   return "live_mode" as const;
 };
 
 const getDodoClient = () => {
+  const env = getDodoEnvironment();
+  const baseURL = env === "test_mode" ? "https://test.dodopayments.com" : "https://live.dodopayments.com";
+  
   return new DodoPayments({
     bearerToken: getDodoApiKey(),
-    environment: getDodoEnvironment(),
-    baseURL: null,
+    baseURL,
   });
 };
 
