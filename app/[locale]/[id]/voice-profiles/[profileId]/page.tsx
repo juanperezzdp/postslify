@@ -373,7 +373,7 @@ export default function PerfilDetallePage() {
                             <span className="mb-4 flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-xs font-bold text-blue-600 ring-1 ring-blue-100">
                               #{index + 1}
                             </span>
-                            <p className="text-lg leading-relaxed text-slate-700 font-medium">
+                            <p className="text-shadow-sm leading-relaxed text-slate-700  whitespace-pre-wrap">
                               &quot;{example}&quot;
                             </p>
                           </div>

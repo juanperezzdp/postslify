@@ -35,7 +35,7 @@ import {
   faLightbulb,
 } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { PREDEFINED_TIMEZONES } from "@/lib/timezone";
+import { PREDEFINED_TIMEZONES, getTimezoneSelectLabel } from "@/lib/timezone";
 import type { Message } from "@/types/posts";
 import type { LinkedInUser, PageSettingsResponse, PageData } from "@/types/linkedin";
 import type { VoiceProfile, VoiceProfileSnapshot } from "@/types/voice-profile";
@@ -1947,7 +1947,7 @@ export default function CrearPostPage() {
             <h3 className="text-xl font-bold text-slate-900">{t('success.postScheduled')}</h3>
             <p className="mt-2 text-sm text-slate-500">
               {t('success.scheduledFor')}<br/>
-              <span className="font-medium text-slate-900">{scheduleSuccess.scheduledAt.replace("T", " ")} ({scheduleSuccess.timezone})</span>
+              <span className="font-medium text-slate-900">{scheduleSuccess.scheduledAt.replace("T", " ")} ({getTimezoneSelectLabel(scheduleSuccess.timezone)})</span>
             </p>
             <div className="mt-6 flex justify-center">
               <button

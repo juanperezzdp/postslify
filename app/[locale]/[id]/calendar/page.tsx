@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { getProxiedImageUrl } from "@/lib/image-proxy";
 import type { ScheduledPost, ScheduledTargetSummary } from "@/types/posts";
-import { PREDEFINED_TIMEZONES } from "@/lib/timezone";
+import { PREDEFINED_TIMEZONES, getTimezoneSelectLabel } from "@/lib/timezone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
   faChevronLeft, 
@@ -660,7 +660,7 @@ export default function CalendarPage() {
       }).format(new Date(group.post.scheduled_at))}
     </span>
     <span className="text-[10px] text-zinc-400">
-      {group.post.timezone && ` (${group.post.timezone})`}
+      {group.post.timezone && ` (${getTimezoneSelectLabel(group.post.timezone)})`}
     </span>
   </div>
                       </div>

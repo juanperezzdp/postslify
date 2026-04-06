@@ -36,7 +36,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { useTranslations } from "next-intl";
-import { PREDEFINED_TIMEZONES } from "@/lib/timezone";
+import { PREDEFINED_TIMEZONES, getTimezoneSelectLabel } from "@/lib/timezone";
 import type { Message } from "@/types/posts";
 import type { ArchivedPostItem, ChatHistoryListResponse, ChatHistoryUpdateRequest } from "@/types/chat-history";
 import type {
@@ -2544,7 +2544,7 @@ export default function ArchivedPostsPage() {
               {t("success.scheduledFor")}
               <br />
               <span className="font-medium text-slate-900">
-                {scheduleSuccess.scheduledAt.replace("T", " ")} ({scheduleSuccess.timezone})
+                {scheduleSuccess.scheduledAt.replace("T", " ")} ({getTimezoneSelectLabel(scheduleSuccess.timezone)})
               </span>
             </p>
             <div className="mt-6 flex justify-center">
