@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { useTranslations, useLocale } from "next-intl";
 
 interface DateTimePickerProps {
   value: string;
@@ -9,6 +10,8 @@ interface DateTimePickerProps {
 }
 
 export function DateTimePicker({ value, onChange, className }: DateTimePickerProps) {
+  const t = useTranslations("DateTimePicker");
+  const locale = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(value ? new Date(value) : null);
   const [viewDate, setViewDate] = useState<Date>(value ? new Date(value) : new Date());
@@ -40,13 +43,13 @@ export function DateTimePicker({ value, onChange, className }: DateTimePickerPro
 
   const formatDateDisplay = (date: Date | null) => {
     if (!date) return "";
-    return date.toLocaleString("es-ES", {
+    return date.toLocaleString(locale === "es" ? "es-ES" : "en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
       hour: "2-digit",
       minute: "2-digit",
-      hour12: false,
+      hour12: locale !== "es",
     });
   };
 
@@ -122,8 +125,9 @@ export function DateTimePicker({ value, onChange, className }: DateTimePickerPro
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
     const padding = Array.from({ length: firstDay }, (_, i) => i);
     const monthNames = [
-      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      t("months.0"), t("months.1"), t("months.2"), t("months.3"),
+      t("months.4"), t("months.5"), t("months.6"), t("months.7"),
+      t("months.8"), t("months.9"), t("months.10"), t("months.11")
     ];
 
     return (
@@ -147,8 +151,8 @@ export function DateTimePicker({ value, onChange, className }: DateTimePickerPro
         </div>
         
         <div className="grid grid-cols-7 gap-1 mb-2">
-          {["L", "M", "X", "J", "V", "S", "D"].map((d) => (
-            <div key={d} className="text-center text-xs font-bold text-slate-400">
+          {[t("days.0"), t("days.1"), t("days.2"), t("days.3"), t("days.4"), t("days.5"), t("days.6")].map((d, idx) => (
+            <div key={`${d}-${idx}`} className="text-center text-xs font-bold text-slate-400">
               {d}
             </div>
           ))}
@@ -216,10 +220,10 @@ export function DateTimePicker({ value, onChange, className }: DateTimePickerPro
             className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors"
           >
             <FontAwesomeIcon icon={faChevronLeft} className="w-3 h-3" />
-            Volver
+            {t("back")}
           </button>
           <span className="font-bold text-slate-900">
-            Selecciona hora
+            {t("selectTime")}
           </span>
           <div className="w-12"></div> {/* Spacer for centering */}
         </div>
@@ -286,7 +290,7 @@ export function DateTimePicker({ value, onChange, className }: DateTimePickerPro
         `}
       >
         <span className={selectedDate ? "text-slate-900" : "text-slate-400"}>
-          {selectedDate ? formatDateDisplay(selectedDate) : "Selecciona fecha y hora"}
+          {selectedDate ? formatDateDisplay(selectedDate) : t("placeholder")}
         </span>
         <FontAwesomeIcon icon={faCalendar} className="text-slate-400" />
       </div>

@@ -7,6 +7,12 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: [
         "/api/",
+        "/_next/",
+        "/*.json$",
+        "/*.woff2$",
+        "/*.otf$",
+        "/*.ttf$",
+        "*/favicon.ico*",
         "*/dashboard/*",
         "*/calendar/*",
         "*/create-post/*",

@@ -20,8 +20,9 @@ export default auth((req) => {
   ) {
     const url = req.nextUrl.clone();
     url.protocol = "https";
-    url.host = "postslify.com";
-    return NextResponse.redirect(url, 308);
+    url.hostname = "postslify.com";
+    url.port = ""; 
+    return NextResponse.redirect(url, 301);
   }
 
   const isStaticAsset =
@@ -52,6 +53,17 @@ export default auth((req) => {
   ]);
   const isProtectedRoute = Boolean(routeSection && protectedSections.has(routeSection));
   const sessionUserId = typeof req.auth?.user?.id === "string" ? req.auth.user.id : undefined;
+
+  if (pathname === "/" || pathname === "/es" || pathname === "/en") {
+    const safeLocale = hasLocale ? locale : "en";
+    const canonicalPath = pathname === "/" ? `/${safeLocale}` : pathname;
+    
+    if (pathname === "/") {
+      const url = req.nextUrl.clone();
+      url.pathname = canonicalPath;
+      return NextResponse.redirect(url, 301);
+    }
+  }
 
   if (isProtectedRoute && !req.auth?.user) {
     const loginPath = hasLocale ? `/${locale}/login` : "/login";

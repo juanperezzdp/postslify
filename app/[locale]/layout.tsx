@@ -80,16 +80,16 @@ export async function generateMetadata({
     description: seo.description,
     keywords: [...seo.keywords],
     alternates: {
-      canonical: `/${safeLocale}`,
+      canonical: `https://postslify.com/${safeLocale}`,
       languages: {
-        en: "/en",
-        es: "/es",
-        "x-default": "/en",
+        en: "https://postslify.com/en",
+        es: "https://postslify.com/es",
+        "x-default": "https://postslify.com/en",
       },
     },
     openGraph: {
       type: "website",
-      url: `/${safeLocale}`,
+      url: `https://postslify.com/${safeLocale}`,
       siteName: "Postslify",
       title: seo.title,
       description: seo.description,

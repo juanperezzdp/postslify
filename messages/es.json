@@ -1,4 +1,32 @@
 {
+  "DateTimePicker": {
+    "placeholder": "Selecciona fecha y hora",
+    "back": "Volver",
+    "selectTime": "Selecciona hora",
+    "months": {
+      "0": "Enero",
+      "1": "Febrero",
+      "2": "Marzo",
+      "3": "Abril",
+      "4": "Mayo",
+      "5": "Junio",
+      "6": "Julio",
+      "7": "Agosto",
+      "8": "Septiembre",
+      "9": "Octubre",
+      "10": "Noviembre",
+      "11": "Diciembre"
+    },
+    "days": {
+      "0": "L",
+      "1": "M",
+      "2": "X",
+      "3": "J",
+      "4": "V",
+      "5": "S",
+      "6": "D"
+    }
+  },
   "Sidebar": {
     "createAndManage": "Crear y Gestionar",
     "createPost": "Crear post",
@@ -439,7 +467,14 @@
     "description": "Gestiona y recupera tus publicaciones archivadas con una vista clara y ordenada.",
     "emptyTitle": "No hay posts archivados",
     "emptyDescription": "Los posts que archives aparecerán aquí para que puedas recuperarlos más tarde.",
-    "emptyCta": "Crear nuevo post"
+    "emptyCta": "Crear nuevo post",
+    "defaults": {
+      "personalProfile": "Perfil personal",
+      "personalLinkedIn": "LinkedIn personal",
+      "page": "Página",
+      "linkedinPage": "Página de LinkedIn",
+      "corporatePage": "Página corporativa"
+    }
   },
   "Calendar": {
     "title": "Calendario de Contenidos",

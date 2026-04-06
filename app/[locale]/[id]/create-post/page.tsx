@@ -2877,10 +2877,10 @@ export default function CrearPostPage() {
                       </div>
                       <div className="flex flex-1 flex-col overflow-hidden">
                         <span className="truncate text-sm font-semibold text-slate-900">
-                          {user?.name || "Perfil personal"}
+                          {user?.name || t("defaults.personalProfile")}
                         </span>
                         <span className="truncate text-xs text-slate-500">
-                          {user?.headline || "LinkedIn personal"}
+                          {user?.headline || t("defaults.personalLinkedIn")}
                         </span>
                       </div>
                       <div className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all ${
@@ -2934,7 +2934,7 @@ export default function CrearPostPage() {
                           {page.logoUrl ? (
                             <Image
                               src={page.logoUrl}
-                              alt={page.name || "Página"}
+                              alt={page.name || t("defaults.page")}
                               width={40}
                               height={40}
                               className={`h-full w-full object-cover ${
@@ -2942,7 +2942,7 @@ export default function CrearPostPage() {
                               }`}
                             />
                           ) : (
-                            (page.name || "P").charAt(0).toUpperCase()
+                            (page.name || t("defaults.page")).charAt(0).toUpperCase()
                           )}
                         </div>
                         <div className="flex flex-1 flex-col overflow-hidden">
@@ -2950,7 +2950,7 @@ export default function CrearPostPage() {
                             {page.name || page.urn}
                           </span>
                         <span className="truncate text-xs text-slate-500">
-                          {page.description || "Página corporativa"}
+                          {page.description || t("defaults.corporatePage")}
                         </span>
                         </div>
                         {pageIsActive ? (
@@ -3679,10 +3679,10 @@ export default function CrearPostPage() {
                         </div>
                         <div className="flex flex-1 flex-col overflow-hidden">
                           <span className="truncate text-sm font-bold text-slate-900">
-                            {user?.name || t('labels.personalProfile')}
+                            {user?.name || t("defaults.personalProfile")}
                           </span>
                           <span className="truncate text-xs font-medium text-slate-500">
-                            {user?.headline || t('labels.personalLinkedIn')}
+                            {user?.headline || t("defaults.personalLinkedIn")}
                           </span>
                         </div>
                         <div className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all duration-200 ${
@@ -3735,21 +3735,21 @@ export default function CrearPostPage() {
                           {page.logoUrl ? (
                             <Image
                               src={page.logoUrl}
-                              alt={page.name || "Página"}
+                              alt={page.name || t("defaults.page")}
                               width={40}
                               height={40}
                               className={`h-full w-full object-cover ${!pageIsActive ? "grayscale opacity-80" : ""}`}
                             />
                           ) : (
-                            <span className="text-xs font-bold text-slate-600">{(page.name || "P").charAt(0).toUpperCase()}</span>
+                            <span className="text-xs font-bold text-slate-600">{(page.name || t("defaults.page")).charAt(0).toUpperCase()}</span>
                           )}
                         </div>
                         <div className="flex flex-1 flex-col overflow-hidden">
                           <span className="truncate text-sm font-bold text-slate-900">
-                            {page.name || t('labels.linkedinPage')}
+                            {page.name || t("defaults.linkedinPage")}
                           </span>
                           <span className="truncate text-xs font-medium text-slate-500">
-                            {page.description || t('labels.corporatePage')}
+                            {page.description || t("defaults.corporatePage")}
                           </span>
                         </div>
                         {pageIsActive ? (
