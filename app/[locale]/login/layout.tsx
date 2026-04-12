@@ -13,15 +13,15 @@ export async function generateMetadata({
     description:
       "Access your Postslify dashboard to schedule posts, track analytics, and manage your social media presence. Sign in or create an account to get started.",
     alternates: {
-      canonical: `/${safeLocale}/login`,
+      canonical: `https://postslify.com/${safeLocale}/login`,
       languages: {
-        en: "/en/login",
-        es: "/es/login",
-        "x-default": "/en/login",
+        en: "https://postslify.com/en/login",
+        es: "https://postslify.com/es/login",
+        "x-default": "https://postslify.com/en/login",
       },
     },
     robots: {
-      index: false,
+      index: true,
       follow: true,
     },
     openGraph: {
@@ -29,7 +29,7 @@ export async function generateMetadata({
       description:
         "Unlock the full power of your social media. Manage, schedule, and analyze with Postslify.",
       type: "website",
-      url: `/${safeLocale}/login`,
+      url: `https://postslify.com/${safeLocale}/login`,
     },
   };
 }
