@@ -14,14 +14,21 @@ export default auth((req) => {
   const forwardedProto = (req.headers.get("x-forwarded-proto") || "https").toLowerCase();
   const pathname = req.nextUrl.pathname;
 
+  const url = req.nextUrl.clone();
+  
   if (
     hostname === "www.postslify.com" ||
     (hostname === "postslify.com" && forwardedProto !== "https")
   ) {
-    const url = req.nextUrl.clone();
-    url.protocol = "https";
+    url.protocol = "https:";
     url.hostname = "postslify.com";
     url.port = ""; 
+    return NextResponse.redirect(url, 301);
+  }
+
+  // Quitar trailing slash si existe, excepto si es el root "/"
+  if (pathname !== "/" && pathname.endsWith("/")) {
+    url.pathname = pathname.slice(0, -1);
     return NextResponse.redirect(url, 301);
   }
 
@@ -56,11 +63,14 @@ export default auth((req) => {
 
   if (pathname === "/" || pathname === "/es" || pathname === "/en") {
     const safeLocale = hasLocale ? locale : "en";
-    const canonicalPath = pathname === "/" ? `/${safeLocale}` : pathname;
+    
+    // Si la ruta es exactamente "/" o "/es" o "/en", lo forzamos a mostrarse limpio pero
+    // aseguramos de que el middleware de internacionalización pueda hacer su trabajo si es necesario.
+    // Dejaremos que next-intl maneje /es y /en en lugar de nosotros intervenir aquí, 
+    // a menos que sea el root estricto "/".
     
     if (pathname === "/") {
-      const url = req.nextUrl.clone();
-      url.pathname = canonicalPath;
+      url.pathname = `/${safeLocale}`;
       return NextResponse.redirect(url, 301);
     }
   }
