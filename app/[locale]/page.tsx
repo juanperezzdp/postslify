@@ -223,6 +223,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
       <main className="flex flex-1 flex-col items-center justify-center px-4 pt-32 text-center sm:px-6 lg:px-8">
         {/* Hero Section */}
+      <div><a
+  href="https://www.producthunt.com/products/postslify?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-postslify"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <Image
+    src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1138003&theme=light&t=1777817144950"
+    alt="Postslify - AI-powered LinkedIn content, done in minutes | Product Hunt"
+    width={250}
+    height={54}
+    priority
+  />
+</a></div>
         <div className="relative z-10 flex w-full max-w-4xl flex-col items-center gap-8">
           <div className="animate-fade-in-up">
             <h1 className="mx-auto max-w-4xl text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl md:text-7xl">
